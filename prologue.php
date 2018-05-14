@@ -7,16 +7,17 @@
     <title>Úvodná stránka</title>
 </head>
 <body>
+<input type="button" value="Adresa Userov">
+<input type="button" value="Adresa Skol">
 
+<div id="googleMap" style="width:50%;height:350px;"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzAGVYxB7GHyFD0rDQuIiKZMWiYKWBqsw&callback=myMap"></script>
 </body>
 </html>
 
 
 
 <?php
-/**
- * Created by PhpStorm.
- * User: Marcel
- * Date: 5/14/2018
- * Time: 6:20 PM
- */
+
+?>
