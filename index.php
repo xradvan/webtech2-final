@@ -3,5 +3,3 @@
  * Index file
  *
  */
-
-echo "Hello World";
