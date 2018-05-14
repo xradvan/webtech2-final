@@ -51,6 +51,9 @@ INSERT INTO `pouzivatelia` (`id`, `meno`, `priezvisko`, `email`, `stredna_skola`
 -- Indexes for dumped tables
 --
 
+
+
+
 --
 -- Indexes for table `pouzivatelia`
 --
