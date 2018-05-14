@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /**
  * Config file
  */
@@ -14,3 +18,8 @@ define('DB_PASSWORD', 'xradvan_db');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
+
+$servername = "localhost";
+$username = "root";
+$password = "xradvan_db";
+$dbname = "webtech2_final";
