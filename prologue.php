@@ -11,7 +11,7 @@
 <input type="button" value="Adresa Skol">
 
 <div id="googleMap" style="width:50%;height:350px;"></div>
-
+<script src="scripts/map.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzAGVYxB7GHyFD0rDQuIiKZMWiYKWBqsw&callback=myMap"></script>
 </body>
 </html>
