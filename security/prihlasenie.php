@@ -16,9 +16,10 @@
 </head>
 
     <body class="text-center">
-    <form class="form-signin" action="prihlasenie_script.php">
+    <form class="form-signin" action="prihlasenie_script.php" method="POST">
         <h1 class="h3 mb-3 font-weight-normal">Prihlásenie</h1>
         <h6 class="text-success d-none" id="alert">Registrácia prebehla úspešne. Prihláste sa.</h6>
+        <h6 class="text-danger d-none" id="login-fail">Nesprávne meno alebo heslo.</h6>
         <br>
         <label for="email" class="sr-only">Email</label>
         <input type="email" name="email" id="email" class="form-control" placeholder="Email" required autofocus>
@@ -30,9 +31,16 @@
 
     <script>
         // Zobrazenie alertu
+        // Uspesna registracia
         if(window.location.href.indexOf("ok") > -1) {
             $('#alert').removeClass("d-none");
         }
+
+        // Nespravne meno alebo heslo
+        if(window.location.href.indexOf("fail") > -1) {
+            $('#login-fail').removeClass("d-none");
+        }
+
     </script>
     </body>
 </html>

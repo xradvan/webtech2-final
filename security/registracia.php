@@ -30,7 +30,7 @@
             <br>
 
             <label for="email">Email</label>
-            <input type="email" class="form-control" name="email"  id="email" required>
+            <input type="email" class="form-control" name="email"  id="email" required autofocus>
             <div class="invalid-feedback">
                 Zadajte platný email.
             </div>
@@ -41,7 +41,7 @@
 
 
             <label for="meno">Meno</label>
-            <input type="text" class="form-control" name="meno"  id="meno" autofocus required>
+            <input type="text" class="form-control" name="meno"  id="meno"  required>
 
 
             <label for="priezvisko">Priezvisko</label>
