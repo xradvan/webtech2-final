@@ -1,0 +1,36 @@
+body{
+    margin: 0 auto;
+}
+
+
+#googleMap{
+    margin: 0 auto;
+    margin-top: 5%;
+    height:450px;
+}
+
+.navbar {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+#vitajte{
+    color: #fff;
+}
+
+#vitajte:hover{
+    cursor: default;
+}
+
+@media only screen and (min-height: 750px) {
+    #googleMap {
+        height: 600px;
+    }
+}
+
+@media only screen and (min-height: 900px) {
+    #googleMap {
+        height: 700px;
+    }
+}
