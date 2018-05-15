@@ -65,29 +65,40 @@
         $query = "INSERT INTO clanky (text) VALUES ('$text')";
         mysqli_query($conn, $query);
 
-        $mail = new PHPMailer(true);       
-        try {
-            $mail->isSMTP();              
-            $mail->Host = 'smtp.gmail.com';  
-            $mail->SMTPAuth = true;        
-            $mail->Username = 'ebeehives@gmail.com';   
-            $mail->Password = 'Qw3rty95';    
-            $mail->SMTPSecure = 'tls';     
-            $mail->Port = 587;           
-            $mail->CharSet = 'UTF-8';
-            
-            $mail->setFrom('webtech@gmail.com', 'Webtech');
-            $mail->addAddress('matusbubeliny@gmail.com', '');     
-    
-            $mail->isHTML(true);    
-            $mail->Subject = 'Upozornenie na nový článok';
-            $mail->Body    = '<h3>Bol pridaný nový článok</h3>';
-            $mail->AltBody = '<h3>Bol pridaný nový článok</h3>';
-    
-            $mail->send();
-        } catch (Exception $e) {
-            echo $e;
+        $odoberatelia = array();
+        $selectOdoberatelia = "SELECT email FROM odoberatelia";
+        $result = mysqli_query($conn, $selectOdoberatelia);
+
+        while ($row = mysqli_fetch_assoc($result)){
+            array_push($odoberatelia, $row);
         }
+
+        $mail = new PHPMailer(true);   
+        for ($i = 0; $i < sizeof($odoberatelia); $i++){    
+            try {
+                $mail->isSMTP();              
+                $mail->Host = 'smtp.gmail.com';  
+                $mail->SMTPAuth = true;        
+                $mail->Username = 'ebeehives@gmail.com';   
+                $mail->Password = 'Qw3rty95';    
+                $mail->SMTPSecure = 'tls';     
+                $mail->Port = 587;           
+                $mail->CharSet = 'UTF-8';
+                
+                $mail->setFrom('webtech@gmail.com', 'Webtech');
+                $mail->addAddress($odoberatelia[$i]['email'], '');     
+        
+                $mail->isHTML(true);    
+                $mail->Subject = 'Upozornenie na nový článok';
+                $mail->Body    = '<h3>Bol pridaný nový článok</h3>';
+                $mail->AltBody = '<h3>Bol pridaný nový článok</h3>';
+        
+                $mail->send();
+            } catch (Exception $e) {
+                echo $e;
+            }
+        } 
+        $conn->close();       
     }
 
 ?>
