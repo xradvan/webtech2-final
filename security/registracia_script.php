@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         http://147.175.98.209/webtech2-final/security/registracia_over.php
 
 EOT;
-        mail("peterradvan@gmail.com", "Dokoncenie registracie", $message);
+        mail($email, "Dokoncenie registracie", $message);
 
 
     } catch (Exception $e) {

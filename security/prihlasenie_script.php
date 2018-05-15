@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($heslo, $hesloDB)) {
             // Vytvorenie session
             $_SESSION['rola'] = $rola;
-            $_SESSION['user_name'] = $email;
+            $_SESSION['email'] = $email;
 
 
 
