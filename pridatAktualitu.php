@@ -59,7 +59,7 @@
 
             $conn->close();
 
-            //header('location:aktuality.php');
+            header('location:aktuality.php');
 	}
 
 
