@@ -32,8 +32,8 @@
                     echo "<h5 class='card-title'>".$data['titulok']."</h5>";
                     echo "<h6 class='card-subtitle mb-2 text-muted'>".$data['datum']."</h6>";
                     echo "<p class='card-text'>".$data['obsah']."</p>";
-                    echo "<button type='button' class='btn btn-primary' onclick='editovatAktualitu('".$data['id']."');'>editovať</button>";
-                    echo "<button type='button' class='btn btn-danger' onclick='window.location = \"zmazatAktualitu.php?id=".$data['id']."\";'>vymazať</button>";
+                    echo '<button type="button" class="btn btn-primary" onclick="editovatAktualitu(\''.$data['id'].'\');">editovať</button>';
+                    echo '<button type="button" class="btn btn-danger" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';">vymazať</button>';
                     echo "</div>";
                     echo "</div>";
                 }
@@ -71,15 +71,15 @@
             while ($data = mysqli_fetch_array($result))
             {   
                 if($i%2==0){
-                    echo "<div class='card' id='".$data['id']."'>";
-                    echo "<div class='card-body'>";
-                    echo "<h5 class='card-title'>".$data['titulok']."</h5>";
-                    echo "<h6 class='card-subtitle mb-2 text-muted'>".$data['datum']."</h6>";
-                    echo "<p class='card-text'>".$data['obsah']."</p>";
-                    echo "<button type='button' class='btn btn-primary' onclick='editovatAktualitu('".$data['id']."');'>editovať</button>";
-                    echo "<button type='button' class='btn btn-danger' onclick='window.location = \"zmazatAktualitu.php?id=".$data['id']."\";'>vymazať</button>";
-                    echo "</div>";
-                    echo "</div>";
+                    echo '<div class="card" id="'.$data['id'].'">';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
+                    echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
+                    echo '<p class="card-text">'.$data['obsah'].'</p>';
+                    echo '<button type="button" class="btn btn-primary" onclick="editovatAktualitu(\''.$data['id'].'\');">editovať</button>';
+                    echo '<button type="button" class="btn btn-danger" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';">vymazať</button>';
+                    echo '</div>';
+                    echo '</div>';
                 }
                 $i++;
             }
@@ -91,22 +91,23 @@
     </div>
     <div class="lightBox">
         <div class="container editDiv">
-            <form>
+            <form method="POST" action="zmenitAktualitu.php">
                 <div class="form-group">
                     <label for="editTitulok">Titulok</label>
-                    <input type="text" class="form-control" id="editTitulok">
+                    <input type="text" class="form-control" name="editTitulok" id="editTitulok">
                 </div>
                 <div class="form-group">
                     <label for="editDatum">Dátum</label>
-                    <input type="date" class="form-control" id="editDatum">
+                    <input type="date" class="form-control" name="editDatum" id="editDatum">
                 </div>
                 <div class="form-group">
                     <label for="editObsah">Aktualita</label>
-                    <textarea class="form-control" id="editObsah" rows="10"></textarea>
+                    <textarea class="form-control" id="editObsah" name="editObsah" rows="10"></textarea>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-light">uložiť zmeny</button>
+                    <button type="submit" class="btn btn-light">uložiť zmeny</button>
                 </div>
+                <input type="text" style="display: none;" name="aktualitaId" id="aktualitaId">
             </form>
         </div>
         <i class="fas fa-times"></i>
@@ -122,12 +123,9 @@
             var datum = new Date();
             $("#editTitulok").val(editTitulok);
             $("#editObsah").val(editObsah);
+            $("#aktualitaId").val(id);
             document.getElementById("editDatum").valueAsDate = new Date();
             $(".lightBox").fadeIn();
-            
-        }
-
-        function vymazatAktualitu(id){
             
         }
 
