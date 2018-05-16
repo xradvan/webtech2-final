@@ -39,6 +39,7 @@
     $query = "SELECT stredna_skola,stredna_skola_adresa, count(stredna_skola) as pocet FROM `pouzivatelia` GROUP BY stredna_skola, stredna_skola_adresa";
     $result = mysqli_query($conn,$query);
 
+
     echo "<script>";
     echo "var strednaSkolaAdresa = [";
     while ($data = mysqli_fetch_array($result))
