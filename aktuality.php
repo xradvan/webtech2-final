@@ -14,6 +14,7 @@
     <title>Aktuality</title>
 </head>
 <body>
+
     <div class="container aktualityDiv">
         <div class="container aktualityLeft col-lg-4">
         <?php
@@ -45,19 +46,25 @@
         ?>
         </div>
         <div class="container aktualityMiddle col-lg-4">
-            <form method="POST" action="pridatAktualitu.php">
-                <div class="form-group">
-                    <label for="titulok">Titulok</label>
-                    <input type="text" class="form-control" id="titulok" name="titulok" placeholder="zadajte nadpis aktuality">
-                </div>
-                <div class="form-group">
-                    <label for="obsah">Aktualita</label>
-                    <textarea class="form-control" id="obsah" name="obsah" rows="10" placeholder="zadajte popis aktuality"></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-light">Pridať aktualitu</button>
-                </div>
-            </form>
+            <?php
+                if($_SESSION['rola'] == "admin"){
+        
+                    echo '<form id="pridatAktualituForm" method="POST" action="pridatAktualitu.php">';
+                    echo '<div class="form-group">';
+                    echo '<label for="titulok">Titulok</label>';
+                    echo '<input type="text" class="form-control" id="titulok" name="titulok" placeholder="zadajte nadpis aktuality">';
+                    echo '</div>';
+                    echo ' <div class="form-group">';
+                    echo '<label for="obsah">Aktualita</label>';
+                    echo '<textarea class="form-control" id="obsah" name="obsah" rows="10" placeholder="zadajte popis aktuality"></textarea>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<button type="submit" class="btn btn-light">Pridať aktualitu</button>';
+                    echo '</div>';
+                    echo '</form>'
+
+                }
+            ?>
         </div>
         <div class="container aktualityRight col-lg-4">
         <?php
