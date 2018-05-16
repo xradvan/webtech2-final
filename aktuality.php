@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container aktualityDiv">
-        <div class="container aktualityLeft">
+        <div class="container aktualityLeft col-lg-4">
         <?php
             require ('config.php');
             $conn = new mysqli($servername, $username, $password, $dbname);
@@ -44,7 +44,7 @@
             $conn->close();
         ?>
         </div>
-        <div class="container aktualityMiddle">
+        <div class="container aktualityMiddle col-lg-4">
             <form method="POST" action="pridatAktualitu.php">
                 <div class="form-group">
                     <label for="titulok">Titulok</label>
@@ -59,7 +59,7 @@
                 </div>
             </form>
         </div>
-        <div class="container aktualityRight">
+        <div class="container aktualityRight col-lg-4">
         <?php
             require ('config.php');
             $conn = new mysqli($servername, $username, $password, $dbname);
