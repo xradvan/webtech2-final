@@ -36,7 +36,7 @@
     $conn->set_charset("UTF8");
     if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
 
-    $query = "SELECT stredna_skola,stredna_skola_adresa, count(stredna_skola) as pocet FROM `pouzivatelia` GROUP BY stredna_skola";
+    $query = "SELECT stredna_skola,stredna_skola_adresa, count(stredna_skola) as pocet FROM `pouzivatelia` GROUP BY stredna_skola, stredna_skola_adresa";
     $result = mysqli_query($conn,$query);
 
     echo "<script>";
