@@ -23,8 +23,8 @@
             <li><a href="#" name="adresa_skoly" onclick="adresaSkoly();">Adresy škôl</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="security/registracia.php"><span class="glyphicon glyphicon-user"></span> Registrácia</a></li>
+            <li><a href="security/prihlasenie.php"><span class="glyphicon glyphicon-log-in"></span> &nbsp;Prihlásenie</a></li>
         </ul>
     </div>
 </nav>
