@@ -84,15 +84,15 @@
             while ($data = mysqli_fetch_array($result))
             {   
                 if($i%2==1){
-                    echo "<div class='card' id='".$data['id']."'>";
-                    echo "<div class='card-body'>";
-                    echo "<h5 class='card-title'>".$data['titulok']."</h5>";
-                    echo "<h6 class='card-subtitle mb-2 text-muted'>".$data['datum']."</h6>";
-                    echo "<p class='card-text'>".$data['obsah']."</p>";
+                    echo '<div class="card" id="'.$data['id'].'">';
+                    echo '<div class="card-body">';
+                    echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
+                    echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
+                    echo '<p class="card-text">'.$data['obsah'].'</p>';
                     echo '<button type="button" class="btn btn-primary" onclick="editovatAktualitu(\''.$data['id'].'\');">editovať</button>';
                     echo '<button type="button" class="btn btn-danger" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';">vymazať</button>';
-                    echo "</div>";
-                    echo "</div>";
+                    echo '</div>';
+                    echo '</div>';
                 }
                 $i++;
             }

@@ -18,13 +18,15 @@
         $selectOdoberatelia = "SELECT email FROM pouzivatelia WHERE odoberatel='1'";
         $result = mysqli_query($conn, $selectOdoberatelia);
 
+
         while ($row = mysqli_fetch_assoc($result)){
             array_push($odoberatelia, $row);
         }
 
-        $mail = new PHPMailer(true);   
+          
         for ($i = 0; $i < sizeof($odoberatelia); $i++){    
             try {
+                $mail = new PHPMailer(true); 
                 $mail->isSMTP();              
                 $mail->Host = 'smtp.gmail.com';  
                 $mail->SMTPAuth = true;        
@@ -35,12 +37,13 @@
                 $mail->CharSet = 'UTF-8';
                 
                 $mail->setFrom('webtech@gmail.com', 'Webtech');
-                $mail->addAddress($odoberatelia[$i]['email'], '');     
+                $mail->addAddress($odoberatelia[$i]['email']);     
         
                 $mail->isHTML(true);    
                 $mail->Subject = 'Upozornenie na nový článok';
-                $mail->Body    = '<h3>Bol pridaný nový článok</h3>';
-                $mail->AltBody = '<h3>Bol pridaný nový článok</h3>';
+                $mail->Body    = '<h2 style="text-align: center;">'.$_POST['titulok'].'</h2><h5 style="color: gray; text-align: center;">'.$datum.'</h5><p style="text-align: center;">'.$_POST['obsah'].'</p> <p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
+
+                $mail->AltBody = '<h2 style="text-align: center;">'.$_POST['titulok'].'</h2><h5 style="color: gray; text-align: center;">'.$datum.'</h5><p style="text-align: center;">'.$_POST['obsah'].'</p> <p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
         
                 $mail->send();
             } catch (Exception $e) {
