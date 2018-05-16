@@ -61,7 +61,7 @@
                     echo '<div class="form-group">';
                     echo '<button type="submit" class="btn btn-light">Pridať aktualitu</button>';
                     echo '</div>';
-                    echo '</form>'
+                    echo '</form>';
 
                 }
             ?>
