@@ -1,11 +1,5 @@
 <?php
-    include("security/over_uzivatela.php");
-    if(isset($_GET['odhlasenie'])){
-    session_destroy();
-    unset($_SESSION['rola']);
-    unset($_SESSION['email']);
-    header("location:prologue.php");
-}
+require_once "security/over_uzivatela.php";
 ?>
 
 <html>
@@ -14,7 +8,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="css/registraciaPouzivatela.css">
+    <link rel="stylesheet" type="text/css" href="css/osobneVykony.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"> 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -25,12 +19,15 @@
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <title>Aktuality</title>
+    <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/jszip.min.js"></script>
+    <title>Ososbné výkony</title>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
         <span class="navbar-brand" >
-                <?php
+            <?php
                 require ('config.php');
                 $conn = new mysqli($servername, $username, $password, $dbname);
                 $conn->set_charset("UTF8");
@@ -41,7 +38,6 @@
                 while ($data = mysqli_fetch_array($result)){
                     echo "Vitajte ".$data['meno']." ".$data['priezvisko'];
                 }
-               
             ?>
         </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,17 +59,17 @@
                         <a class="dropdown-item active" href="#">Vypnúť</a>
                     </div>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="aktuality.php">
                         Aktuality
                     </a>
                 </li>
-                <li class="nav-item active" id="registracia" style="display: none;">
+                <li class="nav-item" id="registracia" style="display: none;">
                     <a class="nav-link" href="registraciaPouzivatela.php">
                         Používatelia
                     </a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="osobneVykony.php">
                         Osobné výkony
                     </a>
@@ -91,10 +87,10 @@
                 }
     </script>
 
-<div class="row">
-    <div class="col-8 leftCol">
-        <h3> Tabuľka všetkých používateľov</h3>
-        <table class="table table-dark table-bordered"  id="pouzivateliaTable">
+
+
+    <div class="container text-center col-lg-10">
+    	<table class="table table-dark table-bordered"  id="pouzivateliaTable">
             <thead>
             <tr>
                 <th scope="col"></th>
@@ -127,72 +123,61 @@
                 ?>
             </tbody>
         </table>
-
     </div>
-    <div class="col-4 rightCol">
-        <h3>Pridanie používateľov</h3>
-        <img src="img/add.png" class="addBtn" alt="add">
-
-        <div class="addDiv">
-
-            <form id="addForm">
-                <div class="form-group">
-                    <label for="subor">Vyberte csv súbor pre registrovanie nových používateľov </label>
-                    <input type="file" id="subor" required>
-                </div>
-                <button type="button" id="insertBtn" class="btn btn-danger">Registrovať</button>
-            </form>
-            <table class="table table-striped" id="pridaniPouzivateliaTable" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Meno</th>
-                <th scope="col">Priezvisko</th>
-                <th scope="col">Admin</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-</div>
-<script>
-
-     $( document ).ready(function() {
+     <div class="container text-center col-lg-2">
+     	<img id="ulozit" src="img/download.png" width="70" height="70"><br>
+        <span>uložiť tabulku ako PDF</span>
+     </div>
+<script type="text/javascript">
+	 $( document ).ready(function() {
       $('#pouzivateliaTable').DataTable();
+      $("#ulozit").on('click', function () {
+      	// parse the HTML table element having an id=exportTable
+          var dataSource = shield.DataSource.create({
+            data: "#pouzivateliaTable",
+            schema: {
+                type: "table",
+                fields: {
+                    Meno: { type: String },
+                    Priezvisko: { type: String },
+                    Admin: { type: String }
+                }
+            }
+        });
 
-    $('.checkbox').change(function() {
-        if($(this).is(":checked")) {
-            var rola = "admin";
-        }else{
-            var rola = "user";
-        }
-        var id = $(this).val();
-        window.location.href = "zmenaRolyPouzivatela.php?id="+id+"&rola="+rola;
+        // when parsing is done, export the data to PDF
+        dataSource.read().then(function (data) {
+            var pdf = new shield.exp.PDFDocument({
+                author: "Webtech",
+                created: new Date()
+            });
 
-              
+            pdf.addPage("a4", "portrait");
+
+            pdf.table(
+                50,
+                50,
+                data,
+                [
+                    { field: "Meno", title: "Meno", width: 100 },
+                    { field: "Priezvisko", title: "Priezvisko", width: 100 },
+                    { field: "Admin", title: "Admin", width: 50 }
+                ],
+                {
+                    margins: {
+                        top: 50,
+                        left: 50
+                    }
+                }
+            );
+
+            pdf.saveAs({
+                fileName: "OsobneVykony"
+            });
+        });
     });
-
-    $(".addBtn").on('click', function () {
-        $(".addDiv").slideToggle();
-    });
-    $("#insertBtn").on('click', function () {
-        window.location.href = "ulozenieCSV.php?subor="+$("#subor").val();
-
-    });
-
-    });
+});
 
 </script>
 </body>
 </html>
-<?php
-	
-?>
