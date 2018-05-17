@@ -9,14 +9,35 @@ var map2;
 
 
 
-$(".addBtn").on('click', function () {
+$("#privateBtn").on('click', function () {
     $(".addDiv").slideToggle();
+
+    $(".addDiv button:last-child").attr('id', 'insertBtn');
 });
 
-$("#insertBtn").on('click', function () {
+$("#publicBtn").on('click', function () {
+    $(".addDiv").slideToggle();
+    $(".addDiv button:last-child").attr('id', 'insertBtnP');
+
+});
+
+$("#relayBtn").on('click', function () {
+    $(".addDiv").slideToggle();
+    $(".addDiv button:last-child").attr('id', 'insertBtnR');
+
+});
+
+$(document).on('click','#insertBtn', function () {
     window.location.href = "pridajTrasu.php?lat1="+lat1+"&lng1="+lng1+"&lat2="+lat2+"&lng2="+lng2+"&start="+$("#formGroupExampleInput").val()+"&end="+$("#formGroupExampleInput2").val()+"&dis="+dis;
 });
 
+$(document).on('click','#insertBtnP', function () {
+    window.location.href = "pridajVerejne.php?lat1="+lat1+"&lng1="+lng1+"&lat2="+lat2+"&lng2="+lng2+"&start="+$("#formGroupExampleInput").val()+"&end="+$("#formGroupExampleInput2").val()+"&dis="+dis;
+});
+
+$(document).on('click','#insertBtnR', function () {
+    window.location.href = "pridajStafeta.php?lat1="+lat1+"&lng1="+lng1+"&lat2="+lat2+"&lng2="+lng2+"&start="+$("#formGroupExampleInput").val()+"&end="+$("#formGroupExampleInput2").val()+"&dis="+dis;
+});
 
 function myMap() {
     var myLatLng = {lat: 48.6737532, lng: 19.696058};
@@ -84,7 +105,7 @@ function myMap() {
 
         directionsService.route(request, function(response, status) {
             if (status === 'OK') {
-                $("#insertBtn").fadeIn();
+                $(".addDiv button:last-child").fadeIn();
                 directionsDisplay.setDirections(response);
                 dis = response.routes[0].legs[0].distance.value;
             } else {

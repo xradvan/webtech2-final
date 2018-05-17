@@ -83,7 +83,7 @@ require_once "security/over_uzivatela.php";
     </script>
 
 
-<div class="row">
+    <div class="row">
     <div class="col-8 leftCol">
         <div id="myMap" style="height: 400px; width: 70%"></div>
 
@@ -92,6 +92,25 @@ require_once "security/over_uzivatela.php";
                 Výber trasy
             </a>
 
+<<<<<<< HEAD
+            <?php
+            require ("config.php");
+
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn->set_charset("UTF8");
+
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy FROM trasa WHERE id_user = 4 OR mod_trasy = 'verejný' ORDER BY aktivna_trasa DESC";
+
+
+            ?>
+
+=======
+>>>>>>> 4ff1f9cad538184b29cd542dcd0f6d0441e2d5b3
             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="#">Trasa 1</a>
                 <a class="dropdown-item" href="#">Trasa 2</a>
@@ -116,6 +135,41 @@ require_once "security/over_uzivatela.php";
                 <td>@mdo</td>
             </tr>
 
+<<<<<<< HEAD
+
+                <?php
+                $i = 1;
+                if ($result = $conn->query($sql)) {
+                    while ($row = $result->fetch_object()) {
+                        echo "<tr>";
+                            $mail = $_SESSION['email'];
+                            echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
+                            echo "<td>$row->start_nazov</td>";
+                            echo "<td>$row->ciel_nazov</td>";
+                            echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
+                            echo "<td>$row->datum_vytvorenia</td>";
+                            //echo "<td>$row->aktivna_trasa</td>";
+                            echo "<td>$mail</td>";
+                            echo "<td>$row->mod_trasy</td>";
+                            if($row->aktivna_trasa > 0){
+                                echo "<td><input onclick='check($i)' class='radio' type='radio' checked> </td>";
+                            }
+                            else{
+                                echo "<td><input onclick='check($i)' class='radio' type='radio' ></td>";
+                            }
+
+
+                        echo "</tr>";
+
+                        $i++;
+                    }
+                    $result->close();
+                }
+
+
+                ?>
+=======
+>>>>>>> 4ff1f9cad538184b29cd542dcd0f6d0441e2d5b3
             </tbody>
         </table>
 
