@@ -99,8 +99,8 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<button type="button" class="btn btn-primary" onclick="editovatAktualitu(\''.$data['id'].'\');">editovať</button>';
-                    echo '<button type="button" class="btn btn-danger" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';">vymazať</button>';
+                    echo '<input type="image" src="edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="45" height="48"></button>';
+                    echo '<input type="image" src="delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="48" height="48" class="deleteButton">';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -144,8 +144,10 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<button type="button" class="btn btn-primary" onclick="editovatAktualitu(\''.$data['id'].'\');">editovať</button>';
-                    echo '<button type="button" class="btn btn-danger" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';">vymazať</button>';
+                    echo '<input type="image" src="edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="45" height="48"></button>';
+                    echo '<input type="image" src="delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="48" height="48" class="deleteButton">';
+
+                    
                     echo '</div>';
                     echo '</div>';
                 }
