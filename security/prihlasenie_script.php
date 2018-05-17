@@ -16,7 +16,7 @@ try {
 }
 try {
     // Ziskaj hash query
-    $stmt = $conn->prepare("SELECT heslo, rola, meno, priezvisko FROM pouzivatelia WHERE email=?");
+    $stmt = $conn->prepare("SELECT heslo, rola, meno, priezvisko, id FROM pouzivatelia WHERE email=?");
 
 
 } catch (Exception $e) {
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("s",$email);
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($hesloDB, $rola, $meno, $priezvisko);
+        $stmt->bind_result($hesloDB, $rola, $meno, $priezvisko, $id);
         $stmt->fetch();
 
         if (password_verify($heslo, $hesloDB)) {
@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['email'] = $email;
             $_SESSION['meno'] = $meno;
             $_SESSION['priezvisko'] = $priezvisko;
+            $_SESSION['id'] = $id;
 
             if ($rola == "admin") {
                 header("Location: ../cestyAdmin.php");
