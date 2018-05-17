@@ -69,6 +69,11 @@
                         Registrácia používateľa
                     </a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="osobneVykony.php">
+                        Osobné výkony
+                    </a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
@@ -99,8 +104,8 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<button type="button" class="btn btn-primary" onclick="editovatAktualitu(\''.$data['id'].'\');">editovať</button>';
-                    echo '<button type="button" class="btn btn-danger" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';">vymazať</button>';
+                    echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
+                    echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -144,8 +149,8 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<button type="button" class="btn btn-primary" onclick="editovatAktualitu(\''.$data['id'].'\');">editovať</button>';
-                    echo '<button type="button" class="btn btn-danger" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';">vymazať</button>';
+                    echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
+                    echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
                     echo '</div>';
                     echo '</div>';
                 }

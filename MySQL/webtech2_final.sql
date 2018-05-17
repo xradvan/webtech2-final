@@ -151,6 +151,48 @@ ALTER TABLE `trasa`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
+CREATE TABLE `zoznamtimov` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `idUzivatela` int(11) NOT NULL,
+  `nazovTimu` varchar(40) COLLATE utf8_slovak_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
+
+--
+-- Dumping data for table `zoznamtimov`
+--
+
+INSERT INTO `zoznamtimov` (`id`, `idUzivatela`, `nazovTimu`) VALUES
+(31, 1, 'krtkovia'),
+(32, 2, 'krtkovia'),
+(34, 5, 'krtkovia'),
+(42, 4, 'tim'),
+(43, 1, 'tim'),
+(44, 2, 'tim'),
+(46, 4, 'Team'),
+(47, 1, 'Team');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `zoznamtimov`
+--
+ALTER TABLE `zoznamtimov`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `zoznamtimov`
+--
+ALTER TABLE `zoznamtimov`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+COMMIT;
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
