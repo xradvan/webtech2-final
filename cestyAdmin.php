@@ -107,7 +107,7 @@ require_once "security/over_uzivatela.php";
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy FROM trasa ORDER BY aktivna_trasa DESC";
+            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy, vytvoril FROM trasa ORDER BY aktivna_trasa DESC";
 
 
             ?>
@@ -161,10 +161,7 @@ require_once "security/over_uzivatela.php";
                     echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
                     echo "<td>$row->datum_vytvorenia</td>";
                     //echo "<td>$row->aktivna_trasa</td>";
-                    $menoUser= $_SESSION['meno'];
-                    $priezviskoUser= $_SESSION['priezvisko'];
-
-                    echo "<td>$menoUser $priezviskoUser</td>";
+                    echo "<td>$row->vytvoril</td>";
                     echo "<td>$row->mod_trasy</td>";
                     if($row->aktivna_trasa > 0){
                         echo "<td><input onclick='check($i)' class='radio' type='radio' checked> </td>";
