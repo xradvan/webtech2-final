@@ -69,7 +69,7 @@ require_once "security/over_uzivatela.php";
                         Používatelia
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item" id="osobneVykony" style="display: inline;">
                     <a class="nav-link" href="osobneVykony.php">
                         Osobné výkony
                     </a>
@@ -80,28 +80,30 @@ require_once "security/over_uzivatela.php";
             </ul>
         </div>
     </nav>
-    <script type="text/javascript">
-                var user = '<?php echo $_SESSION['rola']; ?>';
-                if(user=="admin"){
-                    $("#registracia").css("display","inline");
-                }
-    </script>
 
-
+    <?php
+        $query="SELECT meno, priezvisko from pouzivatelia WHERE id='$_GET[id]'";
+        $result = mysqli_query($conn,$query);
+        $data = mysqli_fetch_array($result)
+    ?>
 
     <div class="container text-center col-lg-10">
+        <h4 class="text-left">Používateľ <strong><?php echo $data['meno']." ".$data['priezvisko']; ?></strong></h4>
     	<table class="table table-dark table-bordered"  id="pouzivateliaTable">
             <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">Meno</th>
-                <th scope="col">Priezvisko</th>
-                <th scope="col">Admin</th>
+                <th scope="col">COL 1</th>
+                <th scope="col">COL 2</th>
+                <th scope="col">COL 3</th>
+                <th scope="col">COL 1</th>
+                <th scope="col">COL 2</th>
+                <th scope="col">COL 3</th>
             </tr>
             </thead>
             <tbody>
                 <?php
-                    if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+                    /*if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
                         $query="SELECT id, meno, priezvisko, rola from pouzivatelia";
                         $result = mysqli_query($conn,$query);
                         $i=1;
@@ -118,17 +120,32 @@ require_once "security/over_uzivatela.php";
                              echo '</tr>';
                              $i++;
                         }
-                        $conn->close();
+                        $conn->close();*/
 
                 ?>
             </tbody>
         </table>
     </div>
-     <div class="container text-center col-lg-2">
-     	<img id="ulozit" src="img/download.png" width="70" height="70"><br>
-        <span>uložiť tabulku ako PDF</span>
-     </div>
+    <div class="container text-center col-lg-2">
+        <input type="image" src="img/download.png" id="ulozit" width="70" height="70"><br>
+        <span>Uložiť tabulku ako PDF</span>
+        <button type="button" class="btn-lg btn-danger" id="returnButton" style="display:none">Späť na používateľov</button>
+    </div>
+
+     <script type="text/javascript">
+        var user = '<?php echo $_SESSION['rola']; ?>';
+        if(user=="admin"){
+            $("#registracia").css("display","inline");
+            $("#osobneVykony").css("display", "none");
+            $("#returnButton").css("display","inline");
+        }
+    </script>
+
 <script type="text/javascript">
+    $( "#returnButton" ).click(function() {
+            window.location.href = "registraciaPouzivatela.php";
+        });
+
 	 $( document ).ready(function() {
       $('#pouzivateliaTable').DataTable();
       $("#ulozit").on('click', function () {
