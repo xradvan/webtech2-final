@@ -41,6 +41,10 @@
                 mysqli_query($conn,$import) or die(mysqli_error($conn));
 
 
+
+
+
+
                 // Poslanie emailu na overenie registracie
                 $message = <<<EOT
                 Dobry den,
