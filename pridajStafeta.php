@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $start = $_GET["start"];
 $lat1  =  $_GET["lat1"];
 $lng1  = $_GET["lng1"];
@@ -8,7 +8,10 @@ $lat2  =  $_GET["lat2"];
 $lng2  =  $_GET["lng2"];
 $dis  =  $_GET["dis"]/1000;
 $modTrasy = "štafetový";
-
+$meno = $_SESSION['meno'];
+$priezvisko = $_SESSION['priezvisko'];
+$idUser = $_SESSION['id'];
+echo $idUser;
 require ("config.php");
 // Create connection
 $conn = new mysqli($servername, $username, $password , $dbname);
@@ -20,8 +23,8 @@ if ($conn->connect_error) {
 }
 
 
-$sql = "INSERT INTO trasa (start_nazov, start_lat, start_long,ciel_nazov,ciel_lat,ciel_long,prejdene_km,celkove_km,aktivna_trasa,datum_vytvorenia,mod_trasy)
-                VALUES ('" . $start . "', '" . $lat1 . "','" . $lng1 . "','" . $end . "','" . $lat2 . "','" . $lng2 . "',0,$dis,0,'".date("Y-m-d H:i:s")."','" . $modTrasy . "')";
+$sql = "INSERT INTO trasa (start_nazov, start_lat, start_long,ciel_nazov,ciel_lat,ciel_long,prejdene_km,celkove_km,aktivna_trasa,datum_vytvorenia,mod_trasy,vytvoril, id_user)
+                VALUES ('" . $start . "', '" . $lat1 . "','" . $lng1 . "','" . $end . "','" . $lat2 . "','" . $lng2 . "',0,$dis,0,'".date("Y-m-d H:i:s")."','" . $modTrasy . "','" . $meno." ".$priezvisko . "',$idUser)";
 
 echo $sql."<br><br>";
 
@@ -32,4 +35,5 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
+
 header("Location: cestyAdmin.php");

@@ -103,10 +103,13 @@ require_once "security/over_uzivatela.php";
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
+            $idU = $_SESSION['id'];
 
-            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy FROM trasa WHERE id_user = 4 OR mod_trasy = 'verejný' ORDER BY aktivna_trasa DESC";
-
-
+            $sql = "SELECT pouzivatelia.id, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
+                    FROM trasa_pouzivatel
+                    INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
+                    INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
+                    WHERE trasa_pouzivatel.id_pouzivatel = $idU OR mod_trasy = 'verejný' ORDER BY aktivna_trasa DESC";
             ?>
 
             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
@@ -152,14 +155,12 @@ require_once "security/over_uzivatela.php";
             if ($result = $conn->query($sql)) {
                 while ($row = $result->fetch_object()) {
                     echo "<tr>";
-                    $mail = $_SESSION['email'];
                     echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
                     echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
                     echo "<td>$row->datum_vytvorenia</td>";
-                    //echo "<td>$row->aktivna_trasa</td>";
-                    echo "<td>$mail</td>";
+                    echo "<td>$row->vytvoril</td>";
                     echo "<td>$row->mod_trasy</td>";
                     if($row->aktivna_trasa > 0){
                         echo "<td><input onclick='check($i)' class='radio' type='radio' checked> </td>";
