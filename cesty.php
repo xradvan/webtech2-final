@@ -104,9 +104,12 @@ require_once "security/over_uzivatela.php";
                 die("Connection failed: " . $conn->connect_error);
             }
             $idU = $_SESSION['id'];
-            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy, vytvoril FROM trasa WHERE id_user = $idU OR mod_trasy = 'verejný' ORDER BY aktivna_trasa DESC";
 
-
+            $sql = "SELECT pouzivatelia.id, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
+                    FROM trasa_pouzivatel
+                    INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
+                    INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
+                    WHERE trasa_pouzivatel.id_pouzivatel = $idU OR mod_trasy = 'verejný' ORDER BY aktivna_trasa DESC";
             ?>
 
             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
