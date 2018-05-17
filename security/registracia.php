@@ -17,8 +17,8 @@
 
 <body>
 
-
     <div class="container">
+
         <!--  Alert  -->
         <div class="alert alert-danger d-none" id="alert">
             Zadaná emailová adresa sa už používa
@@ -70,8 +70,10 @@
 
             <br><br>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Registruj</button>
-            <br><br>
+            <br>
+            <div id="spat" class="btn btn-lg btn-primary btn-block btn-danger">Späť na úvod</div>
         </form>
+
 
     </div>
     <script>
@@ -79,6 +81,10 @@
         if(window.location.href.indexOf("fail") > -1) {
             $('#alert').removeClass("d-none");
         }
+
+        $( "#spat" ).click(function() {
+            window.location.href = "../prologue.php";
+        });
 
         // Validacia
         (function() {
