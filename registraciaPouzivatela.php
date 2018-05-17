@@ -16,10 +16,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="css/registraciaPouzivatela.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css"> 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <title>Aktuality</title>
 </head>
@@ -85,7 +89,7 @@
 <div class="row">
     <div class="col-8 leftCol">
         <h3> Tabuľka všetkých používateľov</h3>
-        <table class="table table-dark">
+        <table class="table table-dark table-bordered"  id="pouzivateliaTable">
             <thead>
             <tr>
                 <th scope="col"></th>
@@ -106,13 +110,14 @@
                             echo '<td>'.$data["meno"].'</td>';
                             echo '<td>'.$data["priezvisko"].'</td>';
                             if($data['rola'] == "user"){
-                                echo '<td><input type="checkbox" value="'.$data['id'].'"></td>';
+                                echo '<td><input type="checkbox" class="checkbox" value="'.$data['id'].'"></td>';
                             }else{
-                                echo '<td><input type="checkbox" checked value="'.$data['id'].'"></td>';
+                                echo '<td><input type="checkbox" class="checkbox" checked value="'.$data['id'].'"></td>';
                             }
-                             echo '<tr>';
+                             echo '</tr>';
                              $i++;
                         }
+                        $conn->close();
 
                 ?>
             </tbody>
@@ -128,17 +133,17 @@
             <form id="addForm">
                 <div class="form-group">
                     <label for="subor">Vyberte csv súbor pre registrovanie nových používateľov </label>
-                    <input type="file" class="form-control" id="subor" required>
+                    <input type="file" id="subor" required>
                 </div>
                 <button type="button" id="insertBtn" class="btn btn-danger">Registrovať</button>
             </form>
-            <table class="table table-dark">
+            <table class="table table-striped" id="pridaniPouzivateliaTable" cellspacing="0" width="100%">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col"></th>
+                <th scope="col">Meno</th>
+                <th scope="col">Priezvisko</th>
+                <th scope="col">Admin</th>
             </tr>
             </thead>
             <tbody>
@@ -154,8 +159,21 @@
     </div>
 </div>
 <script>
-    var place,place2;
-    var lat1,lat2,lng1,lng2;
+
+     $( document ).ready(function() {
+      $('#pouzivateliaTable').DataTable();
+
+    $('.checkbox').change(function() {
+        if($(this).is(":checked")) {
+            var rola = "admin";
+        }else{
+            var rola = "user";
+        }
+        var id = $(this).val();
+        window.location.href = "zmenaRolyPouzivatela.php?id="+id+"&rola="+rola;
+
+              
+    });
 
     $(".addBtn").on('click', function () {
         $(".addDiv").slideToggle();
@@ -163,6 +181,7 @@
     $("#insertBtn").on('click', function () {
         window.location.href = "ulozenieCSV.php?subor="+$("#subor").val();
 
+    });
 
     });
 
@@ -170,5 +189,5 @@
 </body>
 </html>
 <?php
-	
+    
 ?>
