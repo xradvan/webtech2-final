@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (isset($_SESSION["email"])) {
-    header("location: ../cesty.php");
-}
+//if (isset($_SESSION["email"])) {
+//    header("location: ../cesty.php");
+//}
 
 ?>
 <!doctype html>
@@ -12,7 +12,7 @@ if (isset($_SESSION["email"])) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Prihlásenie</title>
+    <title>Prvé prihlásenie</title>
 
     <!--  Bootstrap  -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
@@ -23,37 +23,47 @@ if (isset($_SESSION["email"])) {
 </head>
 
 <body class="text-center">
-<form class="form-signin" action="prihlasenie_script.php" method="POST">
-    <h1 class="h3 mb-3 font-weight-normal">Prihlásenie</h1>
-    <h6 class="text-success d-none" id="alert">Registrácia prebehla úspešne. Prihláste sa.</h6>
-    <h6 class="text-danger d-none" id="login-fail">Nesprávne meno alebo heslo.</h6>
+<form class="form-signin" action="prve_prihlasenie_script.php" method="POST" onsubmit="return validate()">
+    <h1 class="h3 mb-3 font-weight-normal">Prvé prihlásenie.</h1>
+    <h6>Prosím zmeňte si Vaše heslo.</h6>
+    <h6 class="text-danger d-none" id="alert-zhoda">Nové heslá sa musia zhodovať</h6>
+    <h6 class="text-danger d-none" id="alert-login">Nesprávne meno, alebo heslo.</h6>
     <br>
-    <label for="email" class="sr-only">Email</label>
-    <input type="email" name="email" id="email" class="form-control" placeholder="Email" required autofocus>
+    <input type="password" name="heslo" id="stare-heslo" class="form-control" placeholder="Staré heslo" required autofocus>
+    <input type="password" name="nove-heslo" id="nove-heslo" class="form-control" placeholder="Nové heslo" required >
+    <input type="password" name="znovu-nove-heslo" id="znovu-nove-heslo" class="form-control" placeholder="Znovu nové heslo" required >
     <br>
-    <label for="heslo" class="sr-only">Heslo</label>
-    <input type="password" name="heslo" id="heslo" class="form-control" placeholder="Heslo" required>
     <br>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Prihlásiť</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Zmeniť heslo</button>
     <br>
     <div id="spat" class="btn btn-lg btn-primary btn-block btn-danger">Späť na úvod</div>
 </form>
 
 <script>
     // Zobrazenie alertu
-    // Uspesna registracia
-    if(window.location.href.indexOf("ok") > -1) {
-        $('#alert').removeClass("d-none");
-    }
 
     // Nespravne meno alebo heslo
-    if(window.location.href.indexOf("fail") > -1) {
-        $('#login-fail').removeClass("d-none");
+    if(window.location.href.indexOf("pass=fail") > -1) {
+        $('#alert-login').removeClass("d-none");
     }
+
 
     $( "#spat" ).click(function() {
         window.location.href = "../prologue.php";
     });
+
+
+    function validate() {
+        var nove = $('#nove-heslo').val();
+        var stare = $('#znovu-nove-heslo').val();
+
+        if (nove !== stare) {
+            $('#alert-zhoda').removeClass("d-none");
+            return false;
+        }
+
+        return true;
+    }
 
 </script>
 </body>

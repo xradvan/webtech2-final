@@ -34,8 +34,8 @@
                 $ulica = $data[6];
                 $psc = $data[7];
                 $obec = $data[8];
-
-                $import="INSERT into pouzivatelia(meno,priezvisko,email,heslo,stredna_skola,stredna_skola_adresa,ulica,psc,obec) values('".$meno."','".$priezvisko."','".$email."','".$hesloHash."','".$stredna_skola."','".$stredna_skola_adresa."','".$ulica."','".$psc."','".$obec."')";
+                echo $heslo;
+                $import="INSERT into pouzivatelia(meno,priezvisko,email,heslo,stredna_skola,stredna_skola_adresa,ulica,psc,obec, prve_prihlasenie) values('".$meno."','".$priezvisko."','".$email."','".$hesloHash."','".$stredna_skola."','".$stredna_skola_adresa."','".$ulica."','".$psc."','".$obec."', '1')";
 
                 // Query
                 mysqli_query($conn,$import) or die(mysqli_error($conn));
@@ -47,10 +47,14 @@
 
                 // Poslanie emailu na overenie registracie
                 $message = <<<EOT
-                Dobry den,
+                Dobrý deň,
                 
-                na dokoncenie registracie prosim kliknite na nasledovny odkaz:
-                http://147.175.98.209/webtech2-final/security/registracia_over.php
+                boli ste registrovaní na našom portáli. 
+                Vaše heslo je:
+                $heslo
+                
+                Prihláste sa na: 
+                http://147.175.98.209/webtech2-final/security/prihlasenie.php
 
 EOT;
                 mail($email, "Vitajte", $message);
