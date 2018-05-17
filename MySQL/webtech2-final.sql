@@ -2,10 +2,10 @@
 -- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 16, 2018 at 02:41 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.0.30
+-- Hostiteľ: 127.0.0.1
+-- Čas generovania: Št 17.Máj 2018, 23:09
+-- Verzia serveru: 10.1.32-MariaDB
+-- Verzia PHP: 7.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `webtech2_final`
+-- Databáza: `webtech2-final`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aktuality`
+-- Štruktúra tabuľky pre tabuľku `aktuality`
 --
 
 CREATE TABLE `aktuality` (
@@ -36,7 +36,7 @@ CREATE TABLE `aktuality` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `aktuality`
+-- Sťahujem dáta pre tabuľku `aktuality`
 --
 
 INSERT INTO `aktuality` (`id`, `titulok`, `obsah`, `datum`) VALUES
@@ -58,7 +58,7 @@ INSERT INTO `aktuality` (`id`, `titulok`, `obsah`, `datum`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pouzivatelia`
+-- Štruktúra tabuľky pre tabuľku `pouzivatelia`
 --
 
 CREATE TABLE `pouzivatelia` (
@@ -77,7 +77,7 @@ CREATE TABLE `pouzivatelia` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `pouzivatelia`
+-- Sťahujem dáta pre tabuľku `pouzivatelia`
 --
 
 INSERT INTO `pouzivatelia` (`id`, `meno`, `priezvisko`, `email`, `heslo`, `stredna_skola`, `stredna_skola_adresa`, `ulica`, `psc`, `obec`, `rola`, `odoberatel`) VALUES
@@ -89,7 +89,7 @@ INSERT INTO `pouzivatelia` (`id`, `meno`, `priezvisko`, `email`, `heslo`, `stred
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trasa`
+-- Štruktúra tabuľky pre tabuľku `trasa`
 --
 
 CREATE TABLE `trasa` (
@@ -100,98 +100,102 @@ CREATE TABLE `trasa` (
   `ciel_nazov` varchar(50) COLLATE utf8_slovak_ci NOT NULL,
   `ciel_lat` varchar(20) COLLATE utf8_slovak_ci NOT NULL,
   `ciel_long` varchar(20) COLLATE utf8_slovak_ci NOT NULL,
-  `prejdene_km` double NOT NULL,
   `celkove_km` double NOT NULL,
-  `aktivna_trasa` tinyint(1) NOT NULL,
-  `datum_vytvorenia` datetime NOT NULL
+  `datum_vytvorenia` datetime NOT NULL,
+  `mod_trasy` varchar(20) COLLATE utf8_slovak_ci NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `vytvoril` varchar(100) COLLATE utf8_slovak_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Indexes for dumped tables
+-- Sťahujem dáta pre tabuľku `trasa`
+--
+
+INSERT INTO `trasa` (`id`, `start_nazov`, `start_lat`, `start_long`, `ciel_nazov`, `ciel_lat`, `ciel_long`, `celkove_km`, `datum_vytvorenia`, `mod_trasy`, `id_user`, `vytvoril`) VALUES
+(55, 'Bratislava, Slovensko', '48.1485965', '17.10774779999997', 'Košice, Slovensko', '48.7163857', '21.26107460000003', 403.63, '2018-05-17 23:00:52', 'privátny', 4, 'Peter Radvan'),
+(56, 'Málaga, Španielsko', '36.721261', '-4.421265500000004', 'Madrid, Španielsko', '40.4167754', '-3.7037901999999576', 529.388, '2018-05-17 23:01:43', 'verejný', 4, 'Peter Radvan');
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `trasa_pouzivatel`
+--
+
+CREATE TABLE `trasa_pouzivatel` (
+  `id` int(11) NOT NULL,
+  `id_pouzivatel` int(11) NOT NULL,
+  `id_trasa` int(11) NOT NULL,
+  `prejdene_km` int(11) NOT NULL,
+  `aktivna_trasa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `trasa_pouzivatel`
+--
+
+INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`, `aktivna_trasa`) VALUES
+(7, 4, 55, 0, 0),
+(8, 4, 56, 0, 0),
+(9, 5, 56, 0, 0),
+(10, 6, 56, 0, 0),
+(11, 7, 56, 0, 0);
+
+--
+-- Kľúče pre exportované tabuľky
 --
 
 --
--- Indexes for table `aktuality`
+-- Indexy pre tabuľku `aktuality`
 --
 ALTER TABLE `aktuality`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pouzivatelia`
+-- Indexy pre tabuľku `pouzivatelia`
 --
 ALTER TABLE `pouzivatelia`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `trasa`
+-- Indexy pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexy pre tabuľku `trasa_pouzivatel`
+--
+ALTER TABLE `trasa_pouzivatel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pre exportované tabuľky
 --
 
 --
--- AUTO_INCREMENT for table `aktuality`
+-- AUTO_INCREMENT pre tabuľku `aktuality`
 --
 ALTER TABLE `aktuality`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT for table `pouzivatelia`
+-- AUTO_INCREMENT pre tabuľku `pouzivatelia`
 --
 ALTER TABLE `pouzivatelia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `trasa`
+-- AUTO_INCREMENT pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT pre tabuľku `trasa_pouzivatel`
+--
+ALTER TABLE `trasa_pouzivatel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
-
-CREATE TABLE `zoznamtimov` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `idUzivatela` int(11) NOT NULL,
-  `nazovTimu` varchar(40) COLLATE utf8_slovak_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
-
---
--- Dumping data for table `zoznamtimov`
---
-
-INSERT INTO `zoznamtimov` (`id`, `idUzivatela`, `nazovTimu`) VALUES
-(31, 1, 'krtkovia'),
-(32, 2, 'krtkovia'),
-(34, 5, 'krtkovia'),
-(42, 4, 'tim'),
-(43, 1, 'tim'),
-(44, 2, 'tim'),
-(46, 4, 'Team'),
-(47, 1, 'Team');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `zoznamtimov`
---
-ALTER TABLE `zoznamtimov`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `zoznamtimov`
---
-ALTER TABLE `zoznamtimov`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
-COMMIT;
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

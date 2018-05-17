@@ -109,7 +109,7 @@ require_once "security/over_uzivatela.php";
                     FROM trasa_pouzivatel
                     INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
                     INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
-                    WHERE trasa_pouzivatel.id_pouzivatel = $idU OR mod_trasy = 'verejný' ORDER BY aktivna_trasa DESC";
+                    WHERE trasa_pouzivatel.id_pouzivatel = $idU ORDER BY aktivna_trasa DESC";
             ?>
 
             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
