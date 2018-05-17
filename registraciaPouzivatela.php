@@ -220,18 +220,9 @@
     $(".addBtn").on('click', function () {
         $(".addDiv").slideToggle();
     });
-<<<<<<< HEAD
-=======
-    $("#insertBtn").on('click', function () {
-        window.location.href = "ulozenieCSV.php?subor="+$("#subor").val();
 
-    });
->>>>>>> 230fef517b8cc965ecf2df6d9bddcf3815f7ff41
 
 
 </script>
 </body>
 </html>
-<?php
-    
-?>
