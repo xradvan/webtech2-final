@@ -14,49 +14,95 @@
     <title>Štafetový mód - administrátor</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <span class="navbar-brand" >
+
+        </span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="cesty.php">Domov</a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="druzstva.php">
+                    Družstvá
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
+        </ul>
+    </div>
+</nav>
 <div class="formular">
-    <form onsubmit="pridajTim(); return false;">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Zadajte názov tímu:</span>
+       <div id="zobrazPrve">
+           <h5>Maximálny počet členov v tíme: 6 </h5>
+           <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                   <span class="input-group-text" id="basic-addon1">Zadajte názov tímu:</span>
+               </div>
+               <input type="text" id="menoTimu" required class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+           </div>
+           <div class="buttonDiv">
+               <input type="button" id="potvrd" value="Potvrď" class="btn btn-secondary">
+           </div>
+       </div>
+
+        <form onsubmit="return false;">
+        <div id="zobrazDruhe">
+            <?php
+            require ('config.php');
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn->set_charset("UTF8");
+            if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+
+            $query = " SELECT meno, priezvisko, id FROM pouzivatelia ";
+            $result = mysqli_query($conn,$query);
+            $i = 1;
+            echo "<select id='menaDoTimov' class='custom-select'>";
+            echo "<option value = 0>"."Vyberte člena do tímu"."</option>";
+            while ($data = mysqli_fetch_array($result))
+            {
+                echo "<option value='" . $data['id']."'>" . $data['meno']." ".$data['priezvisko']. "</option>";
+                $i++;
+            }
+            echo "</select>";
+            ?>
+
+            <div id='menaClenovTimu'>
+                <h4>Členovia tímu: </h4>
             </div>
-            <input type="text" id="menoTimu" required class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <?php
-        require ('config.php');
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        $conn->set_charset("UTF8");
-        if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
 
-        $query = " SELECT meno, priezvisko, id FROM pouzivatelia ";
-        $result = mysqli_query($conn,$query);
-        $i = 1;
-        echo "<select id='menaDoTimov' class='custom-select'>";
-        echo "<option value = 0>"."Vyberte člena do tímu"."</option>";
-        while ($data = mysqli_fetch_array($result))
-        {
-            echo "<option value='" . $data['id']."'>" . $data['meno']." ".$data['priezvisko']. "</option>";
-            $i++;
-        }
-        echo "</select>";
-        ?>
+            <select id="odstranMena" class="custom-select">
+                <option>Odstráňte člena z tímu</option>
+            </select>
+            <div class="buttonDiv">
+                <input type="submit" id="vytvorTim" value="Vytvor tím" class="btn btn-secondary">
 
-        <div id='menaClenovTimu'>
-            <h4>Členovia tímu: </h4>
-        </div>
-
-        <select id="odstranMena" class="custom-select">
-            <option>Odstráňte člena z tímu</option>
-        </select>
-        <div id="buttonDiv">
-            <input type="submit" id="vytvorTim" value="Vytvor tím" class="btn btn-secondary">
-
+            </div>
         </div>
     </form>
 </div>
 
-
 <script>
+    $("#potvrd").on("click",function(){
+        if( $("#menoTimu").val() != '' ) {
+            var meno = $("#menoTimu").val();
+            console.log(meno);
+            $("#zobrazDruhe").css("display","block");
+            $("#zobrazPrve").css("display","none");
+            $odkaz = "stafetovyMod.php?nazov=".$string;
+        }
+        else{
+            alert("Vyplňte náyov tímu!");
+        }
+    });
+
     var pocetClenovTimu = 0;
     var clenoviaTimu = new Map();
     $('#menaDoTimov').on('change', function() {
@@ -92,33 +138,24 @@
         }
     });
 
-
-    function pridajTim(){
+    $("#vytvorTim").on("click",function(){
         if (pocetClenovTimu <= 6){
-           // alert("OK");
-           // console.log(clenoviaTimu);
-            //for (var [key, value] of clenoviaTimu) {
-               // var id = key;
-               // var meno = value;
-                var menoTimu = $('#menoTimu').val();
-                //console.log(menoTimu);
-           // }
-
-
-               /*$.ajax({
-                    type: "POST",
-                    url: 'test.php',
-                    data: ({Imgname:"13"}),
-                    success: function(data) {
-                        alert(data);
-                    }
-                });
-                window.location = 'test.php';*/
+            var menoTimu = $('#menoTimu').val();
+            var i = 1;
+            var url = "test.php?";
+            for (var [key, value] of clenoviaTimu) {
+                var id = key;
+                url += i+"="+id+"&";
+                i++;
+            }
+                url += "tim="+menoTimu;
+            window.location = url;
         }
         else{
             alert("V tíme nie je dostatočný počet členov!");
         }
-    }
+    });
+
 </script>
 </body>
 </html>
