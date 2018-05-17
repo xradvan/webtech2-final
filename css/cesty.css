@@ -14,7 +14,7 @@ body {
 }
 #dropdownMenuLink {
     width:100% !important;
-    margin-bottom:10% !important;
+    margin-bottom:3% !important;
 }
 #trasyId{
     margin: 0 auto;
@@ -39,4 +39,23 @@ body {
 }
 .addDiv{
     display: none;
+}
+
+#insertBtn{
+    display: none;
+}
+#privatneTrasy tr{
+    background: rgba(50,56,62,0.7);
+}
+
+#privatneTrasy tr:first-child{
+    background: rgba(50,56,62,0.1);
+}
+
+#selectBtn{
+    width:25%;
+    margin: 0 auto;
+}
+.spanId{
+    visibility: hidden;
 }

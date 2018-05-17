@@ -11,7 +11,11 @@ select{
     padding: 1% 7%;
 }
 
-#buttonDiv{
+.buttonDiv{
     margin-top: 4%;
     text-align: center;
+}
+
+#zobrazDruhe{
+    display: none;
 }

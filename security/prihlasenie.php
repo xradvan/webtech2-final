@@ -23,10 +23,13 @@
         <br>
         <label for="email" class="sr-only">Email</label>
         <input type="email" name="email" id="email" class="form-control" placeholder="Email" required autofocus>
+        <br>
         <label for="heslo" class="sr-only">Heslo</label>
         <input type="password" name="heslo" id="heslo" class="form-control" placeholder="Heslo" required>
         <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Prihlásiť</button>
+        <br>
+        <div id="spat" class="btn btn-lg btn-primary btn-block btn-danger">Späť na úvod</div>
     </form>
 
     <script>
@@ -40,6 +43,10 @@
         if(window.location.href.indexOf("fail") > -1) {
             $('#login-fail').removeClass("d-none");
         }
+
+        $( "#spat" ).click(function() {
+            window.location.href = "../prologue.php";
+        });
 
     </script>
     </body>
