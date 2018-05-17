@@ -33,6 +33,17 @@ body {
     transform: scale(1.05);
     cursor: pointer;
 }
+.addBtn:nth-child(2){
+    right:110px;
+
+}
+
+.addBtn:nth-child(3){
+    right:170px;
+    border-radius: 50%;
+    border: 1px solid black;
+
+}
 
 #addForm{
     margin-top:90px;
@@ -41,7 +52,7 @@ body {
     display: none;
 }
 
-#insertBtn{
+.addDiv button:last-child{
     display: none;
 }
 #privatneTrasy tr{
@@ -58,4 +69,10 @@ body {
 }
 .spanId{
     visibility: hidden;
+}
+
+.adminMode{
+    text-align: center;
+    border-bottom:2px solid #eeeeee;
+    padding-bottom: 15px;
 }

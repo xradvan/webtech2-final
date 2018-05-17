@@ -23,65 +23,67 @@ require_once "security/over_uzivatela.php";
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
         <span class="navbar-brand" >
             <?php
-                require ('config.php');
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                $conn->set_charset("UTF8");
-                $email= $_SESSION['email'];
-                if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
-                $query="SELECT meno, priezvisko from pouzivatelia WHERE email='$email'";
-                $result = mysqli_query($conn,$query);
-                while ($data = mysqli_fetch_array($result)){
-                    echo "Vitajte ".$data['meno']." ".$data['priezvisko'];
-                }
+            require ('config.php');
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn->set_charset("UTF8");
+            $email= $_SESSION['email'];
+            if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+            $query="SELECT meno, priezvisko from pouzivatelia WHERE email='$email'";
+            $result = mysqli_query($conn,$query);
+            while ($data = mysqli_fetch_array($result)){
+                echo "Vitajte ".$data['meno']." ".$data['priezvisko'];
+            }
             ?>
         </span>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="cesty.php">Domov</a>
-                </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="cesty.php">Domov</a>
+            </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Upozornenia
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item " href="#">Zapnúť</a>
-                        <a class="dropdown-item active" href="#">Vypnúť</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="aktuality.php">
-                        Aktuality
-                    </a>
-                </li>
-                <li class="nav-item" id="registracia" style="display: none;">
-                    <a class="nav-link" href="registraciaPouzivatela.php">
-                        Používatelia
-                    </a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
-            </ul>
-        </div>
-    </nav>
-    <script type="text/javascript">
-                var user = '<?php echo $_SESSION['rola']; ?>';
-                if(user=="admin"){
-                    $("#registracia").css("display","inline");
-                }
-    </script>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Upozornenia
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item " href="#">Zapnúť</a>
+                    <a class="dropdown-item active" href="#">Vypnúť</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="aktuality.php">
+                    Aktuality
+                </a>
+            </li>
+            <li class="nav-item" id="registracia" style="display: none;">
+                <a class="nav-link" href="registraciaPouzivatela.php">
+                    Používatelia
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
+        </ul>
+    </div>
+</nav>
+<script type="text/javascript">
+    var user = '<?php echo $_SESSION['rola']; ?>';
+    if(user=="admin"){
+        $("#registracia").css("display","inline");
+    }
+</script>
+
+<h1 class="adminMode">Administratorský mód</h1>
 
 
-    <div class="row">
+<div class="row">
     <div class="col-8 leftCol">
         <div id="myMap" style="height: 400px; width: 70%"></div>
 
@@ -98,13 +100,13 @@ require_once "security/over_uzivatela.php";
 
             $conn = new mysqli($servername, $username, $password, $dbname);
             $conn->set_charset("UTF8");
-
+            session_start();
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy FROM trasa WHERE id_user = 4 OR mod_trasy = 'verejný' ORDER BY aktivna_trasa DESC";
+            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy FROM trasa ORDER BY aktivna_trasa DESC";
 
 
             ?>
@@ -147,37 +149,36 @@ require_once "security/over_uzivatela.php";
             <tbody>
 
 
-                <?php
-                $i = 1;
-                if ($result = $conn->query($sql)) {
-                    while ($row = $result->fetch_object()) {
-                        echo "<tr>";
-                            $mail = $_SESSION['email'];
-                            echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
-                            echo "<td>$row->start_nazov</td>";
-                            echo "<td>$row->ciel_nazov</td>";
-                            echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
-                            echo "<td>$row->datum_vytvorenia</td>";
-                            //echo "<td>$row->aktivna_trasa</td>";
-                            echo "<td>$mail</td>";
-                            echo "<td>$row->mod_trasy</td>";
-                            if($row->aktivna_trasa > 0){
-                                echo "<td><input onclick='check($i)' class='radio' type='radio' checked> </td>";
-                            }
-                            else{
-                                echo "<td><input onclick='check($i)' class='radio' type='radio' ></td>";
-                            }
-
-
-                        echo "</tr>";
-
-                        $i++;
+            <?php
+            $i = 1;
+            if ($result = $conn->query($sql)) {
+                while ($row = $result->fetch_object()) {
+                    echo "<tr>";
+                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
+                    echo "<td>$row->start_nazov</td>";
+                    echo "<td>$row->ciel_nazov</td>";
+                    echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
+                    echo "<td>$row->datum_vytvorenia</td>";
+                    //echo "<td>$row->aktivna_trasa</td>";
+                    echo "<td>"<$_SESSION['priezvisko'];"</td>";
+                    echo "<td>$row->mod_trasy</td>";
+                    if($row->aktivna_trasa > 0){
+                        echo "<td><input onclick='check($i)' class='radio' type='radio' checked> </td>";
                     }
-                    $result->close();
+                    else{
+                        echo "<td><input onclick='check($i)' class='radio' type='radio' ></td>";
+                    }
+
+
+                    echo "</tr>";
+
+                    $i++;
                 }
+                $result->close();
+            }
 
 
-                ?>
+            ?>
             </tbody>
         </table>
 
@@ -186,7 +187,10 @@ require_once "security/over_uzivatela.php";
     </div>
     <div class="col-4 rightCol">
 
-        <img src="img/add.png" class="addBtn" alt="add">
+        <img src="img/add.png"    id="privateBtn" class="addBtn" alt="add">
+        <img src="img/public.png" id="publicBtn" class="addBtn" alt="add">
+        <img src="img/relay.png"  id="relayBtn" class="addBtn" alt="add">
+
 
         <div class="addDiv">
 
@@ -201,7 +205,7 @@ require_once "security/over_uzivatela.php";
                 </div>
 
                 <button type="button" id="searchBtn" class="btn btn-secondary">Vyhľadaj</button>
-                <button type="button" id="insertBtn" class="btn btn-danger">Potvrď</button>
+                <button type="button"  class="btn btn-danger">Potvrď</button>
 
             </form>
 
@@ -216,7 +220,7 @@ require_once "security/over_uzivatela.php";
 
 <script>
 
-        if (window.location.href.indexOf("lat1=") > -1) {
+    if (window.location.href.indexOf("lat1=") > -1) {
 
 
         var url_string = window.location.href;
@@ -242,7 +246,7 @@ require_once "security/over_uzivatela.php";
         window.location.replace("updateStavTrasy.php?index="+id+"");
 
     }
-        $(document).ready(function () {
+    $(document).ready(function () {
 
         $("#privatneTrasy").DataTable();
     })

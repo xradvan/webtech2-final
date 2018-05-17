@@ -46,7 +46,14 @@ if ($result = $conn->query($sql)) {
     $result->close();
 }
 
-header("Location: cesty.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
+session_start();
+
+if($_SESSION['rola'] == "admin"){
+    header("Location: cestyAdmin.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
+}
+else{
+    header("Location: cesty.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
+}
 
 $conn->close();
 
