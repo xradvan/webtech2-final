@@ -34,7 +34,6 @@
                 $ulica = $data[6];
                 $psc = $data[7];
                 $obec = $data[8];
-                echo $heslo;
                 $import="INSERT into pouzivatelia(meno,priezvisko,email,heslo,stredna_skola,stredna_skola_adresa,ulica,psc,obec, prve_prihlasenie) values('".$meno."','".$priezvisko."','".$email."','".$hesloHash."','".$stredna_skola."','".$stredna_skola_adresa."','".$ulica."','".$psc."','".$obec."', '1')";
 
                 // Query
@@ -68,8 +67,8 @@ EOT;
         // Vymaze subor po uspesnom importe
         unlink($target_file);
 
-        // header("location:registraciaPouzivatela.php?upload=ok");
-        // die();
+         header("location:registraciaPouzivatela.php?upload=ok");
+         die();
 
     } else {
 //        header("location:registraciaPouzivatela.php?upload=fail");
