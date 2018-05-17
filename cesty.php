@@ -1,5 +1,5 @@
 <?php
-//require_once "security/over_uzivatela.php";
+require_once "security/over_uzivatela.php";
 ?>
 
 <html>
@@ -23,37 +23,62 @@
     <title>Document</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <span class="navbar-brand" >
+            <?php
+                require ('config.php');
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                $conn->set_charset("UTF8");
+                $email= $_SESSION['email'];
+                if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+                $query="SELECT meno, priezvisko from pouzivatelia WHERE email='$email'";
+                $result = mysqli_query($conn,$query);
+                while ($data = mysqli_fetch_array($result)){
+                    echo "Vitajte ".$data['meno']." ".$data['priezvisko'];
+                }
+            ?>
+        </span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<!--<?php echo $_SESSION["rola"]; ?>-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="cesty.php">Domov</a>
+                </li>
 
-
-<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-    <span class="navbar-brand" >Navbar</span>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Link <span class="sr-only">(current)</span></a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Upozornenia
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item " href="#">Zapnúť</a>
-                    <a class="dropdown-item active" href="#">Vypnúť</a>
-                </div>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
-        </ul>
-    </div>
-</nav>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Upozornenia
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item " href="#">Zapnúť</a>
+                        <a class="dropdown-item active" href="#">Vypnúť</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="aktuality.php">
+                        Aktuality
+                    </a>
+                </li>
+                <li class="nav-item" id="registracia" style="display: none;">
+                    <a class="nav-link" href="registraciaPouzivatela.php">
+                        Používatelia
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
+            </ul>
+        </div>
+    </nav>
+    <script type="text/javascript">
+                var user = '<?php echo $_SESSION['rola']; ?>';
+                if(user=="admin"){
+                    $("#registracia").css("display","inline");
+                }
+    </script>
 
 
 <div class="row">

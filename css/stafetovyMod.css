@@ -1,0 +1,21 @@
+.formular{
+    width: 70%;
+    margin: 7% auto 3% auto;
+}
+
+select{
+    margin: 2% 0;
+}
+
+#vytvorTim{
+    padding: 1% 7%;
+}
+
+.buttonDiv{
+    margin-top: 4%;
+    text-align: center;
+}
+
+#zobrazDruhe{
+    display: none;
+}

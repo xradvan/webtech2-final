@@ -1,0 +1,39 @@
+body {
+}
+.leftCol{
+    border-right: 2px solid #eee !important;
+}
+.rightCol{
+}
+.row{
+    box-sizing: border-box !important;
+    margin:0;
+}
+
+#dropdownMenuLink {
+    width:100% !important;
+    margin-bottom:10% !important;
+}
+
+.addBtn{
+    position: absolute;
+    top:30px;
+    right:50px;
+    width: 50px;
+    height:50px;
+    transition: all 0.3s linear;
+}
+.addBtn:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+#addForm{
+    margin-top:90px;
+}
+.addDiv{
+    display: none;
+}
+.form-inline {
+    display: unset !important;
+}

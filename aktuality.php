@@ -64,13 +64,23 @@
                         Aktuality
                     </a>
                 </li>
+                <li class="nav-item" id="registracia" style="display: none;">
+                    <a class="nav-link" href="registraciaPouzivatela.php">
+                        Registrácia používateľa
+                    </a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
             </ul>
         </div>
     </nav>
-
+    <script type="text/javascript">
+                var user = '<?php echo $_SESSION['rola']; ?>';
+                if(user=="admin"){
+                    $("#registracia").css("display","inline");
+                }
+    </script>
     <div class="container aktualityDiv" id="containerAktuality">
         <div class="container aktualityLeft col-lg-4" id="left">
         <?php
