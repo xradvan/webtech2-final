@@ -16,7 +16,7 @@ try {
 }
 try {
     // Ziskaj hash query
-    $stmt = $conn->prepare("SELECT heslo, rola FROM pouzivatelia WHERE email=?");
+    $stmt = $conn->prepare("SELECT heslo, rola, meno, priezvisko FROM pouzivatelia WHERE email=?");
 
 
 } catch (Exception $e) {
@@ -33,18 +33,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("s",$email);
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($hesloDB, $rola);
+        $stmt->bind_result($hesloDB, $rola, $meno, $priezvisko);
         $stmt->fetch();
 
         if (password_verify($heslo, $hesloDB)) {
             // Vytvorenie session
             $_SESSION['rola'] = $rola;
             $_SESSION['email'] = $email;
+            $_SESSION['meno'] = $meno;
+            $_SESSION['priezvisko'] = $priezvisko;
 
 
 
-            header("Location: ../cesty.php");
-            die();
+            if ($rola == "admin") {
+                header("Location: ../cestyAdmin.php");
+                die();
+            } else {
+                header("Location: ../cestyAdmin.php");
+                die();
+            }
         }
         else {
             header("Location: prihlasenie.php?login=fail");

@@ -1,6 +1,8 @@
 <?php
     session_start();
-    if (isset($_SESSION["email"])) {
+    if (isset($_SESSION["rola"]) && $_SESSION["rola"] == "admin") {
+        header("location: ../cestyAdmin.php");
+    } else {
         header("location: ../cesty.php");
     }
 

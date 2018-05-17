@@ -39,6 +39,17 @@
 
                 // Query
                 mysqli_query($conn,$import) or die(mysqli_error($conn));
+
+
+                // Poslanie emailu na overenie registracie
+                $message = <<<EOT
+                Dobry den,
+                
+                na dokoncenie registracie prosim kliknite na nasledovny odkaz:
+                http://147.175.98.209/webtech2-final/security/registracia_over.php
+
+EOT;
+                mail($email, "Vitajte", $message);
             }
             $i=1;
         }
