@@ -30,6 +30,7 @@ require_once "security/over_uzivatela.php";
             $conn = new mysqli($servername, $username, $password, $dbname);
             $conn->set_charset("UTF8");
             $email= $_SESSION['email'];
+
             if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
             $query="SELECT meno, priezvisko from pouzivatelia WHERE email='$email'";
             $result = mysqli_query($conn,$query);
@@ -100,7 +101,6 @@ require_once "security/over_uzivatela.php";
 
             $conn = new mysqli($servername, $username, $password, $dbname);
             $conn->set_charset("UTF8");
-            session_start();
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
@@ -160,7 +160,10 @@ require_once "security/over_uzivatela.php";
                     echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
                     echo "<td>$row->datum_vytvorenia</td>";
                     //echo "<td>$row->aktivna_trasa</td>";
-                    echo "<td>"<$_SESSION['priezvisko'];"</td>";
+                    $menoUser= $_SESSION['meno'];
+                    $priezviskoUser= $_SESSION['priezvisko'];
+
+                    echo "<td>$menoUser $priezviskoUser</td>";
                     echo "<td>$row->mod_trasy</td>";
                     if($row->aktivna_trasa > 0){
                         echo "<td><input onclick='check($i)' class='radio' type='radio' checked> </td>";

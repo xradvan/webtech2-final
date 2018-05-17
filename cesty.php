@@ -186,7 +186,7 @@ require_once "security/over_uzivatela.php";
     </div>
     <div class="col-4 rightCol">
 
-        <img src="img/add.png" class="addBtn" alt="add">
+        <img src="img/add.png" id="privateBtn" class="addBtn" alt="add">
 
         <div class="addDiv">
 
