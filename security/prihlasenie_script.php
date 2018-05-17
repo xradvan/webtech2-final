@@ -43,13 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['meno'] = $meno;
             $_SESSION['priezvisko'] = $priezvisko;
 
-
-
             if ($rola == "admin") {
                 header("Location: ../cestyAdmin.php");
                 die();
             } else {
-                header("Location: ../cestyAdmin.php");
+                header("Location: ../cesty.php");
                 die();
             }
         }

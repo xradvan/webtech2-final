@@ -99,7 +99,7 @@ if(isset($_GET['odhlasenie'])){
                     Používatelia
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="osobneVykony" style="display: inline;">
                 <a class="nav-link" href="osobneVykony.php">
                     Osobné výkony
                 </a>
@@ -114,6 +114,7 @@ if(isset($_GET['odhlasenie'])){
     var user = '<?php echo $_SESSION['rola']; ?>';
     if(user=="admin"){
         $("#registracia").css("display","inline");
+        $("#osobneVykony").css("display", "none");
     }
 </script>
 
@@ -127,6 +128,7 @@ if(isset($_GET['odhlasenie'])){
                 <th scope="col">Meno</th>
                 <th scope="col">Priezvisko</th>
                 <th scope="col">Admin</th>
+                <th scope="col">Osobné výkony</th>
             </tr>
             </thead>
             <tbody>
@@ -145,6 +147,7 @@ if(isset($_GET['odhlasenie'])){
                 }else{
                     echo '<td><input type="checkbox" class="checkbox" checked value="'.$data['id'].'"></td>';
                 }
+                echo '<td><a href="osobneVykony.php?id='.$data['id'].'">Zobraziť osobné výkony</a></td>';
                 echo '</tr>';
                 $i++;
             }
