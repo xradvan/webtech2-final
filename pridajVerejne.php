@@ -10,6 +10,7 @@ $dis  =  $_GET["dis"]/1000;
 $modTrasy = "verejný";
 $meno = $_SESSION['meno'];
 $priezvisko = $_SESSION['priezvisko'];
+$idUser = $_SESSION['id'];
 require ("config.php");
 // Create connection
 $conn = new mysqli($servername, $username, $password , $dbname);
@@ -21,8 +22,8 @@ if ($conn->connect_error) {
 }
 
 
-$sql = "INSERT INTO trasa (start_nazov, start_lat, start_long,ciel_nazov,ciel_lat,ciel_long,prejdene_km,celkove_km,aktivna_trasa,datum_vytvorenia,mod_trasy, vytvoril)
-                VALUES ('" . $start . "', '" . $lat1 . "','" . $lng1 . "','" . $end . "','" . $lat2 . "','" . $lng2 . "',0,$dis,0,'".date("Y-m-d H:i:s")."','" . $modTrasy . "','" . $meno." ".$priezvisko . "')";
+$sql = "INSERT INTO trasa (start_nazov, start_lat, start_long,ciel_nazov,ciel_lat,ciel_long,prejdene_km,celkove_km,aktivna_trasa,datum_vytvorenia,mod_trasy, vytvoril,id_user)
+                VALUES ('" . $start . "', '" . $lat1 . "','" . $lng1 . "','" . $end . "','" . $lat2 . "','" . $lng2 . "',0,$dis,0,'".date("Y-m-d H:i:s")."','" . $modTrasy . "','" . $meno." ".$priezvisko . "',$idUser)";
 
 echo $sql."<br><br>";
 
