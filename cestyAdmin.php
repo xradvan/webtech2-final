@@ -107,8 +107,11 @@ require_once "security/over_uzivatela.php";
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            $sql = "SELECT id,start_nazov, ciel_nazov, prejdene_km, celkove_km, datum_vytvorenia, aktivna_trasa, mod_trasy, vytvoril FROM trasa ORDER BY aktivna_trasa DESC";
-
+            $sql = "SELECT pouzivatelia.id, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
+                    FROM trasa_pouzivatel
+                    INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
+                    INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
+                    ORDER BY aktivna_trasa DESC";
 
             ?>
 
