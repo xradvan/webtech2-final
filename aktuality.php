@@ -66,10 +66,10 @@
                 </li>
                 <li class="nav-item" id="registracia" style="display: none;">
                     <a class="nav-link" href="registraciaPouzivatela.php">
-                        Registrácia používateľa
+                        Používatelia
                     </a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item" id="osobneVykony" style="display: inline;">
                     <a class="nav-link" href="osobneVykony.php">
                         Osobné výkony
                     </a>
@@ -84,6 +84,7 @@
                 var user = '<?php echo $_SESSION['rola']; ?>';
                 if(user=="admin"){
                     $("#registracia").css("display","inline");
+                    $("#osobneVykony").css("display", "none");
                 }
     </script>
     <div class="container aktualityDiv" id="containerAktuality">
