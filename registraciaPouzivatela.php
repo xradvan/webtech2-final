@@ -21,9 +21,39 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <title>Aktuality</title>
+    <title>Používatelia</title>
 </head>
 <body>
+
+<!--    Alerts -->
+<div class="alert alert-success alert-dismissible fade show d-none" role="alert" id="alert-success">
+    Užívatelia boli úspešne pridaný.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="alert alert-danger alert-dismissible fade show d-none" role="alert" id="alert-fail">
+    Súbor sa nepodarilo nahrať. Skontrolujte veľkosť a formát. Podporovane je len kodovanie UTF-8.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<script>
+    // Zobrazenie alertu
+    // Uspesna registracia
+    if(window.location.href.indexOf("ok") > -1) {
+        $('#alert-success').removeClass("d-none");
+    }
+
+    // Nespravne meno alebo heslo
+    if(window.location.href.indexOf("fail") > -1) {
+        $('#alert-fail').removeClass("d-none");
+    }
+
+</script>
+
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
         <span class="navbar-brand" >
                 <?php
@@ -83,8 +113,10 @@
     </script>
 
 <div class="row">
-    <div class="col-8 leftCol">
-        <h3> Tabuľka všetkých používateľov</h3>
+    <div class="col-8 leftCol mt-1">
+        <br><br>
+        <h3>Tabuľka všetkých používateľov</h3>
+        <br>
         <table class="table table-dark">
             <thead>
             <tr>
@@ -125,12 +157,12 @@
 
         <div class="addDiv">
 
-            <form id="addForm">
+            <form id="addForm" method="POST" action="ulozenieCSV.php" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="subor">Vyberte csv súbor pre registrovanie nových používateľov </label>
-                    <input type="file" class="form-control" id="subor" required>
+                    <input type="file" class="form-control" name="inputFile" id="subor" required>
                 </div>
-                <button type="button" id="insertBtn" class="btn btn-danger">Registrovať</button>
+                <button type="submit" id="insertBtn" class="btn btn-danger">Registrovať</button>
             </form>
             <table class="table table-dark">
             <thead>
@@ -160,11 +192,7 @@
     $(".addBtn").on('click', function () {
         $(".addDiv").slideToggle();
     });
-    $("#insertBtn").on('click', function () {
-        window.location.href = "ulozenieCSV.php?subor="+$("#subor").val();
 
-
-    });
 
 </script>
 </body>
