@@ -54,22 +54,10 @@ require_once "security/over_uzivatela.php";
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Upozornenia
                     </a>
-                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php
-                        $email= $_SESSION['email'];
-                        $query="SELECT odoberatel from pouzivatelia WHERE email='$email'";
-                        $result = mysqli_query($conn,$query);
-                        while ($data = mysqli_fetch_array($result)){
-                            if($data['odoberatel'] == 1){
-                                echo '<a class="dropdown-item active" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
-                                echo '<a class="dropdown-item " href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
-                            }else{
-                                echo '<a class="dropdown-item" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
-                                echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
-                            }
-                        }
-                    ?>
-                </div>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item " href="#">Zapnúť</a>
+                        <a class="dropdown-item active" href="#">Vypnúť</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="aktuality.php">
@@ -93,14 +81,8 @@ require_once "security/over_uzivatela.php";
         </div>
     </nav>
 
-    <?php
-        $query="SELECT meno, priezvisko from pouzivatelia WHERE id='$_GET[id]'";
-        $result = mysqli_query($conn,$query);
-        $data = mysqli_fetch_array($result)
-    ?>
-
     <div class="container text-center col-lg-10">
-        <h4 class="text-left">Používateľ <strong><?php echo $data['meno']." ".$data['priezvisko']; ?></strong></h4>
+        <h4 class="text-left">Používateľ <strong><?php echo $_SESSION['meno']." ".$_SESSION['priezvisko']; ?></strong></h4>
     	<table class="table table-dark table-bordered"  id="pouzivateliaTable">
             <thead>
             <tr>
@@ -154,21 +136,6 @@ require_once "security/over_uzivatela.php";
     </script>
 
 <script type="text/javascript">
-
-    function zmenitNastavenieAktualit(id){
-
-        if(id=="zapUpozornenia"){
-            $("#zapUpozornenia").addClass("active");
-            $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=osobneVykony.php";
-
-        }else{
-            $("#zapUpozornenia").removeClass("active");
-            $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=osobneVykony.php";
-        }
-    }
-    
     $( "#returnButton" ).click(function() {
             window.location.href = "registraciaPouzivatela.php";
         });
