@@ -10,7 +10,7 @@ echo "<br>".$_POST['hodnotenie'];
 echo "<br>".$_POST['note'];
 
 session_start();
-echo "<br>".$_SESSION['id'];
+echo "<br> id:".$_SESSION['id'];
 
 $idUser = $_SESSION['id'];
 
@@ -68,6 +68,8 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
+
+
 
 if($_SESSION['rola'] == 'admin'){
     header("Location: cestyAdmin.php");
