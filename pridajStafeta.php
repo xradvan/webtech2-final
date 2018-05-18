@@ -70,7 +70,33 @@ foreach ($ids as $index){
 
 }
 
-var_dump($ids);
+$sql = "SELECT id from tim";
+$tims = [];
+
+if ($result = $conn->query($sql)) {
+    while ($row = $result->fetch_object()) {
+
+        array_push($tims,$row->id);
+
+    }
+}
+foreach ($tims as $jedentim){
+
+    $sql = "INSERT INTO trasa_tim (id_tim, id_trasa, odbehnute_km)
+            VALUES ($jedentim,$idTrasa,0)";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    echo "<br>".$sql."<br><br>";
+
+}
+
+
+var_dump($tims);
 $conn->close();
 
 header("Location: cestyAdmin.php");
