@@ -47,6 +47,28 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
+$naseKm = 0;
+
+$sql = "SELECT  SUM(odbehnute_km) as moje_km FROM trening WHERE id_trasa_pouzivatel = $id_tr_pouz";
+
+if ($result = $conn->query($sql)) {
+    while ($row = $result->fetch_object()) {
+
+        $naseKm = $row->moje_km;
+
+    }
+    $result->close();
+}
+
+echo $naseKm;
+
+$sql = "UPDATE trasa_pouzivatel SET prejdene_km=$naseKm WHERE id = $id_tr_pouz";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
 if($_SESSION['rola'] == 'admin'){
     header("Location: cestyAdmin.php");
 }
