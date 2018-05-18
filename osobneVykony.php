@@ -104,6 +104,9 @@ require_once "security/over_uzivatela.php";
     <div class="container text-center col-lg-10">
     <?php if ($_SESSION['rola'] == "user"){
             echo '<h4 class="text-left">Používateľ <strong>'.$_SESSION['meno']." ".$_SESSION['priezvisko'].'</strong></h4>';
+                $query="SELECT id from pouzivatelia WHERE email='$_SESSION[email]'";
+                $result1 = mysqli_query($conn,$query);
+                $data1 = mysqli_fetch_array($result1);
         }
             else {
                 $query="SELECT meno, priezvisko from pouzivatelia WHERE id='$_GET[id]'";
@@ -112,42 +115,58 @@ require_once "security/over_uzivatela.php";
                 echo '<h4 class="text-left">Používateľ <strong>'.$data['meno']." ".$data['priezvisko'].'</strong></h4>';
             }
             ?>
-    	<table class="table table-dark table-bordered"  id="pouzivateliaTable">
+        <table class="table table-dark table-bordered"  id="pouzivateliaTable">
             <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">COL 1</th>
-                <th scope="col">COL 2</th>
-                <th scope="col">COL 3</th>
-                <th scope="col">COL 1</th>
-                <th scope="col">COL 2</th>
-                <th scope="col">COL 3</th>
+                <th scope="col">Počet_km</th>
+                <th scope="col">Začiatok</th>
+                <th scope="col">Koniec</th>
+                <th scope="col">Zem_šírka</th>
+                <th scope="col">Zem_výška</th>
+                <th scope="col">Hodnotenie</th>
+                <th scope="col">Poznámka</th>
+                <th scope="col">Dátum</th>
+                <th scope="col">Priem_rýchlosť</th>
             </tr>
             </thead>
             <tbody>
                 <?php
-                    /*if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
-                        $query="SELECT id, meno, priezvisko, rola from pouzivatelia";
+                    if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+                    if(!isset($_GET['id'])){
+                        $query="SELECT  trening.lat_trening, trening.lng_trening, trening.poznamka, trening.odbehnute_km, trening.den_treningu, trening.zaciatok_treningu, trening.koniec_treningu, trening.hodnotenie, trening.poznamka FROM trening JOIN trasa_pouzivatel ON trasa_pouzivatel.id = trening.id_trasa_pouzivatel JOIN pouzivatelia ON trasa_pouzivatel.id_pouzivatel = pouzivatelia.id JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa AND pouzivatelia.id = '$data1[id]'";
+                    }else{
+                        $query="SELECT  trening.lat_trening, trening.lng_trening, trening.poznamka, trening.odbehnute_km, trening.den_treningu, trening.zaciatok_treningu, trening.koniec_treningu, trening.hodnotenie, trening.poznamka FROM trening JOIN trasa_pouzivatel ON trasa_pouzivatel.id = trening.id_trasa_pouzivatel JOIN pouzivatelia ON trasa_pouzivatel.id_pouzivatel = pouzivatelia.id JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa AND pouzivatelia.id = '$_GET[id]'";
+                        
+                    }   $km_tr = 0;
                         $result = mysqli_query($conn,$query);
                         $i=1;
                         while ($data = mysqli_fetch_array($result)){
+                            $km_tr += $data["odbehnute_km"];
+                            $prm = strtotime($data["koniec_treningu"]) - strtotime($data["zaciatok_treningu"]);
+                            $prm = round($data["odbehnute_km"]/(($prm / 60) / 60), 2)." km/h";
                             echo '<tr>';
                             echo '<th scope="row">'.$i.'</th>';
-                            echo '<td>'.$data["meno"].'</td>';
-                            echo '<td>'.$data["priezvisko"].'</td>';
-                            if($data['rola'] == "user"){
-                                echo '<td><input type="checkbox" class="checkbox" value="'.$data['id'].'"></td>';
-                            }else{
-                                echo '<td><input type="checkbox" class="checkbox" checked value="'.$data['id'].'"></td>';
+                            echo '<td>'.$data["odbehnute_km"].'</td>';
+                            echo '<td>'.$data["zaciatok_treningu"].'</td>';
+                            echo '<td>'.$data["koniec_treningu"].'</td>';
+                            echo '<td>'.$data["lat_trening"].'</td>';
+                            echo '<td>'.$data["lng_trening"].'</td>';
+                            echo '<td>'.$data["hodnotenie"].'</td>';
+                            echo '<td>'.$data["poznamka"].'</td>';
+                            echo '<td>'.$data["den_treningu"].'</td>';
+                            echo '<td>'.$prm.'</td>';
+                            echo '</tr>';
+                            $i++;
                             }
-                             echo '</tr>';
-                             $i++;
-                        }
-                        $conn->close();*/
+                        $km_tr = $km_tr / ($i - 1);
 
                 ?>
             </tbody>
         </table>
+        <?php
+            echo "<h4><strong>Priemerná hodnota odbehnutých km na 1 tréning je: ".$km_tr." km</strong></h4>";
+        ?>
     </div>
     <div class="container text-center col-lg-2">
         <input type="image" src="img/download.png" id="ulozit" width="70" height="70"><br>
@@ -184,18 +203,22 @@ require_once "security/over_uzivatela.php";
             window.location.href = "registraciaPouzivatela.php";
         });
 
-	 $( document ).ready(function() {
+     $( document ).ready(function() {
       $('#pouzivateliaTable').DataTable();
       $("#ulozit").on('click', function () {
-      	// parse the HTML table element having an id=exportTable
+        // parse the HTML table element having an id=exportTable
           var dataSource = shield.DataSource.create({
             data: "#pouzivateliaTable",
             schema: {
                 type: "table",
                 fields: {
-                    Meno: { type: String },
-                    Priezvisko: { type: String },
-                    Admin: { type: String }
+                    Štart: { type: String },
+                    Cieľ: { type: String },
+                    Odbehnuté_km: { type: String },
+                    Začiatok_tréningu: { type: String },
+                    Koniec_tréningu: { type: String },
+                    Hodnotenie_tréningu: { type: String },
+                    Deň_tréningu: { type: String }
                 }
             }
         });
@@ -207,23 +230,22 @@ require_once "security/over_uzivatela.php";
                 created: new Date()
             });
 
-            pdf.addPage("a4", "portrait");
+            pdf.addPage("a4", "letter");
 
             pdf.table(
                 50,
                 50,
                 data,
                 [
-                    { field: "Meno", title: "Meno", width: 100 },
-                    { field: "Priezvisko", title: "Priezvisko", width: 100 },
-                    { field: "Admin", title: "Admin", width: 50 }
-                ],
-                {
-                    margins: {
-                        top: 50,
-                        left: 50
-                    }
-                }
+                    { field: "Štart", title: "Štart", width: 100 },
+                    { field: "Cieľ", title: "Cieľ", width: 100 },
+                    { field: "Odbehnuté_km", title: "Počet km", width: 70 },
+                    { field: "Začiatok_tréningu", title: "od", width: 70 },
+                    { field: "Koniec_tréningu", title: "do", width: 70 },
+                    { field: "Hodnotenie_tréningu", title: "Hodnotenie", width: 70 },
+                    { field: "Deň_tréningu", title: "Deň", width: 100 }
+                ]
+               
             );
 
             pdf.saveAs({
