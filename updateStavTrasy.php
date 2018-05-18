@@ -1,7 +1,7 @@
 <?php
 
 $index = $_GET['index'];
-$tid = 56;
+$tid = $_GET['tid'];
 
 require ("config.php");
 // Create connection
