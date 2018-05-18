@@ -79,6 +79,11 @@ require_once "security/over_uzivatela.php";
                     Používatelia
                 </a>
             </li>
+            <li class="nav-item" id="osobneVykony" style="display: inline;">
+                <a class="nav-link" href="osobneVykony.php">
+                    Osobné výkony
+                </a>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
@@ -166,7 +171,7 @@ require_once "security/over_uzivatela.php";
             if ($result = $conn->query($sql)) {
                 while ($row = $result->fetch_object()) {
                     echo "<tr>";
-                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
+                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
                     echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
@@ -179,16 +184,11 @@ require_once "security/over_uzivatela.php";
                     else{
                         echo "<td><input onclick='check($i)' class='radio' type='radio' ></td>";
                     }
-
-
                     echo "</tr>";
-
                     $i++;
                 }
                 $result->close();
             }
-
-
             ?>
             </tbody>
         </table>
@@ -199,6 +199,7 @@ require_once "security/over_uzivatela.php";
     <div class="col-4 rightCol">
 
         <img src="img/add.png" id="privateBtn" class="addBtn" alt="add">
+        <img src="img/distance.png" id="distanceBtn" class="addBtn" alt="add">
 
         <div class="addDiv">
 
@@ -222,7 +223,74 @@ require_once "security/over_uzivatela.php";
 
         </div>
 
+        <div class="distanceDiv">
 
+
+
+                    <div class="form-group">
+                        <label>Počet odbehnutých kilometrov:</label>
+                        <input type="number" class="form-control" id="distance" min="0" step="any" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Deň tréningu:</label>
+                        <input class="form-control" type="date"  id="date" >
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Začiatok tréningu:</label>
+                            <input class="form-control" type="time"  id="startTime" >
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label>Koniec tréningu:</label>
+                            <input class="form-control" type="time"  id="endTime" >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Zemepisná šírka:</label>
+                            <input type="number" class="form-control" id="latitude" step="any" >
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label>Zemepisná dĺžka:</label>
+                            <input type="number" class="form-control" id="longtitude" step="any" >
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Hodnotenie tréningu:</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio1" value="option1"> 1
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio2" value="option2"> 2
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio3" value="option3"> 3
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio4" value="option5"> 4
+                        </div>
+                        <div class="form-check form-check-inline"">
+                        <input class="form-check-input" type="radio" id="inlineRadio5" value="option5"> 5
+                    </div>
+
+                <div class="form-group">
+                    <label>Poznámka:</label>
+                    <textarea class="form-control" rows="5" id="poznamka"></textarea>
+                </div>
+
+                <button type="button" id="insertBtn" class="btn btn-danger col-4 offset-4">Potvrď</button>
+                </form>
+
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -232,12 +300,12 @@ require_once "security/over_uzivatela.php";
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=cesty.php";
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=cesty.php";
         }
     }
 
@@ -259,13 +327,14 @@ require_once "security/over_uzivatela.php";
         for(var i = 1; i < document.getElementById("privatneTrasy").rows.length; i++){
             document.querySelector("#privatneTrasy tr:nth-child("+i+")  td:last-child .radio").checked = false;
         }
-
         document.querySelector("#privatneTrasy tr:nth-child("+index+")  td:last-child .radio").checked = true;
-
-        var id = $("#privatneTrasy tr:nth-child("+index+") th span").text();
-
-        window.location.replace("updateStavTrasy.php?index="+id+"");
-
+        var id = $("#privatneTrasy tr:nth-child("+index+") th span:first-child").text();
+        var tid = $("#privatneTrasy tr:nth-child("+index+") th span:last-child").text();
+        console.log(id);
+        console.log(tid);
+        //var str = "updateStavTrasy.php?index="+id+"&tid="+tid;
+        //console.log(str);
+        window.location.replace("updateStavTrasy.php?index="+id+"&tid="+tid);
     }
     $(document).ready(function () {
 

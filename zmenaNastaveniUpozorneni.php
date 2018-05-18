@@ -13,4 +13,5 @@
         $result = mysqli_query($conn,$query);
     	$conn->close();
 	}
+    header("location: ".$_GET[lokacia]."");
 ?>
