@@ -1,3 +1,6 @@
+<?php
+include("security/over_uzivatela.php");
+?>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -24,7 +27,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="cesty.php">Domov</a>
+                <?php
+                if($_SESSION['rola']== "admin"){
+                    echo '<a class="nav-link" href="cestyAdmin.php">Domov</a>';
+                }else{
+                    echo '<a class="nav-link" href="cesty.php">Domov</a>';
+                }
+                ?>
             </li>
 
             <li class="nav-item active">
