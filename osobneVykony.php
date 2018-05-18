@@ -87,7 +87,7 @@ require_once "security/over_uzivatela.php";
                         Používatelia
                     </a>
                 </li>
-                <li class="nav-item" id="osobneVykony" style="display: inline;">
+                <li class="nav-item active" id="osobneVykony" style="display: inline;">
                     <a class="nav-link" href="osobneVykony.php">
                         Osobné výkony
                     </a>
