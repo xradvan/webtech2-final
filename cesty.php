@@ -20,7 +20,10 @@ require_once "security/over_uzivatela.php";
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="./css/cesty.css">
-    <title>Document</title>
+    <title>Cesty</title>
+
+    <!--    Google charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
@@ -101,7 +104,20 @@ require_once "security/over_uzivatela.php";
     <div class="col-8 leftCol">
         <div id="myMap" style="height: 400px; width: 70%"></div>
 
+        <!--   Nacitanie dat uzivatelov pre vykreslenie grafu: verejny rezim    -->
+        <?php
+        $fileName = "tmp/bezciInfo.js";
 
+        if (file_exists($fileName)) {
+            $file = fopen($fileName, "r");
+            $contents = fread($file, filesize($fileName));
+            echo "<script>";
+            echo $contents;
+            echo "</script>";
+            fclose($file);
+            unlink($fileName);
+        }
+        ?>
 
 
         <div class="dropdown show " id="trasyId">
@@ -174,7 +190,7 @@ require_once "security/over_uzivatela.php";
                     echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
-                    echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
+                    echo "<td>$row->prejdene_km/<b>".round($row->celkove_km)."</b></td>";
                     echo "<td>$row->datum_vytvorenia</td>";
                     echo "<td>$row->vytvoril</td>";
                     echo "<td>$row->mod_trasy</td>";
@@ -224,7 +240,6 @@ require_once "security/over_uzivatela.php";
         </div>
 
         <div class="distanceDiv">
-
 
                <form action="prebehnuteKm.php" method="post" >
                     <div class="form-group">
@@ -284,8 +299,13 @@ require_once "security/over_uzivatela.php";
                 </form>
 
             </div>
-
+        <div class="progressDiv">
+            <div id="barClenovia"></div>
         </div>
+        </div>
+
+<!--        Chart -->
+
     </div>
 </div>
 
@@ -359,6 +379,7 @@ while ($data = mysqli_fetch_array($result)) {
 }
 ?>
 
+<script src="scripts/bar.js" ></script>
 
 </body>
 </html>

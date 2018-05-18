@@ -27,16 +27,14 @@ echo $lng1."<br>";
 echo $lat2."<br>";
 echo $lng2."<br>";
 session_start();
-if($_SESSION['rola'] == 'admin'){
-
-    // Ak je trasa verejna, vygeneruj data vsetkych bezcov, ktory na nej bezia
-    // Zapis do suboru
 
 
-    if ($mod_trasy === "verejný") {
-        $fileName="tmp/bezciInfo.js";
-        $fp = fopen($fileName, 'w');
-        $verejnyUsers = $conn->query("SELECT CONCAT(pouzivatelia.meno, \" \",pouzivatelia.priezvisko) as bezec, prejdene_km FROM trasa_pouzivatel JOIN pouzivatelia ON pouzivatelia.id=trasa_pouzivatel.id_pouzivatel
+// Ak je trasa verejna, vygeneruj data vsetkych bezcov, ktory na nej bezia
+// Zapis do suboru
+if ($mod_trasy === "verejný") {
+    $fileName="tmp/bezciInfo.js";
+    $fp = fopen($fileName, 'w');
+    $verejnyUsers = $conn->query("SELECT CONCAT(pouzivatelia.meno, \" \",pouzivatelia.priezvisko) as bezec, prejdene_km FROM trasa_pouzivatel JOIN pouzivatelia ON pouzivatelia.id=trasa_pouzivatel.id_pouzivatel
 WHERE trasa_pouzivatel.id_trasa=".$_GET['id']);
     if ($verejnyUsers->num_rows > 0) {
 
@@ -53,11 +51,10 @@ WHERE trasa_pouzivatel.id_trasa=".$_GET['id']);
 
 
 
-        fclose($fp);
-    }
+    fclose($fp);
+}
 
-
-
+if($_SESSION['rola'] == 'admin'){
 
     header("Location: cestyAdmin.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
 }

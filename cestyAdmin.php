@@ -24,7 +24,7 @@ require_once "security/over_uzivatela.php";
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <link rel="stylesheet" href="./css/cesty.css">
-    <title>Document</title>
+    <title>Cesty Admin</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
@@ -191,7 +191,7 @@ require_once "security/over_uzivatela.php";
                     echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
-                    echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
+                    echo "<td>$row->prejdene_km/<b>".round($row->celkove_km)."</b></td>";
                     echo "<td>$row->datum_vytvorenia</td>";
                     //echo "<td>$row->aktivna_trasa</td>";
                     echo "<td>$row->vytvoril</td>";
@@ -211,6 +211,57 @@ require_once "security/over_uzivatela.php";
             </tbody>
         </table>
 
+        <h1 style="margin-top: 100px;">Všetky trasy</h1>
+
+        <table class="table table-dark" id="vsetkyTrasy">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Štart</th>
+                <th scope="col">Cieľ</th>
+                <th scope="col">Prejdené km</th>
+                <th scope="col">Dátum vytvorenia</th>
+                <th scope="col">Definoval</th>
+                <th scope="col">Mód</th>
+                <th scope="col">Používateľ</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <?php
+
+            $sql = "SELECT trasa.id as tid, pouzivatelia.id, pouzivatelia.meno, pouzivatelia.priezvisko, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
+                    FROM trasa_pouzivatel
+                    INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
+                    INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
+                    ORDER BY aktivna_trasa DESC";
+
+
+            $i = 1;
+            if ($result = $conn->query($sql)) {
+                while ($row = $result->fetch_object()) {
+                    echo "<tr>";
+                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
+                    echo "<td>$row->start_nazov</td>";
+                    echo "<td>$row->ciel_nazov</td>";
+                    echo "<td>$row->prejdene_km/<b>".round($row->celkove_km)."</b></td>";
+                    echo "<td>$row->datum_vytvorenia</td>";
+                    //echo "<td>$row->aktivna_trasa</td>";
+                    echo "<td>$row->vytvoril</td>";
+                    echo "<td>$row->mod_trasy</td>";
+                    echo "<td>$row->meno $row->priezvisko</td>";
+
+                    echo "</tr>";
+                    $i++;
+                }
+                $result->close();
+            }
+            ?>
+            </tbody>
+        </table>
 
 
     </div>
@@ -368,7 +419,6 @@ require_once "security/over_uzivatela.php";
 
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
 <script src="scripts/bar.js" ></script>
 <script src="scripts/cesty.js" ></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArw-eyIcflcUehHyPzWx5FRzAr6EEI_68&libraries=places&callback=myMap"></script>
