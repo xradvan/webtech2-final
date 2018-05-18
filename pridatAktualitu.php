@@ -1,9 +1,8 @@
 <?php
-
-    include("security/over_uzivatela.php");
-
  use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
+    
+    include("security/over_uzivatela.php");
     
     require 'PHPMailer/src/Exception.php';
     require 'PHPMailer/src/PHPMailer.php';
@@ -26,19 +25,20 @@
             array_push($odoberatelia, $row);
         }
 
+          
         for ($i = 0; $i < sizeof($odoberatelia); $i++){    
             try {
                 $mail = new PHPMailer(true); 
                 $mail->isSMTP();              
-                $mail->Host = 'smtp.gmail.com';  
+                $mail->Host = 'mail.stuba.sk';  
                 $mail->SMTPAuth = true;        
-                $mail->Username = 'ebeehives@gmail.com';   
-                $mail->Password = 'Qw3rty95';    
+                $mail->Username = $AISLogin;   
+                $mail->Password = $AISPassword;    
                 $mail->SMTPSecure = 'tls';     
-                $mail->Port = 587;           
+                $mail->Port = 25;           
                 $mail->CharSet = 'UTF-8';
                 
-                $mail->setFrom('webtech@gmail.com', 'Webtech');
+                $mail->setFrom('webtech@stuba.sk', 'Webtech');
                 $mail->addAddress($odoberatelia[$i]['email']);     
         
                 $mail->isHTML(true);    
