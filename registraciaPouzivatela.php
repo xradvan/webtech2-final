@@ -192,25 +192,6 @@ if(isset($_GET['odhlasenie'])){
                 <button type="submit" id="insertBtn" class="btn btn-danger">Registrovať</button>
 
             </form>
-
-            <table class="table table-striped" id="pridaniPouzivateliaTable" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Meno</th>
-                    <th scope="col">Priezvisko</th>
-                    <th scope="col">Admin</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
