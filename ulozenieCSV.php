@@ -1,5 +1,13 @@
 <?php
-    require ('config.php');
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    include("security/over_uzivatela.php");
+    
+    require 'PHPMailer/src/Exception.php';
+    require 'PHPMailer/src/PHPMailer.php';
+    require 'PHPMailer/src/SMTP.php';
+    require_once 'config.php';
 
     //po ulozeni pridat tabulku ulozenych
     $target_dir = "tmp/";
@@ -39,24 +47,45 @@
                 // Query
                 mysqli_query($conn,$import) or die(mysqli_error($conn));
 
-
-
-
-
-
-                // Poslanie emailu na overenie registracie
-                $message = <<<EOT
-                Dobrý deň,
-                
-                boli ste registrovaní na našom portáli. 
-                Vaše heslo je:
-                $heslo
-                
-                Prihláste sa na: 
-                http://147.175.98.209/webtech2-final/security/prihlasenie.php
-
-EOT;
-                mail($email, "Vitajte", $message);
+                // Testovanie pouzivania emailu
+                try {
+                    $mail = new PHPMailer(true); 
+                    $mail->isSMTP();              
+                    $mail->Host = 'mail.stuba.sk';  
+                    $mail->SMTPAuth = true;        
+                    $mail->Username = $AISLogin;   
+                    $mail->Password = $AISPassword;    
+                    $mail->SMTPSecure = 'tls';     
+                    $mail->Port = 25;           
+                    $mail->CharSet = 'UTF-8';
+                    
+                    $mail->setFrom('webtech@stuba.sk', 'Webtech');
+                    $mail->addAddress($email);     
+        
+                    $mail->isHTML(true);    
+                    $mail->Subject = 'Registrácia do webovej aplikácie';
+                    $mail->Body    = '<h2 style="text-align: center;">Dobrý deň,
+                    
+                    boli ste registrovaní na našom portáli. 
+                    Vaše heslo je:
+                    $heslo
+                    
+                    Prihláste sa na: 
+                    http://147.175.98.209/webtech2-final/security/prihlasenie.php</h2><p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
+        
+                    $mail->AltBody = '<h2 style="text-align: center;">Dobrý deň,
+                    
+                    boli ste registrovaní na našom portáli. 
+                    Vaše heslo je:
+                    $heslo
+                    
+                    Prihláste sa na: 
+                    http://147.175.98.209/webtech2-final/security/prihlasenie.php</h2><p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
+                    $mail->send();
+        
+                } catch (Exception $e) {
+                    exit('Error registering user - 0x2');
+                }
             }
             $i=1;
         }

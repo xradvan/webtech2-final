@@ -13,19 +13,19 @@
     $result = mysqli_query($conn,$query);
     $select = "SELECT email FROM pouzivatelia WHERE id = '$_GET[id]'";
     $result = mysqli_query($conn,$select);
-    while ($data = mysqli_fetch_array($result)){
+    if ($data = mysqli_fetch_array($result)){
           try {
                 $mail = new PHPMailer(true); 
                 $mail->isSMTP();              
-                $mail->Host = 'smtp.gmail.com';  
+                $mail->Host = 'mail.stuba.sk';  
                 $mail->SMTPAuth = true;        
-                $mail->Username = 'ebeehives@gmail.com';   
-                $mail->Password = 'Qw3rty95';    
+                $mail->Username = $AISLogin;   
+                $mail->Password = $AISPassword;    
                 $mail->SMTPSecure = 'tls';     
-                $mail->Port = 587;           
+                $mail->Port = 25;           
                 $mail->CharSet = 'UTF-8';
                 
-                $mail->setFrom('webtech@gmail.com', 'Webtech');
+                $mail->setFrom('webtech@stuba.sk', 'Webtech');
                 $mail->addAddress($data['email']);     
         
                 $mail->isHTML(true);    

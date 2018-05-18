@@ -1,3 +1,6 @@
+<?php
+    include("security/over_uzivatela.php");
+?>
 <html>
 <head>
     <meta charset="UTF-8">

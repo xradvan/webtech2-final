@@ -5,6 +5,12 @@
  *
  */
 session_start();
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
 require_once '../config.php';
 
 
@@ -37,8 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $obec = mysqli_real_escape_string($conn, $_POST["obec"]);
 
 
-    // Testovanie pouzivania emailu
-    try {
+    
 
         $emailQuery->bind_param("s", $email);
         $emailQuery->execute();
@@ -64,22 +69,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["psc"] = $psc;
         $_SESSION["obec"] = $obec;
 
+        $mail = new PHPMailer(true); 
+        // Testovanie pouzivania emailu
+        try {
+            $mail->isSMTP();              
+            $mail->Host = 'mail.stuba.sk';  
+            $mail->SMTPAuth = true;        
+            $mail->Username = $AISLogin;   
+            $mail->Password = $AISPassword;    
+            $mail->SMTPSecure = 'tls';     
+            $mail->Port = 25;           
+            $mail->CharSet = 'UTF-8';
+            
+            $mail->setFrom('webtech@stuba.sk', 'Webtech');
+            $mail->addAddress($email);     
 
+            $mail->isHTML(true);    
+            $mail->Subject = 'Potvrdenie registrácie';
+            $mail->Body    = '<h2 style="text-align: center;">Dobry den,
+            na dokoncenie registracie prosim kliknite na nasledovny odkaz:
+            http://147.175.98.209/webtech2-final/security/registracia_over.php</h2><p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
 
-        // Poslanie emailu na overenie registracie
-        $message = <<<EOT
-        Dobry den,
-        
-        na dokoncenie registracie prosim kliknite na nasledovny odkaz:
-        http://147.175.98.209/webtech2-final/security/registracia_over.php
+            $mail->AltBody = '<h2 style="text-align: center;">Dobry den,
+            na dokoncenie registracie prosim kliknite na nasledovny odkaz:
+            http://147.175.98.209/webtech2-final/security/registracia_over.php</h2><p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
+            $mail->send();
 
-EOT;
-        mail($email, "Dokoncenie registracie", $message);
-
-
-    } catch (Exception $e) {
-        exit('Error registering user - 0x2');
-    }
+        } catch (Exception $e) {
+            exit('Error registering user - 0x2');
+        }
 
 }
 $conn->close();
