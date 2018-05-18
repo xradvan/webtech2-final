@@ -1,39 +1,3 @@
-// Odbehnute km timu
-var odbehnuteTim = 70;
-var odbhenuteTimTotal = 112;
-
-var properties = {
-    color: '#aaa',
-
-    strokeWidth: 4,
-    trailWidth: 1,
-    easing: 'easeInOut',
-    duration: 1400,
-    text: {
-        autoStyleContainer: false
-    },
-    from: { color: '#aaa', width: 1 },
-    to: { color: '#333', width: 4 },
-    step: function(state, circle) {
-        circle.path.setAttribute('stroke', state.color);
-        circle.path.setAttribute('stroke-width', state.width);
-
-        var value = Math.round(circle.value() * 100);
-        if (value === 0) {
-            circle.setText('');
-        } else {
-            circle.setText(value + " / " + odbhenuteTimTotal + " km");
-        }
-
-    }
-}
-
-var bar = new ProgressBar.Circle(probar1, properties);
-bar.animate(odbehnuteTim / odbhenuteTimTotal);
-
-
-
-
 // Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart']});
 
@@ -58,6 +22,7 @@ function drawChart() {
 
 
     var options = {
+        'title':'Odbehnuté km členov',
         'width':450,
         };
 

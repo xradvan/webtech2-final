@@ -115,7 +115,7 @@ require_once "security/over_uzivatela.php";
                 echo $contents;
                 echo "</script>";
                 fclose($file);
-
+                unlink($fileName);
             }
         ?>
 
@@ -134,12 +134,14 @@ require_once "security/over_uzivatela.php";
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
-            $idU = $_SESSION['id'];
+            $idU = $_SESSION["id"];
+
             $sql = "SELECT trasa.id as tid, pouzivatelia.id, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
                     FROM trasa_pouzivatel
                     INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
                     INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
-                    WHERE trasa_pouzivatel.id_pouzivatel = $idU ORDER BY aktivna_trasa DESC";
+                    WHERE trasa_pouzivatel.id_pouzivatel=$idU
+                    ORDER BY aktivna_trasa DESC";
 
             ?>
 
@@ -161,7 +163,6 @@ require_once "security/over_uzivatela.php";
         </div>
 
 
-        <h1>Moje trasy</h1>
 
 
         <table class="table table-dark" id="privatneTrasy">
@@ -210,57 +211,6 @@ require_once "security/over_uzivatela.php";
             </tbody>
         </table>
 
-        <h1 style="margin-top: 100px;">Všetky trasy</h1>
-
-        <table class="table table-dark" id="vsetkyTrasy">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Štart</th>
-                <th scope="col">Cieľ</th>
-                <th scope="col">Prejdené km</th>
-                <th scope="col">Dátum vytvorenia</th>
-                <th scope="col">Definoval</th>
-                <th scope="col">Mód</th>
-                <th scope="col">Používateľ</th>
-
-
-            </tr>
-            </thead>
-            <tbody>
-
-
-            <?php
-
-            $sql = "SELECT trasa.id as tid, pouzivatelia.id, pouzivatelia.meno, pouzivatelia.priezvisko, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
-                    FROM trasa_pouzivatel
-                    INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
-                    INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
-                    ORDER BY aktivna_trasa DESC";
-
-
-            $i = 1;
-            if ($result = $conn->query($sql)) {
-                while ($row = $result->fetch_object()) {
-                    echo "<tr>";
-                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
-                    echo "<td>$row->start_nazov</td>";
-                    echo "<td>$row->ciel_nazov</td>";
-                    echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
-                    echo "<td>$row->datum_vytvorenia</td>";
-                    //echo "<td>$row->aktivna_trasa</td>";
-                    echo "<td>$row->vytvoril</td>";
-                    echo "<td>$row->mod_trasy</td>";
-                    echo "<td>$row->meno $row->priezvisko</td>";
-
-                    echo "</tr>";
-                    $i++;
-                }
-                $result->close();
-            }
-            ?>
-            </tbody>
-        </table>
 
 
     </div>
@@ -362,12 +312,6 @@ require_once "security/over_uzivatela.php";
         </div>
 
         <div class="progressDiv">
-            <h4>Odbehnuté km tímu</h4>
-            <div id="probar1">
-
-            </div>
-            <br>
-            <h4>Odbehnuté km bežcov</h4>
             <div id="barClenovia"></div>
         </div>
 
@@ -420,9 +364,6 @@ require_once "security/over_uzivatela.php";
     $(document).ready(function () {
 
         $("#privatneTrasy").DataTable();
-        $("#vsetkyTrasy").DataTable();
-
-
     })
 
 </script>
