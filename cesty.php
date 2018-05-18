@@ -244,8 +244,8 @@ require_once "security/over_uzivatela.php";
         console.log(id);
         console.log(tid);
 
-        //var str = "updateStavTrasy.php?index="+id+"&tid="+tid;
-        //console.log(str);
+        var str = "updateStavTrasy.php?index="+id+"&tid="+tid;
+        console.log(str);
         window.location.replace("updateStavTrasy.php?index="+id+"&tid="+tid);
 
     }
