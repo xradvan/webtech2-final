@@ -111,6 +111,7 @@ require_once "security/over_uzivatela.php";
                     FROM trasa_pouzivatel
                     INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
                     INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
+                    
                     ORDER BY aktivna_trasa DESC";
 
             ?>
