@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Pi 18.Máj 2018, 15:14
+-- Čas generovania: Pi 18.Máj 2018, 16:30
 -- Verzia serveru: 10.1.32-MariaDB
 -- Verzia PHP: 7.0.30
 
@@ -116,7 +116,8 @@ CREATE TABLE `trasa` (
 
 INSERT INTO `trasa` (`id`, `start_nazov`, `start_lat`, `start_long`, `ciel_nazov`, `ciel_lat`, `ciel_long`, `celkove_km`, `datum_vytvorenia`, `mod_trasy`, `id_user`, `vytvoril`) VALUES
 (55, 'Bratislava, Slovensko', '48.1485965', '17.10774779999997', 'Košice, Slovensko', '48.7163857', '21.26107460000003', 403.63, '2018-05-17 23:00:52', 'privátny', 4, 'Peter Radvan'),
-(56, 'Málaga, Španielsko', '36.721261', '-4.421265500000004', 'Madrid, Španielsko', '40.4167754', '-3.7037901999999576', 529.388, '2018-05-17 23:01:43', 'verejný', 4, 'Peter Radvan');
+(56, 'Málaga, Španielsko', '36.721261', '-4.421265500000004', 'Madrid, Španielsko', '40.4167754', '-3.7037901999999576', 529.388, '2018-05-17 23:01:43', 'verejný', 4, 'Peter Radvan'),
+(57, 'Liptovský Mikuláš, Slovensko', '49.0811487', '19.61920669999995', 'Liptovské Revúce, Slovensko', '48.9232669', '19.182118599999967', 46.3, '2018-05-18 16:16:02', 'privátny', 8, 'Marek Blaha');
 
 -- --------------------------------------------------------
 
@@ -138,10 +139,11 @@ CREATE TABLE `trasa_pouzivatel` (
 
 INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`, `aktivna_trasa`) VALUES
 (7, 4, 55, 0, 0),
-(8, 4, 56, 0, 1),
+(8, 4, 56, 140, 1),
 (9, 5, 56, 0, 0),
 (10, 6, 56, 0, 0),
-(11, 7, 56, 0, 0);
+(11, 7, 56, 0, 0),
+(12, 8, 57, 20, 0);
 
 -- --------------------------------------------------------
 
@@ -167,7 +169,14 @@ CREATE TABLE `trening` (
 --
 
 INSERT INTO `trening` (`id`, `id_trasa_pouzivatel`, `odbehnute_km`, `den_treningu`, `zaciatok_treningu`, `koniec_treningu`, `lat_trening`, `lng_trening`, `hodnotenie`, `poznamka`) VALUES
-(1, 7, 20, '2018-05-16', '11:33:10', '20:18:07', 15.11, 41.11, 1, 'Totalny trening');
+(1, 7, 0, '2018-05-16', '11:33:10', '20:18:07', 15.11, 41.11, 1, 'Totalny trening'),
+(2, 8, 0, '2020-02-02', '01:01:00', '02:01:00', 4, 6, 2, 'as15'),
+(3, 8, 0, '2018-01-01', '00:00:00', '01:00:00', 1, 3, 4, 'malaga'),
+(4, 7, 0, '2019-01-01', '00:01:00', '02:04:00', 14, 16, 5, 'Bratislava'),
+(5, 7, 0, '2020-01-01', '00:00:00', '01:01:00', 2, 4, 3, 'hata pata'),
+(6, 8, 40, '2018-01-01', '00:00:00', '01:01:00', 1, 3, 5, 'na hovno'),
+(7, 8, 100, '2018-01-02', '01:01:00', '02:02:00', 1, 2, 3, 'stale na hovno'),
+(8, 12, 20, '2018-01-01', '00:00:00', '01:01:00', 1, 2, 2, 'prvy');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -224,19 +233,19 @@ ALTER TABLE `pouzivatelia`
 -- AUTO_INCREMENT pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT pre tabuľku `trasa_pouzivatel`
 --
 ALTER TABLE `trasa_pouzivatel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pre tabuľku `trening`
 --
 ALTER TABLE `trening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Obmedzenie pre exportované tabuľky
