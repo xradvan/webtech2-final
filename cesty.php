@@ -344,6 +344,21 @@ require_once "security/over_uzivatela.php";
 <script src="scripts/cesty.js" ></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArw-eyIcflcUehHyPzWx5FRzAr6EEI_68&libraries=places&callback=myMap"></script>
 
+<?php
+
+require ('config.php');
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->set_charset("UTF8");
+if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+
+$query = " SELECT * FROM trasa_tim ";
+$result = mysqli_query($conn,$query);
+while ($data = mysqli_fetch_array($result)) {
+
+
+}
+?>
+
 
 </body>
 </html>
