@@ -1,4 +1,7 @@
 <?php
+
+    include("security/over_uzivatela.php");
+
     require ('config.php');
 
     //po ulozeni pridat tabulku ulozenych
