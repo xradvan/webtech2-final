@@ -61,21 +61,19 @@ include("security/over_uzivatela.php");
 <div class="row">
     <div class="col-6 col-md-5">
         <?php
-        $query = " SELECT DISTINCT nazovTimu FROM pouzivatelia";
+        $query = " SELECT DISTINCT nazov FROM tim";
         $result = mysqli_query($conn,$query);
         echo "<table class='table table-dark'>";
         echo "<th>Zoznam tímov</th>";
         echo "<th>Vymaž tím</th>";
         while ($data = mysqli_fetch_array($result)) {
-            if ($data['nazovTimu'] != NULL){
-                $string = str_replace(' ', '_', $data['nazovTimu']);
-                $odkaz = "druzstva.php?nazov=".$string;
-                $odkazId = "druzstva.php?vymazt=".$string;
-                echo "<tr>";
-                echo "<td><a href=$odkaz>".$data['nazovTimu']."</a></td>";
-                echo "<td><a href='$odkazId'>&#10006;</a></td>";
-                echo "</tr>";
-            }
+            $string = str_replace(' ', '_', $data['nazov']);
+            $odkaz = "druzstva.php?nazov=".$string;
+            $odkazId = "druzstva.php?vymazt=".$string;
+            echo "<tr>";
+            echo "<td><a href=$odkaz>".$data['nazov']."</a></td>";
+            echo "<td><a href='$odkazId'>&#10006;</a></td>";
+            echo "</tr>";
         }
         echo "</table>";
         ?>
@@ -84,14 +82,22 @@ include("security/over_uzivatela.php");
     <div class="col-6 col-md-5">
         <?php
             if(isset($_GET["nazov"])){
+
+
                 $prem = str_replace('_', ' ', $_GET["nazov"]);
-                $query = " SELECT meno, priezvisko, id, nazovtimu FROM pouzivatelia WHERE nazovTimu ='$prem'";
+                $query = " SELECT id FROM tim WHERE nazov ='$prem'";
                 $result = mysqli_query($conn,$query);
+                while ($data = mysqli_fetch_array($result)) {
+                    $idcko = $data['id'];
+                }
+
+                $query2 = " SELECT meno, priezvisko, id, id_timu, email FROM pouzivatelia WHERE id_timu =".$idcko;
+                $result2 = mysqli_query($conn,$query2);
                 echo "<table class='table table-dark'>";
                 echo "<th>Členovia tímu</th>";
                 echo "<th>Vymaž člena</th>";
-                while ($data = mysqli_fetch_array($result)) {
-                    $odkazDel = "druzstva.php?del=".$data['id']."&tim=".$data['nazovtimu'];
+                while ($data = mysqli_fetch_array($result2)) {
+                    $odkazDel = "druzstva.php?del=".$data['email'];
                     echo "<tr>";
                 echo "<td>".$data['meno']." ".$data['priezvisko']."</td>";
                 echo "<td><a href='$odkazDel'>&#10006;</a></td>";
@@ -108,16 +114,25 @@ include("security/over_uzivatela.php");
 <?php
 if(isset($_GET["vymazt"])){
     $prem = str_replace('_', ' ', $_GET["vymazt"]);
-    $query = "UPDATE pouzivatelia SET nazovtimu = NULL WHERE nazovtimu ='".$prem."'";
+
+    $query3 = " SELECT id FROM tim WHERE nazov ='$prem'";
+    $result3 = mysqli_query($conn,$query3);
+    while ($data = mysqli_fetch_array($result3)) {
+        $idcko = $data['id'];
+    }
+
+    $query = "DELETE FROM tim WHERE nazov ='".$prem."'";
     $result = mysqli_query($conn,$query);
+
+    $query2 = " UPDATE pouzivatelia SET id_timu = 0 WHERE id_timu =".$idcko;
+    $result2 = mysqli_query($conn,$query2);
     header("Refresh:0; url=druzstva.php");
 }
 
-if(isset($_GET["del"]) && isset($_GET["tim"])){
+if(isset($_GET["del"])){
     $prem = $_GET["del"];
-    $prem2 = str_replace('_', ' ', $_GET["tim"]);
-    $query = " UPDATE pouzivatelia SET nazovtimu = NULL WHERE id =".$prem;
+    $query = " UPDATE pouzivatelia SET id_timu = 0 WHERE email ='".$prem."'";
     $result = mysqli_query($conn,$query);
-    header("Refresh:0; url=druzstva.php?nazov=$prem2");
+    header("Refresh:0; url=druzstva.php");
 }
 ?>

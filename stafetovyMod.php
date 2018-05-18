@@ -51,7 +51,7 @@ include("security/over_uzivatela.php");
     </div>
 </nav>
 <div class="formular">
-       <div id="zobrazPrve">
+    <form onsubmit="return false;">
            <h5>Maximálny počet členov v tíme: 6 </h5>
            <div class="input-group mb-3">
                <div class="input-group-prepend">
@@ -59,21 +59,13 @@ include("security/over_uzivatela.php");
                </div>
                <input type="text" id="menoTimu" required class="form-control" aria-label="Username" aria-describedby="basic-addon1">
            </div>
-           <div class="buttonDiv">
-               <input type="button" id="potvrd" value="Potvrď" class="btn btn-secondary">
-           </div>
-       </div>
 
-        <form onsubmit="return false;">
-        <div id="zobrazDruhe">
             <?php
             require ('config.php');
             $conn = new mysqli($servername, $username, $password, $dbname);
             $conn->set_charset("UTF8");
             if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
-            $meno = $_GET["nazov"];
-            echo "<h4>Názov tímu: <span id='menot'>".$meno."</span></h4>";
-            $query = " SELECT id, meno, priezvisko FROM pouzivatelia WHERE nazovtimu is NULL";
+            $query = " SELECT id, meno, priezvisko FROM pouzivatelia WHERE id_timu=0";
             $result = mysqli_query($conn,$query);
             $i = 1;
             echo "<select id='menaDoTimov' class='custom-select'>";
@@ -88,16 +80,6 @@ include("security/over_uzivatela.php");
 
             <div id='menaClenovTimu'>
                 <h4>Členovia tímu: </h4>
-                <?php
-                $meno = $_GET["nazov"];
-                $query = " SELECT id, meno, priezvisko FROM pouzivatelia WHERE nazovtimu='".$meno."'";
-                $result = mysqli_query($conn,$query);
-                while ($data = mysqli_fetch_array($result))
-                {
-                    echo "<option value='" . $data['id']."'>" . $data['meno']." ".$data['priezvisko']. "</option>";
-                    $i++;
-                }
-                ?>
             </div>
             <select id="odstranMena" class="custom-select">
                 <option>Odstráňte člena z tímu</option>
@@ -106,21 +88,10 @@ include("security/over_uzivatela.php");
                 <input type="submit" id="vytvorTim" value="Vytvor tím" class="btn btn-secondary">
 
             </div>
-        </div>
     </form>
 </div>
 
 <script>
-    $("#potvrd").on("click",function(){
-        if( $("#menoTimu").val() != '' ) {
-            var meno = $("#menoTimu").val();
-            console.log(meno);
-            window.location.href = "stafetovyMod.php?nazov="+meno;
-        }
-        else{
-            alert("Vyplňte názov tímu!");
-        }
-    });
 
     var pocetClenovTimu = 0;
     var clenoviaTimu = new Map();
@@ -135,7 +106,7 @@ include("security/over_uzivatela.php");
             clenoviaTimu.set(value,meno);
             console.log(clenoviaTimu);
             pocetClenovTimu++;
-        }else  {
+        }else  {;
             alert("Nie je možné pridať viac členov do tímu.");
         }
     });
@@ -159,7 +130,7 @@ include("security/over_uzivatela.php");
 
     $("#vytvorTim").on("click",function(){
         if (pocetClenovTimu <= 6){
-            var menot = $('#menot').text();
+            var menot = $('#menoTimu').val();
             var i = 1;
             var url = "test.php?";
             for (var [key, value] of clenoviaTimu) {
@@ -176,38 +147,8 @@ include("security/over_uzivatela.php");
     });
 
 
-
 </script>
 
-<?php
-
-if(isset($_GET["nazov"])){
-    $meno = $_GET["nazov"];
-    require ('config.php');
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    $conn->set_charset("UTF8");
-    if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
-    $query = " SELECT nazovtimu FROM pouzivatelia WHERE nazovtimu='".$meno."'";
-    $result = mysqli_query($conn,$query);
-    $pocet = 0;
-
-    if ($result == $conn->query($query)){
-        while ($data = mysqli_fetch_array($result)) {
-            $pocet++;
-        }
-    }
-
-    if ($pocet >= 3){
-        echo "<script>alert('Tím je plný!')</script>";
-        echo "<script> window.location.href = 'stafetovyMod.php'</script>";
-    }
-
-    else{
-        echo"<script>$('#zobrazDruhe').css('display','block'); </script>";
-        echo"<script>$('#zobrazPrve').css('display','none')</script>";
-    }
-}
-?>
 </body>
 </html>
 
