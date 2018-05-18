@@ -226,38 +226,38 @@ require_once "security/over_uzivatela.php";
         <div class="distanceDiv">
 
 
-
+               <form action="prabehnuteKm.php" method="post" >
                     <div class="form-group">
                         <label>Počet odbehnutých kilometrov:</label>
-                        <input type="number" class="form-control" id="distance" min="0" step="any" required>
+                        <input type="number" name="distance" class="form-control" id="distance" min="0" step="any" required>
                     </div>
 
                     <div class="form-group">
                         <label>Deň tréningu:</label>
-                        <input class="form-control" type="date"  id="date" >
+                        <input class="form-control" name="date" type="date"  id="date" >
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-6">
                             <label>Začiatok tréningu:</label>
-                            <input class="form-control" type="time"  id="startTime" >
+                            <input class="form-control" name="treningStart" type="time"  id="startTime" >
                         </div>
 
                         <div class="form-group col-6">
                             <label>Koniec tréningu:</label>
-                            <input class="form-control" type="time"  id="endTime" >
+                            <input class="form-control" type="time" name="treningEnd" id="endTime" >
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-6">
                             <label>Zemepisná šírka:</label>
-                            <input type="number" class="form-control" id="latitude" step="any" >
+                            <input type="number" class="form-control" name="lat" id="latitude" step="any" >
                         </div>
 
                         <div class="form-group col-6">
                             <label>Zemepisná dĺžka:</label>
-                            <input type="number" class="form-control" id="longtitude" step="any" >
+                            <input type="number" class="form-control" name="lng" id="longtitude" step="any" >
                         </div>
                     </div>
 
@@ -280,12 +280,12 @@ require_once "security/over_uzivatela.php";
                         <input class="form-check-input" type="radio" id="inlineRadio5" value="option5"> 5
                     </div>
 
-                <div class="form-group">
-                    <label>Poznámka:</label>
-                    <textarea class="form-control" rows="5" id="poznamka"></textarea>
-                </div>
+                    <div class="form-group">
+                        <label>Poznámka:</label>
+                        <textarea class="form-control" rows="5" name="note" id="poznamka"></textarea>
+                    </div>
 
-                <button type="button" id="insertBtn" class="btn btn-danger col-4 offset-4">Potvrď</button>
+                    <button type="button" id="prebehnutyBtn" class="btn btn-danger col-4 offset-4">Potvrď</button>
                 </form>
 
             </div>
@@ -340,6 +340,8 @@ require_once "security/over_uzivatela.php";
 
         $("#privatneTrasy").DataTable();
     })
+
+
 
 </script>
 
