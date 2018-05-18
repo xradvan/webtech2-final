@@ -1,7 +1,7 @@
 <?php
 
 $index = $_GET['index'];
-
+$tid = 56;
 
 require ("config.php");
 // Create connection
@@ -12,10 +12,10 @@ $conn->set_charset("UTF8");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "UPDATE trasa SET aktivna_trasa=0";
+$sql = "UPDATE trasa_pouzivatel SET aktivna_trasa=0";
 $conn->query($sql);
 
-$sql = "UPDATE trasa SET aktivna_trasa=1 WHERE id = $index";
+$sql = "UPDATE trasa_pouzivatel SET aktivna_trasa=1 WHERE id_pouzivatel =".$index."AND id_trasa =".$tid;
 
 echo $sql."<br><br>";
 
