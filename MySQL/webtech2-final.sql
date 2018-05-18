@@ -2,10 +2,10 @@
 -- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 18, 2018 at 06:49 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.0.30
+-- Hostiteľ: 127.0.0.1
+-- Čas generovania: Pi 18.Máj 2018, 20:30
+-- Verzia serveru: 10.1.32-MariaDB
+-- Verzia PHP: 7.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `webtech2-final`
+-- Databáza: `webtech2-final`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aktuality`
+-- Štruktúra tabuľky pre tabuľku `aktuality`
 --
 
 CREATE TABLE `aktuality` (
@@ -36,7 +36,7 @@ CREATE TABLE `aktuality` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `aktuality`
+-- Sťahujem dáta pre tabuľku `aktuality`
 --
 
 INSERT INTO `aktuality` (`id`, `titulok`, `obsah`, `datum`) VALUES
@@ -58,7 +58,7 @@ INSERT INTO `aktuality` (`id`, `titulok`, `obsah`, `datum`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pouzivatelia`
+-- Štruktúra tabuľky pre tabuľku `pouzivatelia`
 --
 
 CREATE TABLE `pouzivatelia` (
@@ -79,7 +79,7 @@ CREATE TABLE `pouzivatelia` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `pouzivatelia`
+-- Sťahujem dáta pre tabuľku `pouzivatelia`
 --
 
 INSERT INTO `pouzivatelia` (`id`, `meno`, `priezvisko`, `email`, `heslo`, `stredna_skola`, `stredna_skola_adresa`, `ulica`, `psc`, `obec`, `rola`, `odoberatel`, `prve_prihlasenie`, `id_timu`) VALUES
@@ -92,7 +92,7 @@ INSERT INTO `pouzivatelia` (`id`, `meno`, `priezvisko`, `email`, `heslo`, `stred
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tim`
+-- Štruktúra tabuľky pre tabuľku `tim`
 --
 
 CREATE TABLE `tim` (
@@ -101,7 +101,7 @@ CREATE TABLE `tim` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `tim`
+-- Sťahujem dáta pre tabuľku `tim`
 --
 
 INSERT INTO `tim` (`id`, `nazov`) VALUES
@@ -110,7 +110,7 @@ INSERT INTO `tim` (`id`, `nazov`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trasa`
+-- Štruktúra tabuľky pre tabuľku `trasa`
 --
 
 CREATE TABLE `trasa` (
@@ -129,19 +129,18 @@ CREATE TABLE `trasa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `trasa`
+-- Sťahujem dáta pre tabuľku `trasa`
 --
 
 INSERT INTO `trasa` (`id`, `start_nazov`, `start_lat`, `start_long`, `ciel_nazov`, `ciel_lat`, `ciel_long`, `celkove_km`, `datum_vytvorenia`, `mod_trasy`, `id_user`, `vytvoril`) VALUES
-(55, 'Bratislava, Slovensko', '48.1485965', '17.10774779999997', 'Košice, Slovensko', '48.7163857', '21.26107460000003', 403.63, '2018-05-17 23:00:52', 'privátny', 4, 'Peter Radvan'),
-(56, 'Málaga, Španielsko', '36.721261', '-4.421265500000004', 'Madrid, Španielsko', '40.4167754', '-3.7037901999999576', 529.388, '2018-05-17 23:01:43', 'verejný', 4, 'Peter Radvan'),
-(57, 'Liptovský Mikuláš, Slovensko', '49.0811487', '19.61920669999995', 'Liptovské Revúce, Slovensko', '48.9232669', '19.182118599999967', 46.3, '2018-05-18 16:16:02', 'privátny', 8, 'Marek Blaha'),
-(58, 'Brno, Česko', '49.1950602', '16.606837100000007', 'Praha, Česko', '50.0755381', '14.43780049999998', 205.735, '2018-05-18 18:10:43', 'štafetový', 4, 'Peter Radvan');
+(63, 'Bratislava, Slovensko', '48.1485965', '17.10774779999997', 'Košice, Slovensko', '48.7163857', '21.26107460000003', 403.63, '2018-05-18 19:08:45', 'privátny', 4, 'Peter Radvan'),
+(64, 'Severná Kórea', '40.339852', '127.51009299999998', 'Pchjongjang, Severná Kórea', '39.0392193', '125.76252410000006', 354.397, '2018-05-18 19:09:02', 'verejný', 4, 'Peter Radvan'),
+(65, 'Vancouver, Britská Kolumbia, Kanada', '49.2827291', '-123.12073750000002', 'Toronto, Ontário, Kanada', '43.653226', '-79.38318429999998', 4382.303, '2018-05-18 19:09:38', 'štafetový', 4, 'Peter Radvan');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trasa_pouzivatel`
+-- Štruktúra tabuľky pre tabuľku `trasa_pouzivatel`
 --
 
 CREATE TABLE `trasa_pouzivatel` (
@@ -153,26 +152,23 @@ CREATE TABLE `trasa_pouzivatel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `trasa_pouzivatel`
+-- Sťahujem dáta pre tabuľku `trasa_pouzivatel`
 --
 
 INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`, `aktivna_trasa`) VALUES
-(7, 4, 55, 0, 0),
-(8, 4, 56, 140, 0),
-(9, 5, 56, 0, 0),
-(10, 6, 56, 0, 0),
-(11, 7, 56, 0, 0),
-(12, 8, 57, 20, 0),
-(13, 4, 58, 0, 0),
-(14, 8, 58, 0, 0),
-(15, 9, 58, 0, 1),
-(16, 10, 58, 0, 0),
-(17, 11, 58, 0, 0);
+(24, 4, 63, 120, 0),
+(25, 4, 64, 200, 0),
+(26, 8, 64, 0, 0),
+(27, 9, 64, 0, 0),
+(28, 10, 64, 0, 0),
+(29, 11, 64, 0, 0),
+(30, 4, 65, 250, 1),
+(31, 8, 65, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trasa_tim`
+-- Štruktúra tabuľky pre tabuľku `trasa_tim`
 --
 
 CREATE TABLE `trasa_tim` (
@@ -182,17 +178,10 @@ CREATE TABLE `trasa_tim` (
   `odbehnute_km` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `trasa_tim`
---
-
-INSERT INTO `trasa_tim` (`id`, `id_tim`, `id_trasa`, `odbehnute_km`) VALUES
-(1, 1, 58, 20);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trening`
+-- Štruktúra tabuľky pre tabuľku `trening`
 --
 
 CREATE TABLE `trening` (
@@ -209,118 +198,116 @@ CREATE TABLE `trening` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `trening`
+-- Sťahujem dáta pre tabuľku `trening`
 --
 
 INSERT INTO `trening` (`id`, `id_trasa_pouzivatel`, `odbehnute_km`, `den_treningu`, `zaciatok_treningu`, `koniec_treningu`, `lat_trening`, `lng_trening`, `hodnotenie`, `poznamka`) VALUES
-(1, 7, 0, '2018-05-16', '11:33:10', '20:18:07', 15.11, 41.11, 1, 'Totalny trening'),
-(2, 8, 0, '2020-02-02', '01:01:00', '02:01:00', 4, 6, 2, 'as15'),
-(3, 8, 0, '2018-01-01', '00:00:00', '01:00:00', 1, 3, 4, 'malaga'),
-(4, 7, 0, '2019-01-01', '00:01:00', '02:04:00', 14, 16, 5, 'Bratislava'),
-(5, 7, 0, '2020-01-01', '00:00:00', '01:01:00', 2, 4, 3, 'hata pata'),
-(6, 8, 40, '2018-01-01', '00:00:00', '01:01:00', 1, 3, 5, 'na hovno'),
-(7, 8, 100, '2018-01-02', '01:01:00', '02:02:00', 1, 2, 3, 'stale na hovno'),
-(8, 12, 20, '2018-01-01', '00:00:00', '01:01:00', 1, 2, 2, 'prvy');
+(9, 24, 20, '2018-01-01', '00:00:00', '00:01:00', 1, 2, 2, 'poznamka'),
+(10, 24, 100, '2018-01-01', '00:00:00', '00:01:00', 1, 2, 2, 'sadsa'),
+(15, 25, 100, '2000-01-01', '00:00:00', '00:01:00', 1, 2, 2, 'asd'),
+(16, 25, 100, '2000-01-01', '00:00:00', '00:01:00', 1, 2, 2, 'asd'),
+(17, 30, 150, '2018-01-01', '00:00:00', '00:00:00', 1, 1, 2, 'as'),
+(18, 30, 100, '2018-01-01', '00:00:00', '00:01:00', 1, 2, 2, 'sa');
 
 --
--- Indexes for dumped tables
+-- Kľúče pre exportované tabuľky
 --
 
 --
--- Indexes for table `aktuality`
+-- Indexy pre tabuľku `aktuality`
 --
 ALTER TABLE `aktuality`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pouzivatelia`
+-- Indexy pre tabuľku `pouzivatelia`
 --
 ALTER TABLE `pouzivatelia`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tim`
+-- Indexy pre tabuľku `tim`
 --
 ALTER TABLE `tim`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `trasa`
+-- Indexy pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `trasa_pouzivatel`
+-- Indexy pre tabuľku `trasa_pouzivatel`
 --
 ALTER TABLE `trasa_pouzivatel`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `trasa_tim`
+-- Indexy pre tabuľku `trasa_tim`
 --
 ALTER TABLE `trasa_tim`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `trening`
+-- Indexy pre tabuľku `trening`
 --
 ALTER TABLE `trening`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_trasa_pouzivatel` (`id_trasa_pouzivatel`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pre exportované tabuľky
 --
 
 --
--- AUTO_INCREMENT for table `aktuality`
+-- AUTO_INCREMENT pre tabuľku `aktuality`
 --
 ALTER TABLE `aktuality`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT for table `pouzivatelia`
+-- AUTO_INCREMENT pre tabuľku `pouzivatelia`
 --
 ALTER TABLE `pouzivatelia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `tim`
+-- AUTO_INCREMENT pre tabuľku `tim`
 --
 ALTER TABLE `tim`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `trasa`
+-- AUTO_INCREMENT pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- AUTO_INCREMENT for table `trasa_pouzivatel`
+-- AUTO_INCREMENT pre tabuľku `trasa_pouzivatel`
 --
 ALTER TABLE `trasa_pouzivatel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT for table `trasa_tim`
+-- AUTO_INCREMENT pre tabuľku `trasa_tim`
 --
 ALTER TABLE `trasa_tim`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `trening`
+-- AUTO_INCREMENT pre tabuľku `trening`
 --
 ALTER TABLE `trening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- Constraints for dumped tables
+-- Obmedzenie pre exportované tabuľky
 --
 
 --
--- Constraints for table `trening`
+-- Obmedzenie pre tabuľku `trening`
 --
 ALTER TABLE `trening`
   ADD CONSTRAINT `trening_ibfk_1` FOREIGN KEY (`id_trasa_pouzivatel`) REFERENCES `trasa_pouzivatel` (`id`);

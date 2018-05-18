@@ -21,6 +21,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#" name="adresa_uzivatel" onclick="adresaUzivatelia();">Adresy užívateľov</a></li>
             <li><a href="#" name="adresa_skoly" onclick="adresaSkoly();">Adresy škôl</a></li>
+            <li><a href="dokumentacia.php" name="adresa_skoly">Dokumentácia</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="security/registracia.php"><span class="glyphicon glyphicon-user"></span> Registrácia</a></li>
