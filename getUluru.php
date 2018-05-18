@@ -26,6 +26,13 @@ echo $lat2."<br>";
 echo $lng2."<br>";
 session_start();
 if($_SESSION['rola'] == 'admin'){
+
+    $fileName="tmp/bezciInfo.js";
+    $fp = fopen($fileName, 'w');
+    fwrite($fp, '1');
+
+    fclose($fp);
+
     header("Location: cestyAdmin.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
 }
 else{
