@@ -230,68 +230,63 @@ require_once "security/over_uzivatela.php";
 
             <div class="distanceDiv">
 
-
-
-                <div class="form-group">
-                    <label>Počet odbehnutých kilometrov:</label>
-                    <input type="number" class="form-control" id="distance" min="0" step="any" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Deň tréningu:</label>
-                    <input class="form-control" type="date"  id="date" >
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-6">
-                        <label>Začiatok tréningu:</label>
-                        <input class="form-control" type="time"  id="startTime" >
+                <form action="prebehnuteKm.php" method="post" >
+                    <div class="form-group">
+                        <label>Počet odbehnutých kilometrov:</label>
+                        <input type="number" name="distance" class="form-control" id="distance" min="0" step="any" required>
                     </div>
 
-                    <div class="form-group col-6">
-                        <label>Koniec tréningu:</label>
-                        <input class="form-control" type="time"  id="endTime" >
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-6">
-                        <label>Zemepisná šírka:</label>
-                        <input type="number" class="form-control" id="latitude" step="any" >
+                    <div class="form-group">
+                        <label>Deň tréningu:</label>
+                        <input class="form-control" name="date" type="date"  id="date" >
                     </div>
 
-                    <div class="form-group col-6">
-                        <label>Zemepisná dĺžka:</label>
-                        <input type="number" class="form-control" id="longtitude" step="any" >
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Začiatok tréningu:</label>
+                            <input class="form-control" name="treningStart" type="time"  id="startTime" >
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label>Koniec tréningu:</label>
+                            <input class="form-control" type="time" name="treningEnd" id="endTime" >
+                        </div>
                     </div>
-                </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Zemepisná šírka:</label>
+                            <input type="number" class="form-control" name="lat" id="latitude" step="any" >
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label>Zemepisná dĺžka:</label>
+                            <input type="number" class="form-control" name="lng" id="longtitude" step="any" >
+                        </div>
+                    </div>
 
 
-                <div class="form-group">
-                    <label>Hodnotenie tréningu:</label><br>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="inlineRadio1" value="option1"> 1
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="inlineRadio2" value="option2"> 2
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="inlineRadio3" value="option3"> 3
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="inlineRadio4" value="option5"> 4
-                    </div>
-                    <div class="form-check form-check-inline"">
-                    <input class="form-check-input" type="radio" id="inlineRadio5" value="option5"> 5
-                </div>
+                    <div class="form-group">
+                        <label>Hodnotenie tréningu:</label><br>
+                        <select name="hodnotenie" class="custom-select custom-select-lg p-30">
 
-                <div class="form-group">
-                    <label>Poznámka:</label>
-                    <textarea class="form-control" rows="5" id="poznamka"></textarea>
-                </div>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
 
-                <button type="button" id="insertBtn" class="btn btn-danger col-4 offset-4">Potvrď</button>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Poznámka:</label>
+                        <textarea class="form-control" rows="5" name="note" id="poznamka"></textarea>
+                    </div>
+
+                    <button type="submit" id="prebehnutyBtn" class="btn btn-danger col-4 offset-4">Potvrď</button>
                 </form>
+
 
 
             </div>
