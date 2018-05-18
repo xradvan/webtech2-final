@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 18, 2018 at 09:03 AM
--- Server version: 5.7.14
--- PHP Version: 5.6.25
+-- Hostiteľ: 127.0.0.1
+-- Čas generovania: Pi 18.Máj 2018, 14:55
+-- Verzia serveru: 10.1.32-MariaDB
+-- Verzia PHP: 7.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `webtech2_final`
+-- Databáza: `webtech2_final`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aktuality`
+-- Štruktúra tabuľky pre tabuľku `aktuality`
 --
 
 CREATE TABLE `aktuality` (
@@ -34,7 +36,7 @@ CREATE TABLE `aktuality` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `aktuality`
+-- Sťahujem dáta pre tabuľku `aktuality`
 --
 
 INSERT INTO `aktuality` (`id`, `titulok`, `obsah`, `datum`) VALUES
@@ -56,7 +58,7 @@ INSERT INTO `aktuality` (`id`, `titulok`, `obsah`, `datum`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pouzivatelia`
+-- Štruktúra tabuľky pre tabuľku `pouzivatelia`
 --
 
 CREATE TABLE `pouzivatelia` (
@@ -72,22 +74,25 @@ CREATE TABLE `pouzivatelia` (
   `obec` varchar(40) COLLATE utf8_slovak_ci NOT NULL,
   `rola` varchar(10) COLLATE utf8_slovak_ci NOT NULL DEFAULT 'user',
   `odoberatel` tinyint(1) NOT NULL DEFAULT '0',
-  `prve_prihlasenie` int(11) NOT NULL DEFAULT '0'
+  `prve_prihlasenie` int(11) NOT NULL DEFAULT '0',
+  `nazovtimu` varchar(50) COLLATE utf8_slovak_ci DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `pouzivatelia`
+-- Sťahujem dáta pre tabuľku `pouzivatelia`
 --
 
-INSERT INTO `pouzivatelia` (`id`, `meno`, `priezvisko`, `email`, `heslo`, `stredna_skola`, `stredna_skola_adresa`, `ulica`, `psc`, `obec`, `rola`, `odoberatel`, `prve_prihlasenie`) VALUES
-(4, 'Peter', 'Radvan', 'peterradvan@gmail.com', '$2y$10$Wlyw5xYwJsQfm/rd7N9msecqHdMSeLAwGnmoCCgvxfcaEfrLXtdDG', 'GCM', 'Farska 10, Nitra', 'Lipova 19', '95193', 'Topolcianky', 'admin', 0, 0),
-(6, 'Matus', 'Bubeliny', 'matusbubeliny@gmail.com', '1234', 'Gym', 'Sturova 13', 'Sturova 13', '977 03', 'Brezno', 'user', 1, 0),
-(7, 'Nika', 'Carno', 'carnogurska.n@gmail.com', '1234', 'fdbhsjnklô', 'fjdklwm', 'gjnwmkôl', '97777', 'bjhdwnsqklmô', 'user', 1, 0);
+INSERT INTO `pouzivatelia` (`id`, `meno`, `priezvisko`, `email`, `heslo`, `stredna_skola`, `stredna_skola_adresa`, `ulica`, `psc`, `obec`, `rola`, `odoberatel`, `prve_prihlasenie`, `nazovtimu`) VALUES
+(4, 'Peter', 'Radvan', 'peterradvan@gmail.com', '$2y$10$Wlyw5xYwJsQfm/rd7N9msecqHdMSeLAwGnmoCCgvxfcaEfrLXtdDG', 'GCM', 'Farska 10, Nitra', 'Lipova 19', '95193', 'Topolcianky', 'admin', 0, 0, 'Trpaslíci'),
+(8, 'Marek', 'Blaha', 'blaha.marcus@gmail.com', '$2y$10$Wlyw5xYwJsQfm/rd7N9msecqHdMSeLAwGnmoCCgvxfcaEfrLXtdDG', 'GSM', 'Nizna revuca 36', 'nizna revuca 36', '034 74', 'Liptovske Revuce', 'user', 0, 0, 'Trpaslíci'),
+(9, 'Marcel', 'Boldiš', 'marcelboldis@gmail.com', '$2y$10$Wlyw5xYwJsQfm/rd7N9msecqHdMSeLAwGnmoCCgvxfcaEfrLXtdDG', 'Gymnázium Vráble', 'Vráble', 'Veľké Vozokany', '95182', 'Veľké Vozokany', 'user', 0, 0, 'Elfovia'),
+(10, 'Nika', 'Čarnogurská', 'nika@gmail.com', '$2y$10$Wlyw5xYwJsQfm/rd7N9msecqHdMSeLAwGnmoCCgvxfcaEfrLXtdDG', 'Topolčany', 'Topolčany', 'Topolčany', '596', 'Topolčany', 'user', 0, 0, 'Ľudia'),
+(11, 'Matúš', 'Bubelíny', 'matus@gmail.com', '$2y$10$Wlyw5xYwJsQfm/rd7N9msecqHdMSeLAwGnmoCCgvxfcaEfrLXtdDG', 'Brezno', 'Brezno', 'Brezno', '9535', 'Brezno', 'admin', 0, 0, 'Hobiti');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trasa`
+-- Štruktúra tabuľky pre tabuľku `trasa`
 --
 
 CREATE TABLE `trasa` (
@@ -106,7 +111,7 @@ CREATE TABLE `trasa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `trasa`
+-- Sťahujem dáta pre tabuľku `trasa`
 --
 
 INSERT INTO `trasa` (`id`, `start_nazov`, `start_lat`, `start_long`, `ciel_nazov`, `ciel_lat`, `ciel_long`, `celkove_km`, `datum_vytvorenia`, `mod_trasy`, `id_user`, `vytvoril`) VALUES
@@ -116,7 +121,7 @@ INSERT INTO `trasa` (`id`, `start_nazov`, `start_lat`, `start_long`, `ciel_nazov
 -- --------------------------------------------------------
 
 --
--- Table structure for table `trasa_pouzivatel`
+-- Štruktúra tabuľky pre tabuľku `trasa_pouzivatel`
 --
 
 CREATE TABLE `trasa_pouzivatel` (
@@ -128,7 +133,7 @@ CREATE TABLE `trasa_pouzivatel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
 
 --
--- Dumping data for table `trasa_pouzivatel`
+-- Sťahujem dáta pre tabuľku `trasa_pouzivatel`
 --
 
 INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`, `aktivna_trasa`) VALUES
@@ -139,57 +144,62 @@ INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`
 (11, 7, 56, 0, 0);
 
 --
--- Indexes for dumped tables
+-- Kľúče pre exportované tabuľky
 --
 
 --
--- Indexes for table `aktuality`
+-- Indexy pre tabuľku `aktuality`
 --
 ALTER TABLE `aktuality`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pouzivatelia`
+-- Indexy pre tabuľku `pouzivatelia`
 --
 ALTER TABLE `pouzivatelia`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `trasa`
+-- Indexy pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `trasa_pouzivatel`
+-- Indexy pre tabuľku `trasa_pouzivatel`
 --
 ALTER TABLE `trasa_pouzivatel`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pre exportované tabuľky
 --
 
 --
--- AUTO_INCREMENT for table `aktuality`
+-- AUTO_INCREMENT pre tabuľku `aktuality`
 --
 ALTER TABLE `aktuality`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
 --
--- AUTO_INCREMENT for table `pouzivatelia`
+-- AUTO_INCREMENT pre tabuľku `pouzivatelia`
 --
 ALTER TABLE `pouzivatelia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
--- AUTO_INCREMENT for table `trasa`
+-- AUTO_INCREMENT pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
 --
--- AUTO_INCREMENT for table `trasa_pouzivatel`
+-- AUTO_INCREMENT pre tabuľku `trasa_pouzivatel`
 --
 ALTER TABLE `trasa_pouzivatel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
