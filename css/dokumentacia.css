@@ -1,0 +1,67 @@
+body{
+    background-image: url('../img/dokumentacia.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+    color: white;
+}
+h1{
+    color: blue;
+}
+h3,h4{
+    color: #00ABFF;
+}
+.container{
+    background-color: black;
+    opacity: 0.8;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+}
+.yes{
+    background-color: #088A08;
+}
+.no{
+    background-color: red;
+}
+
+#googleMap{
+    margin: 0 auto;
+    margin-top: 5%;
+    height:450px;
+}
+
+.navbar {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+#vitajte{
+    color: #fff;
+}
+
+#vitajte:hover{
+    cursor: default;
+}
+
+@media only screen and (min-height: 750px) {
+    #googleMap {
+        height: 600px;
+    }
+}
+
+@media only screen and (min-height: 900px) {
+    #googleMap {
+        height: 700px;
+    }
+}
+
+p{
+    line-height: 2;
+    font-size: 120%;
+}
+
+li{
+    line-height: 2;
+    font-size: 120%;
+}
