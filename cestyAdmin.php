@@ -293,6 +293,14 @@ require_once "security/over_uzivatela.php";
 
         </div>
 
+
+
+        <div class="progressDiv">
+            <div id="probar1">
+
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -320,6 +328,7 @@ require_once "security/over_uzivatela.php";
         var lng1 = url.searchParams.get("lng1");
         var lat2 = url.searchParams.get("lat2");
         var lng2 = url.searchParams.get("lng2");
+        var vzd = url.searchParams.get("vzd");
 
     }
 
@@ -345,6 +354,8 @@ require_once "security/over_uzivatela.php";
 
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+<script src="scripts/bar.js" ></script>
 <script src="scripts/cesty.js" ></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArw-eyIcflcUehHyPzWx5FRzAr6EEI_68&libraries=places&callback=myMap"></script>
 

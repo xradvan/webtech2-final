@@ -45,7 +45,7 @@ if ($result = $conn->query($sql)) {
 echo $idTrasa."<br>";
 
 
-$sql = "SELECT id FROM pouzivatelia";
+$sql = "SELECT id FROM pouzivatelia WHERE id_timu > 0 ";
 $ids = [];
 if ($result = $conn->query($sql)) {
     while ($row = $result->fetch_object()) {

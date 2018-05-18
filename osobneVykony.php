@@ -159,7 +159,9 @@ require_once "security/over_uzivatela.php";
                             echo '</tr>';
                             $i++;
                             }
-                        $km_tr = $km_tr / ($i - 1);
+                            if($i-1 != 0){
+                                $km_tr = $km_tr / ($i - 1);
+                            }
 
                 ?>
             </tbody>
@@ -184,7 +186,6 @@ require_once "security/over_uzivatela.php";
     </script>
 
 <script type="text/javascript">
-
     function zmenitNastavenieAktualit(id){
 
         if(id=="zapUpozornenia"){
@@ -206,24 +207,25 @@ require_once "security/over_uzivatela.php";
      $( document ).ready(function() {
       $('#pouzivateliaTable').DataTable();
       $("#ulozit").on('click', function () {
-        // parse the HTML table element having an id=exportTable
           var dataSource = shield.DataSource.create({
             data: "#pouzivateliaTable",
             schema: {
                 type: "table",
                 fields: {
-                    Štart: { type: String },
-                    Cieľ: { type: String },
-                    Odbehnuté_km: { type: String },
-                    Začiatok_tréningu: { type: String },
-                    Koniec_tréningu: { type: String },
-                    Hodnotenie_tréningu: { type: String },
-                    Deň_tréningu: { type: String }
+                    Počet_km: { type: String },
+                    Začiatok: { type: String },
+                    Koniec: { type: String },
+                    Zem_šírka: { type: String },
+                    Zem_výška: { type: String },
+                    Hodnotenie: { type: String },
+                    Poznámka: { type: String },
+                    Dátum: { type: String },
+                    Priem_rýchlosť: { type: String }
                 }
             }
         });
 
-        // when parsing is done, export the data to PDF
+
         dataSource.read().then(function (data) {
             var pdf = new shield.exp.PDFDocument({
                 author: "Webtech",
@@ -237,13 +239,15 @@ require_once "security/over_uzivatela.php";
                 50,
                 data,
                 [
-                    { field: "Štart", title: "Štart", width: 100 },
-                    { field: "Cieľ", title: "Cieľ", width: 100 },
-                    { field: "Odbehnuté_km", title: "Počet km", width: 70 },
-                    { field: "Začiatok_tréningu", title: "od", width: 70 },
-                    { field: "Koniec_tréningu", title: "do", width: 70 },
-                    { field: "Hodnotenie_tréningu", title: "Hodnotenie", width: 70 },
-                    { field: "Deň_tréningu", title: "Deň", width: 100 }
+                    { field: "Počet_km", title: "Pocet km", width: 70 },
+                    { field: "Začiatok", title: "Zaciatok", width: 70 },
+                    { field: "Koniec", title: "Koniec", width: 70 },
+                    { field: "Zem_šírka", title: "Zem.sirka", width: 70 },
+                    { field: "Zem_výška", title: "Zem. vyska", width: 70 },
+                    { field: "Hodnotenie", title: "Hodnotenie", width: 70 },
+                    { field: "Poznámka", title: "Poznamka", width: 100 },
+                    { field: "Dátum", title: "Datum", width: 70 },
+                    { field: "Priem_rýchlosť", title: "Priem. rychlost", width: 100 }
                 ]
                
             );
@@ -252,8 +256,8 @@ require_once "security/over_uzivatela.php";
                 fileName: "OsobneVykony"
             });
         });
-    });
-});
+            });
+        });
 
 </script>
 </body>
