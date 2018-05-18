@@ -160,12 +160,12 @@ require_once "security/over_uzivatela.php";
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=osobneVykony.php";
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=osobneVykony.php";
         }
     }
     

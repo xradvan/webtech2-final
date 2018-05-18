@@ -18,19 +18,17 @@ if(isset($_GET['odhlasenie'])){
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/registraciaPouzivatela.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    
     <title>Pouzivatelia</title>
 </head>
 <body>
@@ -77,14 +75,20 @@ if(isset($_GET['odhlasenie'])){
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="cesty.php">Domov</a>
+                <?php 
+                        if($_SESSION['rola']== "admin"){
+                            echo '<a class="nav-link" href="cestyAdmin.php">Domov</a>';
+                        }else{
+                            echo '<a class="nav-link" href="cesty.php">Domov</a>';
+                        }
+                     ?>
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Upozornenia
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Upozornenia
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <?php
                         $email= $_SESSION['email'];
                         $query="SELECT odoberatel from pouzivatelia WHERE email='$email'";
@@ -98,9 +102,10 @@ if(isset($_GET['odhlasenie'])){
                                 echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
                             }
                         }
+                       
                     ?>
                 </div>
-            </li>
+                </li>
             <li class="nav-item ">
                 <a class="nav-link" href="aktuality.php">
                     Aktuality
@@ -146,7 +151,8 @@ if(isset($_GET['odhlasenie'])){
             <tbody>
             <?php
             if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
-            $query="SELECT id, meno, priezvisko, rola from pouzivatelia";
+            $email= $_SESSION['email'];
+            $query="SELECT id, meno, priezvisko, rola from pouzivatelia WHERE NOT email ='".$email."'";
             $result = mysqli_query($conn,$query);
             $i=1;
             while ($data = mysqli_fetch_array($result)){
@@ -215,12 +221,12 @@ if(isset($_GET['odhlasenie'])){
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=registraciaPouzivatela.php";
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=registraciaPouzivatela.php";
         }
     }
 

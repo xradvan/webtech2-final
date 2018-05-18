@@ -37,7 +37,7 @@
                 while ($data = mysqli_fetch_array($result)){
                     echo "Vitajte ".$data['meno']." ".$data['priezvisko'];
                 }
-                $conn->close();
+                
             ?>
         </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="cesty.php">Domov</a>
+                    <?php 
+                        if($_SESSION['rola']== "admin"){
+                            echo '<a class="nav-link" href="cestyAdmin.php">Domov</a>';
+                        }else{
+                            echo '<a class="nav-link" href="cesty.php">Domov</a>';
+                        }
+                     ?>
+                    
                 </li>
 
                 <li class="nav-item dropdown">
@@ -68,6 +75,7 @@
                                 echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
                             }
                         }
+                        $conn->close();
                     ?>
                 </div>
                 </li>
@@ -224,12 +232,12 @@
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=aktuality.php";
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=aktuality.php";
         }
     }
     
