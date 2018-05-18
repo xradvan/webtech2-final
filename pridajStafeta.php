@@ -11,7 +11,6 @@ $modTrasy = "štafetový";
 $meno = $_SESSION['meno'];
 $priezvisko = $_SESSION['priezvisko'];
 $idUser = $_SESSION['id'];
-echo $idUser;
 require ("config.php");
 // Create connection
 $conn = new mysqli($servername, $username, $password , $dbname);
@@ -24,7 +23,7 @@ if ($conn->connect_error) {
 
 
 $sql = "INSERT INTO trasa (start_nazov, start_lat, start_long,ciel_nazov,ciel_lat,ciel_long,celkove_km,datum_vytvorenia,mod_trasy,id_user, vytvoril)
-        VALUES ('" . $start . "', '" . $lat1 . "','" . $lng1 . "','" . $end . "','" . $lat2 . "','" . $lng2 . "',$dis,'".date("Y-m-d H:i:s")."','" . $modTrasy . "',$id,'" . $meno." ".$priezvisko . "')";
+        VALUES ('" . $start . "', '" . $lat1 . "','" . $lng1 . "','" . $end . "','" . $lat2 . "','" . $lng2 . "',$dis,'".date("Y-m-d H:i:s")."','" . $modTrasy . "',$idUser,'" . $meno." ".$priezvisko . "')";
 
 echo $sql."<br><br>";
 
@@ -46,6 +45,32 @@ if ($result = $conn->query($sql)) {
 echo $idTrasa."<br>";
 
 
+$sql = "SELECT id FROM pouzivatelia";
+$ids = [];
+if ($result = $conn->query($sql)) {
+    while ($row = $result->fetch_object()) {
+
+        array_push($ids,$row->id);
+
+    }
+}
+
+foreach ($ids as $index){
+
+    $sql = "INSERT INTO trasa_pouzivatel (id_pouzivatel, id_trasa, prejdene_km, aktivna_trasa)
+            VALUES ($index,$idTrasa,0,0)";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    echo "<br>".$sql."<br><br>";
+
+}
+
+var_dump($ids);
 $conn->close();
 
 header("Location: cestyAdmin.php");

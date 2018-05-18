@@ -46,7 +46,7 @@ require_once "security/over_uzivatela.php";
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="cesty.php">Domov</a>
+                <a class="nav-link" href="cestyAdmin.php">Domov</a>
             </li>
 
             <li class="nav-item dropdown">
@@ -54,8 +54,20 @@ require_once "security/over_uzivatela.php";
                     Upozornenia
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item " href="#">Zapnúť</a>
-                    <a class="dropdown-item active" href="#">Vypnúť</a>
+                    <?php
+                        $email= $_SESSION['email'];
+                        $query="SELECT odoberatel from pouzivatelia WHERE email='$email'";
+                        $result = mysqli_query($conn,$query);
+                        while ($data = mysqli_fetch_array($result)){
+                            if($data['odoberatel'] == 1){
+                                echo '<a class="dropdown-item active" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item " href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }else{
+                                echo '<a class="dropdown-item" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }
+                        }
+                    ?>
                 </div>
             </li>
             <li class="nav-item">
@@ -158,7 +170,7 @@ require_once "security/over_uzivatela.php";
             if ($result = $conn->query($sql)) {
                 while ($row = $result->fetch_object()) {
                     echo "<tr>";
-                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
+                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
                     echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
@@ -172,16 +184,11 @@ require_once "security/over_uzivatela.php";
                     else{
                         echo "<td><input onclick='check($i)' class='radio' type='radio' ></td>";
                     }
-
-
                     echo "</tr>";
-
                     $i++;
                 }
                 $result->close();
             }
-
-
             ?>
             </tbody>
         </table>
@@ -194,7 +201,8 @@ require_once "security/over_uzivatela.php";
         <img src="img/add.png"    id="privateBtn" class="addBtn" alt="add">
         <img src="img/public.png" id="publicBtn" class="addBtn" alt="add">
         <img src="img/relay.png"  id="relayBtn" class="addBtn" alt="add">
-
+        <a href="stafetovyMod.php" > <img src="img/addpeople.png" id="addPeople" class="addBtn" alt="add"></a>
+        <img src="img/distance.png" id="distanceBtn" class="addBtn" alt="add">
 
         <div class="addDiv">
 
@@ -218,11 +226,98 @@ require_once "security/over_uzivatela.php";
 
         </div>
 
+        <div class="distanceDiv">
+
+            <div class="distanceDiv">
+
+                <form action="prebehnuteKm.php" method="post" >
+                    <div class="form-group">
+                        <label>Počet odbehnutých kilometrov:</label>
+                        <input type="number" name="distance" class="form-control" id="distance" min="0" step="any" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Deň tréningu:</label>
+                        <input class="form-control" name="date" type="date"  id="date" >
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Začiatok tréningu:</label>
+                            <input class="form-control" name="treningStart" type="time"  id="startTime" >
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label>Koniec tréningu:</label>
+                            <input class="form-control" type="time" name="treningEnd" id="endTime" >
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Zemepisná šírka:</label>
+                            <input type="number" class="form-control" name="lat" id="latitude" step="any" >
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label>Zemepisná dĺžka:</label>
+                            <input type="number" class="form-control" name="lng" id="longtitude" step="any" >
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Hodnotenie tréningu:</label><br>
+                        <select name="hodnotenie" class="custom-select custom-select-lg p-30">
+
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Poznámka:</label>
+                        <textarea class="form-control" rows="5" name="note" id="poznamka"></textarea>
+                    </div>
+
+                    <button type="submit" id="prebehnutyBtn" class="btn btn-danger col-4 offset-4">Potvrď</button>
+                </form>
+
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="progressDiv">
+            <div id="probar1">
+
+            </div>
+        </div>
 
     </div>
 </div>
 
 <script>
+    function zmenitNastavenieAktualit(id){
+
+        if(id=="zapUpozornenia"){
+            $("#zapUpozornenia").addClass("active");
+            $("#vypUpozornenia").removeClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=cestyAdmin.php";
+
+        }else{
+            $("#zapUpozornenia").removeClass("active");
+            $("#vypUpozornenia").addClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=cestyAdmin.php";
+        }
+    }
 
     if (window.location.href.indexOf("lat1=") > -1) {
 
@@ -243,13 +338,14 @@ require_once "security/over_uzivatela.php";
         for(var i = 1; i < document.getElementById("privatneTrasy").rows.length; i++){
             document.querySelector("#privatneTrasy tr:nth-child("+i+")  td:last-child .radio").checked = false;
         }
-
         document.querySelector("#privatneTrasy tr:nth-child("+index+")  td:last-child .radio").checked = true;
-
-        var id = $("#privatneTrasy tr:nth-child("+index+") th span").text();
-
-        window.location.replace("updateStavTrasy.php?index="+id+"");
-
+        var id = $("#privatneTrasy tr:nth-child("+index+") th span:first-child").text();
+        var tid = $("#privatneTrasy tr:nth-child("+index+") th span:last-child").text();
+        console.log(id);
+        console.log(tid);
+        //var str = "updateStavTrasy.php?index="+id+"&tid="+tid;
+        //console.log(str);
+        window.location.replace("updateStavTrasy.php?index="+id+"&tid="+tid);
     }
     $(document).ready(function () {
 
@@ -258,6 +354,8 @@ require_once "security/over_uzivatela.php";
 
 </script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+<script src="scripts/bar.js" ></script>
 <script src="scripts/cesty.js" ></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArw-eyIcflcUehHyPzWx5FRzAr6EEI_68&libraries=places&callback=myMap"></script>
 

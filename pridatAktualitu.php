@@ -23,7 +23,6 @@
             array_push($odoberatelia, $row);
         }
 
-          
         for ($i = 0; $i < sizeof($odoberatelia); $i++){    
             try {
                 $mail = new PHPMailer(true); 

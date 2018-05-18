@@ -37,7 +37,7 @@
                 while ($data = mysqli_fetch_array($result)){
                     echo "Vitajte ".$data['meno']." ".$data['priezvisko'];
                 }
-                $conn->close();
+                
             ?>
         </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="cesty.php">Domov</a>
+                    <?php 
+                        if($_SESSION['rola']== "admin"){
+                            echo '<a class="nav-link" href="cestyAdmin.php">Domov</a>';
+                        }else{
+                            echo '<a class="nav-link" href="cesty.php">Domov</a>';
+                        }
+                     ?>
+                    
                 </li>
 
                 <li class="nav-item dropdown">
@@ -55,9 +62,22 @@
                         Upozornenia
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item " href="#">Zapnúť</a>
-                        <a class="dropdown-item active" href="#">Vypnúť</a>
-                    </div>
+                    <?php
+                        $email= $_SESSION['email'];
+                        $query="SELECT odoberatel from pouzivatelia WHERE email='$email'";
+                        $result = mysqli_query($conn,$query);
+                        while ($data = mysqli_fetch_array($result)){
+                            if($data['odoberatel'] == 1){
+                                echo '<a class="dropdown-item active" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item " href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }else{
+                                echo '<a class="dropdown-item" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }
+                        }
+                        $conn->close();
+                    ?>
+                </div>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="aktuality.php">
@@ -105,8 +125,10 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
-                    echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                     if($_SESSION['rola']=="admin"){
+                        echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
+                        echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                    }
                     echo '</div>';
                     echo '</div>';
                 }
@@ -150,8 +172,10 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
-                    echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                    if($_SESSION['rola']=="admin"){
+                        echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
+                        echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                    }
                     echo '</div>';
                     echo '</div>';
                 }
@@ -174,8 +198,6 @@
                     $("#left").css("padding-right","0.5em");
                     $("#right").removeClass("col-lg-4").addClass("col-lg-6");
                     $("#right").css("padding-left","0.5em");
-                    $(".btn-primary").hide();
-                    $(".btn-danger").hide();
                 }
 
             </script>
@@ -207,6 +229,20 @@
     ?>
     <script type="text/javascript">
 
+        function zmenitNastavenieAktualit(id){
+
+        if(id=="zapUpozornenia"){
+            $("#zapUpozornenia").addClass("active");
+            $("#vypUpozornenia").removeClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=aktuality.php";
+
+        }else{
+            $("#zapUpozornenia").removeClass("active");
+            $("#vypUpozornenia").addClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=aktuality.php";
+        }
+    }
+    
         function editovatAktualitu(id){
             var editTitulok = $("#"+id + " h5").text();
             var editObsah = $("#"+id + " p").text();

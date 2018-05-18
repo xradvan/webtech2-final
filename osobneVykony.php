@@ -47,17 +47,35 @@ require_once "security/over_uzivatela.php";
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="cesty.php">Domov</a>
+                <?php 
+                    if($_SESSION['rola']== "admin"){
+                        echo '<a class="nav-link" href="cestyAdmin.php">Domov</a>';
+                    }else{
+                        echo '<a class="nav-link" href="cesty.php">Domov</a>';
+                    }
+                ?>
                 </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Upozornenia
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item " href="#">Zapnúť</a>
-                        <a class="dropdown-item active" href="#">Vypnúť</a>
-                    </div>
+                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <?php
+                        $email= $_SESSION['email'];
+                        $query="SELECT odoberatel from pouzivatelia WHERE email='$email'";
+                        $result = mysqli_query($conn,$query);
+                        while ($data = mysqli_fetch_array($result)){
+                            if($data['odoberatel'] == 1){
+                                echo '<a class="dropdown-item active" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item " href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }else{
+                                echo '<a class="dropdown-item" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }
+                        }
+                    ?>
+                </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="aktuality.php">
@@ -81,50 +99,76 @@ require_once "security/over_uzivatela.php";
         </div>
     </nav>
 
-    <?php
-        $query="SELECT meno, priezvisko from pouzivatelia WHERE id='$_GET[id]'";
-        $result = mysqli_query($conn,$query);
-        $data = mysqli_fetch_array($result)
-    ?>
+    
 
     <div class="container text-center col-lg-10">
-        <h4 class="text-left">Používateľ <strong><?php echo $data['meno']." ".$data['priezvisko']; ?></strong></h4>
-    	<table class="table table-dark table-bordered"  id="pouzivateliaTable">
+    <?php if ($_SESSION['rola'] == "user"){
+            echo '<h4 class="text-left">Používateľ <strong>'.$_SESSION['meno']." ".$_SESSION['priezvisko'].'</strong></h4>';
+                $query="SELECT id from pouzivatelia WHERE email='$_SESSION[email]'";
+                $result1 = mysqli_query($conn,$query);
+                $data1 = mysqli_fetch_array($result1);
+        }
+            else {
+                $query="SELECT meno, priezvisko from pouzivatelia WHERE id='$_GET[id]'";
+                $result = mysqli_query($conn,$query);
+                $data = mysqli_fetch_array($result);
+                echo '<h4 class="text-left">Používateľ <strong>'.$data['meno']." ".$data['priezvisko'].'</strong></h4>';
+            }
+            ?>
+        <table class="table table-dark table-bordered"  id="pouzivateliaTable">
             <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">COL 1</th>
-                <th scope="col">COL 2</th>
-                <th scope="col">COL 3</th>
-                <th scope="col">COL 1</th>
-                <th scope="col">COL 2</th>
-                <th scope="col">COL 3</th>
+                <th scope="col">Počet_km</th>
+                <th scope="col">Začiatok</th>
+                <th scope="col">Koniec</th>
+                <th scope="col">Zem_šírka</th>
+                <th scope="col">Zem_výška</th>
+                <th scope="col">Hodnotenie</th>
+                <th scope="col">Poznámka</th>
+                <th scope="col">Dátum</th>
+                <th scope="col">Priem_rýchlosť</th>
             </tr>
             </thead>
             <tbody>
                 <?php
-                    /*if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
-                        $query="SELECT id, meno, priezvisko, rola from pouzivatelia";
+                    if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+                    if(!isset($_GET['id'])){
+                        $query="SELECT  trening.lat_trening, trening.lng_trening, trening.poznamka, trening.odbehnute_km, trening.den_treningu, trening.zaciatok_treningu, trening.koniec_treningu, trening.hodnotenie, trening.poznamka FROM trening JOIN trasa_pouzivatel ON trasa_pouzivatel.id = trening.id_trasa_pouzivatel JOIN pouzivatelia ON trasa_pouzivatel.id_pouzivatel = pouzivatelia.id JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa AND pouzivatelia.id = '$data1[id]'";
+                    }else{
+                        $query="SELECT  trening.lat_trening, trening.lng_trening, trening.poznamka, trening.odbehnute_km, trening.den_treningu, trening.zaciatok_treningu, trening.koniec_treningu, trening.hodnotenie, trening.poznamka FROM trening JOIN trasa_pouzivatel ON trasa_pouzivatel.id = trening.id_trasa_pouzivatel JOIN pouzivatelia ON trasa_pouzivatel.id_pouzivatel = pouzivatelia.id JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa AND pouzivatelia.id = '$_GET[id]'";
+                        
+                    }   $km_tr = 0;
                         $result = mysqli_query($conn,$query);
                         $i=1;
                         while ($data = mysqli_fetch_array($result)){
+                            $km_tr += $data["odbehnute_km"];
+                            $prm = strtotime($data["koniec_treningu"]) - strtotime($data["zaciatok_treningu"]);
+                            $prm = round($data["odbehnute_km"]/(($prm / 60) / 60), 2)." km/h";
                             echo '<tr>';
                             echo '<th scope="row">'.$i.'</th>';
-                            echo '<td>'.$data["meno"].'</td>';
-                            echo '<td>'.$data["priezvisko"].'</td>';
-                            if($data['rola'] == "user"){
-                                echo '<td><input type="checkbox" class="checkbox" value="'.$data['id'].'"></td>';
-                            }else{
-                                echo '<td><input type="checkbox" class="checkbox" checked value="'.$data['id'].'"></td>';
+                            echo '<td>'.$data["odbehnute_km"].'</td>';
+                            echo '<td>'.$data["zaciatok_treningu"].'</td>';
+                            echo '<td>'.$data["koniec_treningu"].'</td>';
+                            echo '<td>'.$data["lat_trening"].'</td>';
+                            echo '<td>'.$data["lng_trening"].'</td>';
+                            echo '<td>'.$data["hodnotenie"].'</td>';
+                            echo '<td>'.$data["poznamka"].'</td>';
+                            echo '<td>'.$data["den_treningu"].'</td>';
+                            echo '<td>'.$prm.'</td>';
+                            echo '</tr>';
+                            $i++;
                             }
-                             echo '</tr>';
-                             $i++;
-                        }
-                        $conn->close();*/
+                            if($i-1 != 0){
+                                $km_tr = $km_tr / ($i - 1);
+                            }
 
                 ?>
             </tbody>
         </table>
+        <?php
+            echo "<h4><strong>Priemerná hodnota odbehnutých km na 1 tréning je: ".$km_tr." km</strong></h4>";
+        ?>
     </div>
     <div class="container text-center col-lg-2">
         <input type="image" src="img/download.png" id="ulozit" width="70" height="70"><br>
@@ -142,58 +186,78 @@ require_once "security/over_uzivatela.php";
     </script>
 
 <script type="text/javascript">
+    function zmenitNastavenieAktualit(id){
+
+        if(id=="zapUpozornenia"){
+            $("#zapUpozornenia").addClass("active");
+            $("#vypUpozornenia").removeClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=osobneVykony.php";
+
+        }else{
+            $("#zapUpozornenia").removeClass("active");
+            $("#vypUpozornenia").addClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=osobneVykony.php";
+        }
+    }
+    
     $( "#returnButton" ).click(function() {
             window.location.href = "registraciaPouzivatela.php";
         });
 
-	 $( document ).ready(function() {
+     $( document ).ready(function() {
       $('#pouzivateliaTable').DataTable();
       $("#ulozit").on('click', function () {
-      	// parse the HTML table element having an id=exportTable
           var dataSource = shield.DataSource.create({
             data: "#pouzivateliaTable",
             schema: {
                 type: "table",
                 fields: {
-                    Meno: { type: String },
-                    Priezvisko: { type: String },
-                    Admin: { type: String }
+                    Počet_km: { type: String },
+                    Začiatok: { type: String },
+                    Koniec: { type: String },
+                    Zem_šírka: { type: String },
+                    Zem_výška: { type: String },
+                    Hodnotenie: { type: String },
+                    Poznámka: { type: String },
+                    Dátum: { type: String },
+                    Priem_rýchlosť: { type: String }
                 }
             }
         });
 
-        // when parsing is done, export the data to PDF
+
         dataSource.read().then(function (data) {
             var pdf = new shield.exp.PDFDocument({
                 author: "Webtech",
                 created: new Date()
             });
 
-            pdf.addPage("a4", "portrait");
+            pdf.addPage("a4", "letter");
 
             pdf.table(
                 50,
                 50,
                 data,
                 [
-                    { field: "Meno", title: "Meno", width: 100 },
-                    { field: "Priezvisko", title: "Priezvisko", width: 100 },
-                    { field: "Admin", title: "Admin", width: 50 }
-                ],
-                {
-                    margins: {
-                        top: 50,
-                        left: 50
-                    }
-                }
+                    { field: "Počet_km", title: "Pocet km", width: 70 },
+                    { field: "Začiatok", title: "Zaciatok", width: 70 },
+                    { field: "Koniec", title: "Koniec", width: 70 },
+                    { field: "Zem_šírka", title: "Zem.sirka", width: 70 },
+                    { field: "Zem_výška", title: "Zem. vyska", width: 70 },
+                    { field: "Hodnotenie", title: "Hodnotenie", width: 70 },
+                    { field: "Poznámka", title: "Poznamka", width: 100 },
+                    { field: "Dátum", title: "Datum", width: 70 },
+                    { field: "Priem_rýchlosť", title: "Priem. rychlost", width: 100 }
+                ]
+               
             );
 
             pdf.saveAs({
                 fileName: "OsobneVykony"
             });
         });
-    });
-});
+            });
+        });
 
 </script>
 </body>

@@ -28,6 +28,10 @@ $("#relayBtn").on('click', function () {
 
 });
 
+$("#distanceBtn").on('click', function () {
+    $(".distanceDiv").slideToggle();
+});
+
 $(document).on('click','#insertBtn', function () {
     window.location.href = "pridajTrasu.php?lat1="+lat1+"&lng1="+lng1+"&lat2="+lat2+"&lng2="+lng2+"&start="+$("#formGroupExampleInput").val()+"&end="+$("#formGroupExampleInput2").val()+"&dis="+dis;
 });

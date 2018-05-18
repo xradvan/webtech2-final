@@ -1,3 +1,7 @@
+<?php
+include("security/over_uzivatela.php");
+?>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -25,7 +29,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="cesty.php">Domov</a>
+                <?php
+                if($_SESSION['rola']== "admin"){
+                    echo '<a class="nav-link" href="cestyAdmin.php">Domov</a>';
+                }else{
+                    echo '<a class="nav-link" href="cesty.php">Domov</a>';
+                }
+                ?>
+
             </li>
 
             <li class="nav-item active">
@@ -60,8 +71,9 @@
             $conn = new mysqli($servername, $username, $password, $dbname);
             $conn->set_charset("UTF8");
             if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
-
-            $query = " SELECT meno, priezvisko, id FROM pouzivatelia ";
+            $meno = $_GET["nazov"];
+            echo "<h4>Názov tímu: <span id='menot'>".$meno."</span></h4>";
+            $query = " SELECT id, meno, priezvisko FROM pouzivatelia WHERE nazovtimu is NULL";
             $result = mysqli_query($conn,$query);
             $i = 1;
             echo "<select id='menaDoTimov' class='custom-select'>";
@@ -76,8 +88,17 @@
 
             <div id='menaClenovTimu'>
                 <h4>Členovia tímu: </h4>
+                <?php
+                $meno = $_GET["nazov"];
+                $query = " SELECT id, meno, priezvisko FROM pouzivatelia WHERE nazovtimu='".$meno."'";
+                $result = mysqli_query($conn,$query);
+                while ($data = mysqli_fetch_array($result))
+                {
+                    echo "<option value='" . $data['id']."'>" . $data['meno']." ".$data['priezvisko']. "</option>";
+                    $i++;
+                }
+                ?>
             </div>
-
             <select id="odstranMena" class="custom-select">
                 <option>Odstráňte člena z tímu</option>
             </select>
@@ -94,12 +115,10 @@
         if( $("#menoTimu").val() != '' ) {
             var meno = $("#menoTimu").val();
             console.log(meno);
-            $("#zobrazDruhe").css("display","block");
-            $("#zobrazPrve").css("display","none");
-            $odkaz = "stafetovyMod.php?nazov=".$string;
+            window.location.href = "stafetovyMod.php?nazov="+meno;
         }
         else{
-            alert("Vyplňte náyov tímu!");
+            alert("Vyplňte názov tímu!");
         }
     });
 
@@ -140,7 +159,7 @@
 
     $("#vytvorTim").on("click",function(){
         if (pocetClenovTimu <= 6){
-            var menoTimu = $('#menoTimu').val();
+            var menot = $('#menot').text();
             var i = 1;
             var url = "test.php?";
             for (var [key, value] of clenoviaTimu) {
@@ -148,7 +167,7 @@
                 url += i+"="+id+"&";
                 i++;
             }
-                url += "tim="+menoTimu;
+                url += "tim="+menot;
             window.location = url;
         }
         else{
@@ -156,7 +175,39 @@
         }
     });
 
+
+
 </script>
+
+<?php
+
+if(isset($_GET["nazov"])){
+    $meno = $_GET["nazov"];
+    require ('config.php');
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->set_charset("UTF8");
+    if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
+    $query = " SELECT nazovtimu FROM pouzivatelia WHERE nazovtimu='".$meno."'";
+    $result = mysqli_query($conn,$query);
+    $pocet = 0;
+
+    if ($result == $conn->query($query)){
+        while ($data = mysqli_fetch_array($result)) {
+            $pocet++;
+        }
+    }
+
+    if ($pocet >= 3){
+        echo "<script>alert('Tím je plný!')</script>";
+        echo "<script> window.location.href = 'stafetovyMod.php'</script>";
+    }
+
+    else{
+        echo"<script>$('#zobrazDruhe').css('display','block'); </script>";
+        echo"<script>$('#zobrazPrve').css('display','none')</script>";
+    }
+}
+?>
 </body>
 </html>
 

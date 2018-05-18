@@ -1,7 +1,7 @@
 <?php
 
 $index = $_GET['index'];
-
+$tid = $_GET['tid'];
 
 require ("config.php");
 // Create connection
@@ -12,10 +12,10 @@ $conn->set_charset("UTF8");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "UPDATE trasa SET aktivna_trasa=0";
+$sql = "UPDATE trasa_pouzivatel SET aktivna_trasa=0";
 $conn->query($sql);
 
-$sql = "UPDATE trasa SET aktivna_trasa=1 WHERE id = $index";
+$sql = "UPDATE trasa_pouzivatel SET aktivna_trasa=1 WHERE id_pouzivatel =".$index." AND id_trasa =".$tid;
 
 echo $sql."<br><br>";
 
@@ -29,7 +29,7 @@ if ($conn->query($sql) === TRUE) {
 
 
 
-$sql = "SELECT start_lat, start_long, ciel_lat, ciel_long FROM trasa WHERE id =".$index;
+$sql = "SELECT start_lat, start_long, ciel_lat, ciel_long FROM trasa WHERE id =".$tid;
 $lat1=0;
 $lng1=0;
 $lat2=0;
