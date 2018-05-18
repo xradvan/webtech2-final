@@ -125,8 +125,10 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
-                    echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                     if($_SESSION['rola']=="admin"){
+                        echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
+                        echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                    }
                     echo '</div>';
                     echo '</div>';
                 }
@@ -170,8 +172,10 @@
                     echo '<h5 class="card-title">'.$data['titulok'].'</h5>';
                     echo '<h6 class="card-subtitle mb-2 text-muted">'.$data['datum'].'</h6>';
                     echo '<p class="card-text">'.$data['obsah'].'</p>';
-                    echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
-                    echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                    if($_SESSION['rola']=="admin"){
+                        echo '<input type="image" src="img/edit.png" onclick="editovatAktualitu(\''.$data['id'].'\');" width="22" height="24"></button>';
+                        echo '<input type="image" src="img/delete.png" onclick="window.location =\'zmazatAktualitu.php?id='.$data['id'].'\';" width="24" height="24" class="deleteButton">';
+                    }
                     echo '</div>';
                     echo '</div>';
                 }
@@ -194,8 +198,6 @@
                     $("#left").css("padding-right","0.5em");
                     $("#right").removeClass("col-lg-4").addClass("col-lg-6");
                     $("#right").css("padding-left","0.5em");
-                    $(".btn-primary").hide();
-                    $(".btn-danger").hide();
                 }
 
             </script>
