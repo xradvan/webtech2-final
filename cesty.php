@@ -155,7 +155,7 @@ require_once "security/over_uzivatela.php";
             if ($result = $conn->query($sql)) {
                 while ($row = $result->fetch_object()) {
                     echo "<tr>";
-                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
+                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
                     echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
@@ -238,9 +238,15 @@ require_once "security/over_uzivatela.php";
 
         document.querySelector("#privatneTrasy tr:nth-child("+index+")  td:last-child .radio").checked = true;
 
-        var id = $("#privatneTrasy tr:nth-child("+index+") th span").text();
+        var id = $("#privatneTrasy tr:nth-child("+index+") th span:first-child").text();
+        var tid = $("#privatneTrasy tr:nth-child("+index+") th span:last-child").text();
 
-        window.location.replace("updateStavTrasy.php?index="+id+"");
+        console.log(id);
+        console.log(tid);
+
+        //var str = "updateStavTrasy.php?index="+id+"&tid="+tid;
+        //console.log(str);
+        window.location.replace("updateStavTrasy.php?index="+id+"&tid="+tid);
 
     }
     $(document).ready(function () {

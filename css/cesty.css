@@ -67,7 +67,8 @@ body {
     width:25%;
     margin: 0 auto;
 }
-.spanId{
+.spanId,
+.spanTid{
     visibility: hidden;
 }
 
