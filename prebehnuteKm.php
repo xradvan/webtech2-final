@@ -89,7 +89,19 @@ if ($result = $conn->query($sql)) {
     $result->close();
 }
 
-echo $naseKm;
+echo "nase km ".$naseKm;
+$celKM = 0;
+$sql = "SELECT celkove_km FROM trasa where id =$id_trasa";
+if ($result = $conn->query($sql)) {
+    while ($row = $result->fetch_object()) {
+
+        $celKM = $row->celkove_km;
+    }
+}
+
+if ($naseKm >= $celKM){
+    $naseKm = $celKM;
+}
 
 $sql = "UPDATE trasa_pouzivatel SET prejdene_km=$naseKm WHERE id = $id_tr_pouz";
 if ($conn->query($sql) === TRUE) {
@@ -160,10 +172,10 @@ $kilometreTimu = 0;
     }
 }
 
-/*
+
 if($_SESSION['rola'] == 'admin'){
     header("Location: cestyAdmin.php");
 }
 else{
     header("Location: cesty.php");
-}*/
+}

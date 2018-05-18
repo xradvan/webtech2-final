@@ -174,7 +174,7 @@ require_once "security/over_uzivatela.php";
                     echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
-                    echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
+                    echo "<td>$row->prejdene_km/<b>".round($row->celkove_km)."</b></td>";
                     echo "<td>$row->datum_vytvorenia</td>";
                     echo "<td>$row->vytvoril</td>";
                     echo "<td>$row->mod_trasy</td>";
