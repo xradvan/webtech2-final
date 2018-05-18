@@ -69,7 +69,7 @@ include("security/over_uzivatela.php");
             $result = mysqli_query($conn,$query);
             $i = 1;
             echo "<select id='menaDoTimov' class='custom-select'>";
-            echo "<option value = 0>"."Vyberte člena do tímu"."</option>";
+            echo "<option value = 0 selected>"."Vyberte člena do tímu"."</option>";
             while ($data = mysqli_fetch_array($result))
             {
                 echo "<option value='" . $data['id']."'>" . $data['meno']." ".$data['priezvisko']. "</option>";
@@ -96,8 +96,10 @@ include("security/over_uzivatela.php");
     var pocetClenovTimu = 0;
     var clenoviaTimu = new Map();
     $('#menaDoTimov').on('change', function() {
-        if(pocetClenovTimu <= 6){
+        if(pocetClenovTimu < 6){
+            pocetClenovTimu++;
             var value = $(this).val();
+            console.log("poc "+pocetClenovTimu);
             var meno = $('#menaDoTimov option[value ="'+ value +'"]').text();
             var div = $('<div />').attr({'id':value }).html(meno);
             div.appendTo('#menaClenovTimu');
@@ -105,8 +107,7 @@ include("security/over_uzivatela.php");
             $('#menaDoTimov').find(":selected").remove();
             clenoviaTimu.set(value,meno);
             console.log(clenoviaTimu);
-            pocetClenovTimu++;
-        }else  {;
+        }else {
             alert("Nie je možné pridať viac členov do tímu.");
         }
     });
@@ -121,8 +122,6 @@ include("security/over_uzivatela.php");
             $('#'+value+'').remove();
             $('#odstranMena').find(":selected").remove();
             pocetClenovTimu--;
-
-
         }else{
             alert("Tím neobsahuje žiadnych členov.");
         }

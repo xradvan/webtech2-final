@@ -1,4 +1,5 @@
 <?php
+include("security/over_uzivatela.php");
 if(isset($_POST['editTitulok'])  && isset($_POST['editObsah']) && isset($_POST['editDatum']) && isset($_POST['aktualitaId'])){
 	require ('config.php');
     $conn = new mysqli($servername, $username, $password, $dbname);

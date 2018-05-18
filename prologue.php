@@ -95,8 +95,6 @@
                         position: results[0].geometry.location
                     });
                     markers.push(marker);
-                } else {
-                    alert("Geocode unsuccessful");
                 }
             });
         }
@@ -118,8 +116,6 @@
                     });
                     markers.push(marker);
                     pocet++;
-                } else {
-                    alert("Geocode unsuccessful");
                 }
             });
         }
