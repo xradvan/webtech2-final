@@ -47,7 +47,13 @@ require_once "security/over_uzivatela.php";
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="cesty.php">Domov</a>
+                <?php 
+                    if($_SESSION['rola']== "admin"){
+                        echo '<a class="nav-link" href="cestyAdmin.php">Domov</a>';
+                    }else{
+                        echo '<a class="nav-link" href="cesty.php">Domov</a>';
+                    }
+                ?>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -93,14 +99,19 @@ require_once "security/over_uzivatela.php";
         </div>
     </nav>
 
-    <?php
-        $query="SELECT meno, priezvisko from pouzivatelia WHERE id='$_GET[id]'";
-        $result = mysqli_query($conn,$query);
-        $data = mysqli_fetch_array($result)
-    ?>
+    
 
     <div class="container text-center col-lg-10">
-        <h4 class="text-left">Používateľ <strong><?php echo $data['meno']." ".$data['priezvisko']; ?></strong></h4>
+    <?php if ($_SESSION['rola'] == "user"){
+            echo '<h4 class="text-left">Používateľ <strong>'.$_SESSION['meno']." ".$_SESSION['priezvisko'].'</strong></h4>';
+        }
+            else {
+                $query="SELECT meno, priezvisko from pouzivatelia WHERE id='$_GET[id]'";
+                $result = mysqli_query($conn,$query);
+                $data = mysqli_fetch_array($result);
+                echo '<h4 class="text-left">Používateľ <strong>'.$data['meno']." ".$data['priezvisko'].'</strong></h4>';
+            }
+            ?>
     	<table class="table table-dark table-bordered"  id="pouzivateliaTable">
             <thead>
             <tr>
@@ -160,12 +171,12 @@ require_once "security/over_uzivatela.php";
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=osobneVykony.php";
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=osobneVykony.php";
         }
     }
     

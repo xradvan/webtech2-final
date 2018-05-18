@@ -46,7 +46,7 @@ require_once "security/over_uzivatela.php";
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="cesty.php">Domov</a>
+                <a class="nav-link" href="cestyAdmin.php">Domov</a>
             </li>
 
             <li class="nav-item dropdown">
@@ -197,7 +197,8 @@ require_once "security/over_uzivatela.php";
 
     </div>
     <div class="col-4 rightCol">
-        <img src="img/add.png" id="privateBtn" class="addBtn" alt="add">
+
+        <img src="img/add.png"    id="privateBtn" class="addBtn" alt="add">
         <img src="img/public.png" id="publicBtn" class="addBtn" alt="add">
         <img src="img/relay.png"  id="relayBtn" class="addBtn" alt="add">
         <a href="stafetovyMod.php" > <img src="img/addpeople.png" id="addPeople" class="addBtn" alt="add"></a>
@@ -306,15 +307,14 @@ require_once "security/over_uzivatela.php";
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=cestyAdmin.php";
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=cestyAdmin.php";
         }
     }
-
 
     if (window.location.href.indexOf("lat1=") > -1) {
 

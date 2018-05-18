@@ -79,6 +79,11 @@ require_once "security/over_uzivatela.php";
                     Používatelia
                 </a>
             </li>
+            <li class="nav-item" id="osobneVykony" style="display: inline;">
+                <a class="nav-link" href="osobneVykony.php">
+                    Osobné výkony
+                </a>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="aktuality.php?odhlasenie='1'"><img src="logOut.png" width="25px" height="20px"></a></li>
@@ -295,12 +300,12 @@ require_once "security/over_uzivatela.php";
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=cesty.php";
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=cesty.php";
         }
     }
 
