@@ -226,6 +226,7 @@ require_once "security/over_uzivatela.php";
         var lng1 = url.searchParams.get("lng1");
         var lat2 = url.searchParams.get("lat2");
         var lng2 = url.searchParams.get("lng2");
+        var vzd = url.searchParams.get("vzd");
 
     }
 

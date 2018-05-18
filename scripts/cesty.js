@@ -6,6 +6,7 @@ var directionsDisplay2;
 var map;
 var map2;
 
+var directions={};
 
 
 
@@ -137,6 +138,56 @@ function myMap() {
             }
         });
     }
+
+
+
+
+    //
+    var routes=[
+        { label:'',
+            request:{
+                origin: new google.maps.LatLng(lat1, lng1),
+                destination: new google.maps.LatLng(lat2, lng2),
+                travelMode: google.maps.DirectionsTravelMode.DRIVING},
+            rendering:{marker:{icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png'},draggable:false}
+        }
+    ];
+
+    var bounds=new google.maps.LatLngBounds();
+
+
+    var dists=[vzd*1000];
+    console.log(vzd);
+    var selects=document.createElement('select');
+    selects.style.visibility = "hidden";
+
+    list=document.getElementsByTagName('ul')[0];
+
+    for(var d=0;d<dists.length;++d)
+    {
+        selects.options[selects.options.length]=new Option(dists[d],dists[d],d==0,d==0);
+    }
+
+    for(var r=0;r<routes.length;++r)
+    {
+        bounds.extend(routes[r].request.destination);
+        routes[r].rendering.routeId='r'+r+new Date().getTime();
+        routes[r].rendering.dist=dists[0];
+        var select=selects.cloneNode(true);
+
+        select.setAttribute('name',routes[r].rendering.routeId);
+
+        select.onchange=function(){directions[this.name].renderer.dist=this.value;
+            setMarkers(this.name)};
+
+        list.appendChild(document.createElement('li'));
+        list.lastChild.appendChild(select);
+        list.lastChild.appendChild(document.createTextNode(routes[r].label));
+
+        requestRoute(routes[r],map);
+    }
+
+    map.fitBounds(bounds);
 }
 /*
 function urobTrasu(lat1,lng1,lat2,lng2){
@@ -156,3 +207,136 @@ function urobTrasu(lat1,lng1,lat2,lng2){
     });
 
 }*/
+
+function setMarkers(ID)
+{
+    var direction=directions[ID],
+        renderer=direction.renderer,
+        dist=renderer.dist,
+        marker=renderer.marker,
+        map=renderer.getMap(),
+        dirs=direction.renderer.getDirections();
+    marker.map=map;
+
+    for(var k in direction.sets)
+    {
+
+        var set=directions[ID].sets[k];
+        set.visible=!!(k===dist);
+
+        for(var m=0;m<set.length;++m)
+        {
+
+            set[m].setMap((set.visible)?map:null);
+        }
+    }
+    if(!direction.sets[dist])
+    {
+        if(dirs.routes.length)
+        {
+            var route=dirs.routes[0];
+            var az=0;
+            for(var i=0;i<route.legs.length;++i)
+            {
+
+                if(route.legs[i].distance)
+                {
+                    az+=route.legs[i].distance.value;
+                }
+
+            }
+            dist=Math.max(dist,Math.round(az/100));
+            direction.sets[dist]=gMilestone(route,dist,marker);
+
+        }
+    }
+}
+
+function requestRoute(route,map)
+{
+    if(!window.gDirSVC)
+    {
+        window.gDirSVC = new google.maps.DirectionsService();
+    }
+
+    var renderer=new google.maps.DirectionsRenderer(route.rendering);
+    var renderer=new google.maps.DirectionsRenderer(route.rendering);
+    renderer.setMap(map);
+    renderer.setOptions({preserveViewport:true})
+
+
+    google.maps.event.addListener(renderer, 'directions_changed', function() {
+
+        if(directions[this.routeId])
+        {
+            //remove markers
+            for(var k in directions[this.routeId].sets)
+            {
+                for(var m=0;m<directions[this.routeId].sets[k].length;++m)
+                {
+                    directions[this.routeId].sets[k][m].setMap(null);
+                }
+            }
+        }
+
+        directions[this.routeId]={renderer:this,sets:{}};
+        setMarkers(this.routeId);
+
+    });
+
+    window.gDirSVC.route(route.request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            renderer.setDirections(response);
+        }
+    });
+}
+
+function gMilestone(route,dist,opts)
+{
+
+    var markers=[],
+        geo=google.maps.geometry.spherical,
+        path=route.overview_path,
+        point=path[0],
+        distance=0,
+        leg,
+        overflow,
+        pos;
+    var limit = 0;
+    for(var p=1;p<path.length;++p)
+    {
+
+        leg=Math.round(geo.computeDistanceBetween(point,path[p]));
+        d1=distance+0
+        distance+=leg;
+        overflow=dist-(d1%dist);
+
+
+        if(distance>=dist && leg>=overflow)
+        {
+            if(overflow && leg>=overflow)
+            {
+                pos = geo.computeOffset(point, overflow, geo.computeHeading(point, path[p]));
+                opts.position = pos;
+                limit++;
+                if (limit > 1) {
+                    opts.visible = false;
+                }
+                markers.push(new google.maps.Marker(opts));
+                distance -= dist;
+            }
+            while(distance>=dist)
+            {
+
+                pos = geo.computeOffset(point, dist + overflow, geo.computeHeading(point, path[p]));
+                opts.position = pos;
+                markers.push(new google.maps.Marker(opts));
+                distance -= dist;
+
+
+            }
+        }
+        point=path[p]
+    }
+    return markers;
+}
