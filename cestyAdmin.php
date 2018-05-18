@@ -54,8 +54,20 @@ require_once "security/over_uzivatela.php";
                     Upozornenia
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item " href="#">Zapnúť</a>
-                    <a class="dropdown-item active" href="#">Vypnúť</a>
+                    <?php
+                        $email= $_SESSION['email'];
+                        $query="SELECT odoberatel from pouzivatelia WHERE email='$email'";
+                        $result = mysqli_query($conn,$query);
+                        while ($data = mysqli_fetch_array($result)){
+                            if($data['odoberatel'] == 1){
+                                echo '<a class="dropdown-item active" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item " href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }else{
+                                echo '<a class="dropdown-item" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }
+                        }
+                    ?>
                 </div>
             </li>
             <li class="nav-item">
@@ -111,7 +123,6 @@ require_once "security/over_uzivatela.php";
                     FROM trasa_pouzivatel
                     INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
                     INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
-                    
                     ORDER BY aktivna_trasa DESC";
 
             ?>
@@ -159,7 +170,7 @@ require_once "security/over_uzivatela.php";
             if ($result = $conn->query($sql)) {
                 while ($row = $result->fetch_object()) {
                     echo "<tr>";
-                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
+                    echo "<th scope='row'>$i <span class='spanId' >$row->id</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
                     echo "<td>$row->prejdene_km/<b>$row->celkove_km</b></td>";
@@ -224,6 +235,19 @@ require_once "security/over_uzivatela.php";
 </div>
 
 <script>
+    function zmenitNastavenieAktualit(id){
+
+        if(id=="zapUpozornenia"){
+            $("#zapUpozornenia").addClass("active");
+            $("#vypUpozornenia").removeClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+
+        }else{
+            $("#zapUpozornenia").removeClass("active");
+            $("#vypUpozornenia").addClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+        }
+    }
 
     if (window.location.href.indexOf("lat1=") > -1) {
 
@@ -246,15 +270,9 @@ require_once "security/over_uzivatela.php";
 
         document.querySelector("#privatneTrasy tr:nth-child("+index+")  td:last-child .radio").checked = true;
 
-        var id = $("#privatneTrasy tr:nth-child("+index+") th span:first-child").text();
-        var tid = $("#privatneTrasy tr:nth-child("+index+") th span:last-child").text();
+        var id = $("#privatneTrasy tr:nth-child("+index+") th span").text();
 
-        console.log(id);
-        console.log(tid);
-
-        var str = "updateStavTrasy.php?index="+id+"&tid="+tid;
-        console.log(str);
-        window.location.replace("updateStavTrasy.php?index="+id+"&tid="+tid);
+        window.location.replace("updateStavTrasy.php?index="+id+"");
 
     }
     $(document).ready(function () {
