@@ -55,9 +55,21 @@
                         Upozornenia
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item " href="#">Zapnúť</a>
-                        <a class="dropdown-item active" href="#">Vypnúť</a>
-                    </div>
+                    <?php
+                        $email= $_SESSION['email'];
+                        $query="SELECT odoberatel from pouzivatelia WHERE email='$email'";
+                        $result = mysqli_query($conn,$query);
+                        while ($data = mysqli_fetch_array($result)){
+                            if($data['odoberatel'] == 1){
+                                echo '<a class="dropdown-item active" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item " href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }else{
+                                echo '<a class="dropdown-item" href="#" id="zapUpozornenia" onclick="zmenitNastavenieAktualit(\'zapUpozornenia\');">Zapnúť</a>';
+                                echo '<a class="dropdown-item active" href="#" id="vypUpozornenia" onclick="zmenitNastavenieAktualit(\'vypUpozornenia\');">Vypnúť</a>';
+                            }
+                        }
+                    ?>
+                </div>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="aktuality.php">
@@ -207,6 +219,20 @@
     ?>
     <script type="text/javascript">
 
+        function zmenitNastavenieAktualit(id){
+
+        if(id=="zapUpozornenia"){
+            $("#zapUpozornenia").addClass("active");
+            $("#vypUpozornenia").removeClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap";
+
+        }else{
+            $("#zapUpozornenia").removeClass("active");
+            $("#vypUpozornenia").addClass("active");
+            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp";
+        }
+    }
+    
         function editovatAktualitu(id){
             var editTitulok = $("#"+id + " h5").text();
             var editObsah = $("#"+id + " p").text();
