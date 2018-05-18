@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Pi 18.Máj 2018, 14:55
+-- Čas generovania: Pi 18.Máj 2018, 15:14
 -- Verzia serveru: 10.1.32-MariaDB
 -- Verzia PHP: 7.0.30
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Databáza: `webtech2_final`
+-- Databáza: `webtech2-final`
 --
 
 -- --------------------------------------------------------
@@ -138,10 +138,36 @@ CREATE TABLE `trasa_pouzivatel` (
 
 INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`, `aktivna_trasa`) VALUES
 (7, 4, 55, 0, 0),
-(8, 4, 56, 0, 0),
+(8, 4, 56, 0, 1),
 (9, 5, 56, 0, 0),
 (10, 6, 56, 0, 0),
 (11, 7, 56, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `trening`
+--
+
+CREATE TABLE `trening` (
+  `id` int(11) NOT NULL,
+  `id_trasa_pouzivatel` int(11) NOT NULL,
+  `odbehnute_km` double NOT NULL,
+  `den_treningu` date NOT NULL,
+  `zaciatok_treningu` time NOT NULL,
+  `koniec_treningu` time NOT NULL,
+  `lat_trening` double NOT NULL,
+  `lng_trening` double NOT NULL,
+  `hodnotenie` int(11) NOT NULL,
+  `poznamka` varchar(2000) COLLATE utf8_slovak_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `trening`
+--
+
+INSERT INTO `trening` (`id`, `id_trasa_pouzivatel`, `odbehnute_km`, `den_treningu`, `zaciatok_treningu`, `koniec_treningu`, `lat_trening`, `lng_trening`, `hodnotenie`, `poznamka`) VALUES
+(1, 7, 20, '2018-05-16', '11:33:10', '20:18:07', 15.11, 41.11, 1, 'Totalny trening');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -172,6 +198,13 @@ ALTER TABLE `trasa_pouzivatel`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexy pre tabuľku `trening`
+--
+ALTER TABLE `trening`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_trasa_pouzivatel` (`id_trasa_pouzivatel`);
+
+--
 -- AUTO_INCREMENT pre exportované tabuľky
 --
 
@@ -198,6 +231,22 @@ ALTER TABLE `trasa`
 --
 ALTER TABLE `trasa_pouzivatel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT pre tabuľku `trening`
+--
+ALTER TABLE `trening`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Obmedzenie pre exportované tabuľky
+--
+
+--
+-- Obmedzenie pre tabuľku `trening`
+--
+ALTER TABLE `trening`
+  ADD CONSTRAINT `trening_ibfk_1` FOREIGN KEY (`id_trasa_pouzivatel`) REFERENCES `trasa_pouzivatel` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
