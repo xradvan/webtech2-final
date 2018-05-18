@@ -95,3 +95,18 @@ body {
     border-bottom:2px solid #eeeeee;
     padding-bottom: 15px;
 }
+
+.progressDiv{
+    border-top: 2px solid #eee;
+    margin-top: 120px;
+}
+
+#container {
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+
+
