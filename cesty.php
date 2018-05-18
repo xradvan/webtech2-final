@@ -105,7 +105,7 @@ require_once "security/over_uzivatela.php";
             }
             $idU = $_SESSION['id'];
 
-            $sql = "SELECT pouzivatelia.id, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
+            $sql = "SELECT trasa.id as tid, pouzivatelia.id, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
                     FROM trasa_pouzivatel
                     INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
                     INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
@@ -119,7 +119,7 @@ require_once "security/over_uzivatela.php";
                 if ($result = $conn->query($sql)) {
                     while ($row = $result->fetch_object()) {
 
-                        echo "<a href='getUluru.php?id=$row->id'   class='dropdown-item'>$row->start_nazov - $row->ciel_nazov</a>";
+                        echo "<a href='getUluru.php?id=$row->tid'   class='dropdown-item'>$row->start_nazov - $row->ciel_nazov</a>";
 
                     }
                     $result->close();
