@@ -45,6 +45,14 @@ body {
 
 }
 
+.addBtn:nth-child(4){
+    right:380px;
+}
+
+#addPeople{
+    right:380px;
+}
+
 #addForm{
     margin-top:90px;
 }

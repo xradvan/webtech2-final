@@ -191,11 +191,10 @@ require_once "security/over_uzivatela.php";
 
     </div>
     <div class="col-4 rightCol">
-
-        <img src="img/add.png"    id="privateBtn" class="addBtn" alt="add">
+        <img src="img/add.png" id="privateBtn" class="addBtn" alt="add">
         <img src="img/public.png" id="publicBtn" class="addBtn" alt="add">
         <img src="img/relay.png"  id="relayBtn" class="addBtn" alt="add">
-
+        <a href="stafetovyMod.php" > <img src="img/addpeople.png" id="addPeople" class="addBtn" alt="add"></a>
 
         <div class="addDiv">
 
@@ -224,6 +223,7 @@ require_once "security/over_uzivatela.php";
 </div>
 
 <script>
+
 
     if (window.location.href.indexOf("lat1=") > -1) {
 
