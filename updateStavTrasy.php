@@ -2,6 +2,12 @@
 
 $index = $_GET['index'];
 $tid = $_GET['tid'];
+session_start();
+$idUser = $_SESSION['id'];
+echo "trasaId->".$tid."<br>";
+echo "userId ->".$idUser."<br>";
+
+echo "<hr>";
 
 require ("config.php");
 // Create connection
@@ -12,7 +18,7 @@ $conn->set_charset("UTF8");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "UPDATE trasa_pouzivatel SET aktivna_trasa=0";
+$sql = "UPDATE trasa_pouzivatel SET aktivna_trasa=0 WHERE id_pouzivatel = $idUser";
 $conn->query($sql);
 
 $sql = "UPDATE trasa_pouzivatel SET aktivna_trasa=1 WHERE id_pouzivatel =".$index." AND id_trasa =".$tid;
@@ -29,7 +35,7 @@ if ($conn->query($sql) === TRUE) {
 
 
 
-$sql = "SELECT start_lat, start_long, ciel_lat, ciel_long FROM trasa WHERE id =".$tid;
+$sql = "SELECT id,start_lat, start_long, ciel_lat, ciel_long FROM trasa WHERE id =".$tid;
 $lat1=0;
 $lng1=0;
 $lat2=0;
@@ -46,10 +52,10 @@ if ($result = $conn->query($sql)) {
     $result->close();
 }
 
-session_start();
+
 
 if($_SESSION['rola'] == "admin"){
-    header("Location: cestyAdmin.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
+    //header("Location: cestyAdmin.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
 }
 else{
     header("Location: cesty.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2");
