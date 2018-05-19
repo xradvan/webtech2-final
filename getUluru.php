@@ -6,14 +6,22 @@ $conn->set_charset("UTF8");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "SELECT start_lat, start_long, ciel_lat, ciel_long, mod_trasy FROM trasa WHERE id =".$_GET['id'];
+session_start();
+$idUser = $_SESSION['id'];
+
+echo "id->".$idUser."<br>";
+
+
+$sql = "SELECT id, start_lat, start_long, ciel_lat, ciel_long, mod_trasy FROM trasa WHERE id =".$_GET['id'];
 $lat1=0;
 $lng1=0;
 $lat2=0;
 $lng2=0;
+$idTrasa = null;
 $mod_trasy="";
 if ($result = $conn->query($sql)) {
     while ($row = $result->fetch_object()) {
+        $idTrasa = $row->id;
         $lat1 = $row->start_lat;
         $lng1 = $row->start_long;
         $lat2 = $row->ciel_lat;
@@ -22,6 +30,16 @@ if ($result = $conn->query($sql)) {
     }
     $result->close();
 }
+
+$res = $conn->query("SELECT id_timu FROM pouzivatelia WHERE id = $idUser");
+$tmp = $res->fetch_assoc();
+$idTimu = $tmp['id_timu'];
+
+$res = $conn->query("SELECT odbehnute_km FROM trasa_tim WHERE id_tim = $idTimu AND id_trasa = $idTrasa");
+$tmp = $res->fetch_assoc();
+$odbehKmTimu = $tmp['odbehnute_km'];
+
+echo "idTrasa->".$idTrasa."<br>idTimu->".$idTimu."<br>idTimu->".$odbehKmTimu."<hr>";
 echo $lat1."<br>";
 echo $lng1."<br>";
 echo $lat2."<br>";
@@ -87,7 +105,9 @@ WHERE trasa_pouzivatel.id_trasa=".$_GET['id']);
 
 }
 $vzd = is_null($prejdeneKm) ? "":"&vzd=$prejdeneKm";
-
+if($mod_trasy === 'štafetový' ){
+    $vzd = "&vzd=$odbehKmTimu";
+}
 if($_SESSION['rola'] == 'admin'){
     header("Location: cestyAdmin.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2".$vzd);
 }
