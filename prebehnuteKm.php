@@ -1,13 +1,13 @@
 <?php
 require ('config.php');
-echo "<br>".$_POST['distance'];
-echo "<br>".$_POST['date'];
-echo "<br>".$_POST['treningStart'];
-echo "<br>".$_POST['treningEnd'];
-echo "<br>".$_POST['lat'];
-echo "<br>".$_POST['lng'];
-echo "<br>".$_POST['hodnotenie'];
-echo "<br>".$_POST['note'];
+//echo "<br>".$_POST['distance'];
+//echo "<br>".$_POST['date'];
+//echo "<br>".$_POST['treningStart'];
+//echo "<br>".$_POST['treningEnd'];
+//echo "<br>".$_POST['lat'];
+//echo "<br>".$_POST['lng'];
+//echo "<br>".$_POST['hodnotenie'];
+//echo "<br>".$_POST['note'];
 
 $date = "";
 $treningStart = "";
@@ -38,7 +38,7 @@ if(!empty($_POST['note'])){
 
 
 session_start();
-echo "<br> id:".$_SESSION['id'];
+//echo "<br> id:".$_SESSION['id'];
 
 $idUser = $_SESSION['id'];
 
@@ -63,12 +63,12 @@ if ($result = $conn->query($sql)) {
     $result->close();
 }
 
-echo "<br><br><br>".$id_tr_pouz;
+//echo "<br><br><br>".$id_tr_pouz;
 
 $sql = "INSERT INTO trening(id_trasa_pouzivatel, odbehnute_km, den_treningu, zaciatok_treningu, koniec_treningu, lat_trening, lng_trening, hodnotenie, poznamka) 
         VALUES (".$id_tr_pouz.",".$_POST['distance'].",'".$date."','".$treningStart."','".$treningEnd."',".$lat.",".$lng.",".$_POST['hodnotenie'].",'".$note."')";
 
-echo "<br><br><br><br>".$sql;
+//echo "<br><br><br><br>".$sql;
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -89,7 +89,6 @@ if ($result = $conn->query($sql)) {
     $result->close();
 }
 
-echo "nase km ".$naseKm;
 $celKM = 0;
 $sql = "SELECT celkove_km FROM trasa where id =$id_trasa";
 if ($result = $conn->query($sql)) {
@@ -119,7 +118,6 @@ if ($result = $conn->query($sql)) {
     }
 }
 
-echo "modTrasy: ".$mod_trasy;
 
 if( $mod_trasy == 'štafetový'){
 
@@ -158,8 +156,10 @@ $kilometreTimu = 0;
 
     }
 
-    echo $kilometreTimu;
 
+    if ($kilometreTimu > $celKM){
+
+    }
 
     $sql = "UPDATE trasa_tim SET odbehnute_km=$kilometreTimu WHERE id_tim = $timId AND id_trasa = $id_trasa";
     echo "<br><br><br><br>";

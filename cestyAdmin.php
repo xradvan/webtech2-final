@@ -19,8 +19,12 @@ require_once "security/over_uzivatela.php";
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
+
+<!--    Google charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <link rel="stylesheet" href="./css/cesty.css">
-    <title>Document</title>
+    <title>Cesty Admin</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
@@ -100,8 +104,20 @@ require_once "security/over_uzivatela.php";
     <div class="col-8 leftCol">
         <div id="myMap" style="height: 400px; width: 70%"></div>
 
+<!--   Nacitanie dat uzivatelov pre vykreslenie grafu: verejny rezim    -->
+        <?php
+            $fileName = "tmp/bezciInfo.js";
 
-
+            if (file_exists($fileName)) {
+                $file = fopen($fileName, "r");
+                $contents = fread($file, filesize($fileName));
+                echo "<script>";
+                echo $contents;
+                echo "</script>";
+                fclose($file);
+                unlink($fileName);
+            }
+        ?>
 
         <div class="dropdown show " id="trasyId">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -348,9 +364,7 @@ require_once "security/over_uzivatela.php";
 
 
         <div class="progressDiv">
-            <div id="probar1">
-
-            </div>
+            <div id="barClenovia"></div>
         </div>
 
     </div>
@@ -409,7 +423,7 @@ require_once "security/over_uzivatela.php";
 
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+//<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
 <script src="scripts/bar.js" ></script>
 <script src="scripts/cesty.js" ></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArw-eyIcflcUehHyPzWx5FRzAr6EEI_68&libraries=places&callback=myMap"></script>
