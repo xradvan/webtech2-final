@@ -144,8 +144,13 @@ require_once "security/over_uzivatela.php";
                         while ($data = mysqli_fetch_array($result)){
                             $km_tr += $data["odbehnute_km"];
                             if(strtotime($data["koniec_treningu"]) != strtotime($data["zaciatok_treningu"])){
-                            $prm = abs(strtotime($data["koniec_treningu"]) - strtotime($data["zaciatok_treningu"]));
-                            $prm = round($data["odbehnute_km"]/(($prm / 60) / 60), 2)." km/h";
+                                if(strtotime($data["zaciatok_treningu"]) < strtotime($data["koniec_treningu"])){
+                                    $prm = strtotime($data["koniec_treningu"]) - strtotime($data["zaciatok_treningu"]);
+                                   
+                                }else{
+                                    $prm = strtotime($data["koniec_treningu"]) + ((24*3600) - strtotime($data["zaciatok_treningu"])) ;
+                                }
+                                $prm = round($data["odbehnute_km"]/(($prm / 60) / 60), 2)." km/h";
                             }else{
                                 $prm= " - ";
                             }
@@ -166,7 +171,7 @@ require_once "security/over_uzivatela.php";
                             if($i-1 != 0){
                                 $km_tr = $km_tr / ($i - 1);
                             }
-
+                            $conn->close();
                 ?>
             </tbody>
         </table>
