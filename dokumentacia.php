@@ -19,8 +19,6 @@
     </div>
     <ul class="nav navbar-nav">
         <li ><a href="prologue.php">Home</a></li>
-        <li><a href="#" name="adresa_uzivatel" onclick="adresaUzivatelia();">Adresy užívateľov</a></li>
-        <li><a href="#" name="adresa_skoly" onclick="adresaSkoly();">Adresy škôl</a></li>
         <li class="active"><a href="dokumentacia.php" name="dokumentacia">Dokumentácia</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
