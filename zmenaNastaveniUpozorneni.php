@@ -13,6 +13,9 @@
         $result = mysqli_query($conn,$query);
     	$conn->close();
 	}
-         header("location: ".$_GET[lokacia]."?id=".$_GET[id]."");
-  
+	if($_GET[lokacia] == "osobneVykony.php" && $_SESSION[rola] == "admin"){
+        header("location: ".$_GET[lokacia]."?id=".$_GET[id]."");
+	}else{
+		header("location: ".$_GET[lokacia]."");
+	}
 ?>
