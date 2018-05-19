@@ -19,7 +19,8 @@ require_once "security/over_uzivatela.php";
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-
+    <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+    <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/jszip.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Ososbné výkony</title>
 </head>
@@ -175,13 +176,13 @@ require_once "security/over_uzivatela.php";
             </tbody>
         </table>
         <?php
-            echo "<h4><strong>Priemerná hodnota odbehnutých km na 1 tréning je: ".$km_tr." km</strong></h4>";
+            echo "<h4><strong>Priemerná hodnota odbehnutých km na 1 tréning je: ".round($km_tr,2)." km</strong></h4>";
         ?>
     </div>
     <div class="container text-center col-lg-2">
         <input type="image" src="img/download.png" id="ulozit" width="70" height="70"><br>
         <span>Uložiť tabulku ako PDF</span>
-        <button type="button" class="btn-lg btn-danger" id="returnButton" style="display:none">Späť na používateľov</button>
+        <button type="button" class="btn-lg btn-danger" id="returnButton" style="display:none;">Späť na používateľov</button>
     </div>
 
      <script type="text/javascript">
@@ -191,10 +192,13 @@ require_once "security/over_uzivatela.php";
             $("#osobneVykony").css("display", "none");
             $("#returnButton").css("display","inline");
         }
+
     </script>
 
 <?php
-   $id=$_GET['id'];
+
+    if($_SESSION['rola'] == "admin")
+        $id=$_GET['id'];
 ?>
 
 <script type="text/javascript">
@@ -203,12 +207,26 @@ require_once "security/over_uzivatela.php";
         if(id=="zapUpozornenia"){
             $("#zapUpozornenia").addClass("active");
             $("#vypUpozornenia").removeClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=zap&lokacia=osobneVykony.php&id=<?php echo $id; ?>";
+
+            <?php
+            if($_SESSION['rola'] == "admin")
+                echo "window.location.href = 'zmenaNastaveniUpozorneni.php?not=zap&lokacia=osobneVykony.php&id= $id'";
+            else
+                echo "window.location.href = 'zmenaNastaveniUpozorneni.php?not=zap&lokacia=osobneVykony.php'";
+
+            ?>
+
 
         }else{
             $("#zapUpozornenia").removeClass("active");
             $("#vypUpozornenia").addClass("active");
-            window.location.href = "zmenaNastaveniUpozorneni.php?not=vyp&lokacia=osobneVykony.php&id=<?php echo $id; ?>";
+            <?php
+            if($_SESSION['rola'] == "admin")
+                echo "window.location.href = 'zmenaNastaveniUpozorneni.php?not=vyp&lokacia=osobneVykony.php&id= $id'";
+            else
+                echo "window.location.href = 'zmenaNastaveniUpozorneni.php?not=vyp&lokacia=osobneVykony.php'";
+
+            ?>
         }
     }
     

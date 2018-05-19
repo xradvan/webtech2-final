@@ -43,6 +43,7 @@
                 $psc = $data[7];
                 $obec = $data[8];
                 $import="INSERT into pouzivatelia(meno,priezvisko,email,heslo,stredna_skola,stredna_skola_adresa,ulica,psc,obec, prve_prihlasenie) values('".$meno."','".$priezvisko."','".$email."','".$hesloHash."','".$stredna_skola."','".$stredna_skola_adresa."','".$ulica."','".$psc."','".$obec."', '1')";
+//                echo $import;
 
                 // Query
                 mysqli_query($conn,$import) or die(mysqli_error($conn));
@@ -64,23 +65,23 @@
         
                     $mail->isHTML(true);    
                     $mail->Subject = 'Registrácia do webovej aplikácie';
-                    $mail->Body    = '<h2 style="text-align: center;">Dobrý deň,
+                    $mail->Body    = "<h2 style='text-align: center;'>Dobrý deň,
                     
                     boli ste registrovaní na našom portáli. 
                     Vaše heslo je:
                     $heslo
                     
                     Prihláste sa na: 
-                    http://147.175.98.209/webtech2-final/security/prihlasenie.php</h2><p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
+                    http://147.175.98.209/webtech2-final/security/prihlasenie.php</h2><p style='color: red;text-align: center;'>Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>";
         
-                    $mail->AltBody = '<h2 style="text-align: center;">Dobrý deň,
-                    
-                    boli ste registrovaní na našom portáli. 
-                    Vaše heslo je:
-                    $heslo
-                    
-                    Prihláste sa na: 
-                    http://147.175.98.209/webtech2-final/security/prihlasenie.php</h2><p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
+                    $mail->AltBody = '<h2 style="text-align: center;">Dobrý deň,<br>
+                    <br>
+                    boli ste registrovaní na našom portáli. <br>
+                    Vaše heslo je: <br>
+                    $heslo <br>
+                    <br>
+                    Prihláste sa na: <br>
+                    <br>http://147.175.98.209/webtech2-final/security/prihlasenie.php</h2><p style="color: red;text-align: center;">Tento e-mail bol vygenerovaný z webovej aplikácie, prosím neodpovedajte naň</p>';
                     $mail->send();
         
                 } catch (Exception $e) {
@@ -100,8 +101,8 @@
          die();
 
     } else {
-//        header("location:registraciaPouzivatela.php?upload=fail");
-//        die();
+        header("location:registraciaPouzivatela.php?upload=fail");
+        die();
     }
 
 ?>

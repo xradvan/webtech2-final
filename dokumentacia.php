@@ -56,7 +56,7 @@
             <td scope="col" class="no">N</td>
             <td scope="col" class="no">N</td>
             <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
             <td scope="col" class="yes">A</td>
             </tr>
             <tr>
@@ -101,7 +101,7 @@
             </tr>
             <tr>
             <td scope="col">Štafetový mód</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
             <td scope="col" class="no">N</td>
             <td scope="col" class="yes">A</td>
@@ -109,11 +109,11 @@
             </tr>
             <tr>
             <td scope="col">Grafické odlíšenie členov trasy</td>
+            <td scope="col" class="yes">A</td>
+            <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
             <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
             </tr>
             <tr>
             <td scope="col">Tabuľka osobných výkonov</td>
@@ -128,12 +128,12 @@
             <td scope="col" class="no">N</td>
             <td scope="col" class="yes">A</td>
             <td scope="col" class="yes">A</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
             </tr>
             <tr>
             <td scope="col">Generovanie PDF súboru</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
             <td scope="col" class="yes">A</td>
             <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
@@ -143,16 +143,8 @@
             <td scope="col">Úvodná strana</td>
             <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
-            </tr>
-            <tr>
-            <td scope="col">Aktualizácia údajov v tabuľke výkonov</td>
-            <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
+            <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
             </tr>
             <tr>
@@ -160,7 +152,7 @@
             <td scope="col" class="no">N</td>
             <td scope="col" class="yes">A</td>
             <td scope="col" class="yes">A</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
             </tr>
             <tr>
@@ -169,7 +161,7 @@
             <td scope="col" class="yes">A</td>
             <td scope="col" class="yes">A</td>
             <td scope="col" class="no">N</td>
-            <td scope="col" class="no">N</td>
+            <td scope="col" class="yes">A</td>
             </tr>
             </tbody>
             </table>
@@ -180,13 +172,15 @@
             <ul>
                 <li>jQuery</li>
                 <li>Bootstrap</li>
+                <li>Google Charts</li>
+                <li>Shield</li>
                 <li>PHPMailer</li>
             </ul>
             <h3>Použité API</h3>
             <ul>
-                <li>Google Maps</li>
-                <li>Google Maps</li>
-                <li>Google Maps</li>
+                <li>Google Maps Geolocation</li>
+                <li>Google Maps Directions</li>
+                <li>Google Maps Direction metrix</li>
             </ul>
             <h3>Repozitár</h3>
             <ul>

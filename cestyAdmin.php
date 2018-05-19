@@ -99,7 +99,7 @@ require_once "security/over_uzivatela.php";
     }
 </script>
 
-<h1 class="adminMode">Administratorský mód</h1>
+<h1 class="adminMode">Administrátorský mód</h1>
 
 
 <div class="row">

@@ -25,11 +25,7 @@ $idTim = $tmp['id_timu'];
 
 echo "timId->$idTim<br>";
 
-$res = $conn->query("SELECT odbehnute_km FROM trasa_tim WHERE id_tim = $idTim AND id_trasa = $tid");
-$tmp = $res->fetch_assoc();
-$prejdeneKmTim = $tmp['odbehnute_km'];
 
-echo "timKm->$prejdeneKmTim<br>";
 
 echo "<hr>";
 
@@ -74,12 +70,19 @@ if ($result = $conn->query($sql)) {
 }
 
 if($mod_trasy === 'štafetový' ){
+    $res = $conn->query("SELECT odbehnute_km FROM trasa_tim WHERE id_tim = $idTim AND id_trasa = $tid");
+    $tmp = $res->fetch_assoc();
+    $prejdeneKmTim = $tmp['odbehnute_km'];
+
+    echo "timKm->$prejdeneKmTim<br>";
+
     $vzd = "&vzd=$prejdeneKmTim";
 }
 else{
     $vzd = "&vzd=$prejdeneKm";
 }
-
+echo "<hr>";
+echo "<br>$vzd";
 if($_SESSION['rola'] == "admin"){
     header("Location: cestyAdmin.php?lat1=$lat1&lng1=$lng1&lat2=$lat2&lng2=$lng2$vzd");
 }

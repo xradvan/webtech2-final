@@ -21,7 +21,7 @@ h3,h4{
     background-color: #088A08;
 }
 .no{
-    background-color: red;
+    background-color: rgba(230,0,0,0.4);
 }
 
 #googleMap{

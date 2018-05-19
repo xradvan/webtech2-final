@@ -9,7 +9,7 @@ require ('config.php');
 //echo "<br>".$_POST['hodnotenie'];
 //echo "<br>".$_POST['note'];
 
-$date = "";
+$date = date("Y-m-d");
 $treningStart = "";
 $treningEnd = "";
 $lat = 0;

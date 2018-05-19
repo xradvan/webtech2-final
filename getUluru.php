@@ -34,12 +34,14 @@ if ($result = $conn->query($sql)) {
 $res = $conn->query("SELECT id_timu FROM pouzivatelia WHERE id = $idUser");
 $tmp = $res->fetch_assoc();
 $idTimu = $tmp['id_timu'];
+if(!empty($idTimu)){
+    $res = $conn->query("SELECT odbehnute_km FROM trasa_tim WHERE id_tim = $idTimu AND id_trasa = $idTrasa");
+    $tmp = $res->fetch_assoc();
+    $odbehKmTimu = $tmp['odbehnute_km'];
 
-$res = $conn->query("SELECT odbehnute_km FROM trasa_tim WHERE id_tim = $idTimu AND id_trasa = $idTrasa");
-$tmp = $res->fetch_assoc();
-$odbehKmTimu = $tmp['odbehnute_km'];
+    echo "idTrasa->".$idTrasa."<br>idTimu->".$idTimu."<br>idTimu->".$odbehKmTimu."<hr>";
+}
 
-echo "idTrasa->".$idTrasa."<br>idTimu->".$idTimu."<br>idTimu->".$odbehKmTimu."<hr>";
 echo $lat1."<br>";
 echo $lng1."<br>";
 echo $lat2."<br>";
