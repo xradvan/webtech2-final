@@ -152,7 +152,7 @@ if(isset($_GET['odhlasenie'])){
             <?php
             if ($conn->connect_error) {die("Connection failed: " . $conn->connect_error);}
             $email= $_SESSION['email'];
-            $query="SELECT id, meno, priezvisko, rola from pouzivatelia WHERE NOT email ='".$email."'";
+            $query="SELECT id, meno, priezvisko, rola from pouzivatelia";
             $result = mysqli_query($conn,$query);
             $i=1;
             while ($data = mysqli_fetch_array($result)){
@@ -229,12 +229,6 @@ if(isset($_GET['odhlasenie'])){
         $(".addBtn").on('click', function () {
             $(".addDiv").slideToggle();
         });
-
-//            $("#insertBtn").on('click', function () {
-//                window.location.href = "ulozenieCSV.php?subor="+$("#subor").val();
-//
-//            });
-
     });
 
 </script>
