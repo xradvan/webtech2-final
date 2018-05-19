@@ -29,7 +29,8 @@
         </ul>
     </div>
 </nav>
-<h1 class="text-center">Vitajte na našom portáli!</h1>
+<br>
+<h1 class="text-center text-primary">Vitajte na našom portáli!</h1>
 <div id="googleMap" style="width:80%;"></div>
 <?php
     require ('config.php');
