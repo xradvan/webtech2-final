@@ -261,7 +261,6 @@ require_once "security/over_uzivatela.php";
                     INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
                     ORDER BY aktivna_trasa DESC";
 
-
             $i = 1;
             if ($result = $conn->query($sql)) {
                 while ($row = $result->fetch_object()) {

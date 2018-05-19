@@ -165,7 +165,7 @@ require_once "security/over_uzivatela.php";
 
 
 
-
+        <h1 style="margin-top: 20px;">Moje trasy</h1>
         <table class="table table-dark" id="privatneTrasy">
             <thead>
             <tr>
@@ -185,6 +185,7 @@ require_once "security/over_uzivatela.php";
 
 
             <?php
+
             $i = 1;
             if ($result = $conn->query($sql)) {
                 while ($row = $result->fetch_object()) {
@@ -232,7 +233,110 @@ require_once "security/over_uzivatela.php";
             </tbody>
         </table>
 
+        <h1 style="margin-top: 70px;">Všetky verejné trasy</h1>
 
+        <table class="table table-dark" id="vsetkyTrasy">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Štart</th>
+                <th scope="col">Cieľ</th>
+                <th scope="col">Prejdené km</th>
+                <th scope="col">Dátum vytvorenia</th>
+                <th scope="col">Definoval</th>
+                <th scope="col">Mód</th>
+                <th scope="col">Používateľ</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = "SELECT trasa.id as tid, pouzivatelia.id, pouzivatelia.meno, pouzivatelia.priezvisko, trasa.start_nazov, trasa.ciel_nazov, trasa_pouzivatel.prejdene_km, trasa.celkove_km, trasa.datum_vytvorenia, trasa_pouzivatel.aktivna_trasa, trasa.mod_trasy, trasa.vytvoril
+                    FROM trasa_pouzivatel
+                    INNER JOIN trasa ON trasa.id = trasa_pouzivatel.id_trasa
+                    INNER JOIN pouzivatelia on pouzivatelia.id = trasa_pouzivatel.id_pouzivatel
+                    WHERE trasa.mod_trasy = 'verejný' AND pouzivatelia.id <> ".$idU."
+                    ORDER BY aktivna_trasa DESC";
+            $i = 1;
+            if ($result = $conn->query($sql)) {
+            while ($row = $result->fetch_object()) {
+            echo "<tr>";
+                echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
+                echo "<td>$row->start_nazov</td>";
+                echo "<td>$row->ciel_nazov</td>";
+
+                echo "<td>";
+                    if($row->mod_trasy === 'štafetový'){
+                    $res = $conn->query("SELECT id_timu FROM pouzivatelia WHERE id = $row->id");
+                    $idtmp = $res->fetch_assoc();
+                    $idTimu = $idtmp['id_timu'];
+
+                    $res = $conn->query("SELECT odbehnute_km FROM trasa_tim WHERE id_tim = $idTimu AND id_trasa = $row->tid");
+                    $tmp = $res->fetch_assoc();
+                    $odbehKmTimu = $tmp['odbehnute_km'];
+                    if(empty($odbehKmTimu)){
+                    echo "0";
+                    }
+                    else{
+                    echo $odbehKmTimu;
+                    }
+                    }
+                    else{
+                    echo $row->prejdene_km;
+                    }
+
+
+                    echo " / <b>".round($row->celkove_km)."</b></td>";
+
+                echo "<td>$row->datum_vytvorenia</td>";
+                //echo "<td>$row->aktivna_trasa</td>";
+                echo "<td>$row->vytvoril</td>";
+                echo "<td>$row->mod_trasy</td>";
+                echo "<td>$row->meno $row->priezvisko</td>";
+
+                echo "</tr>";
+            $i++;
+            }
+            $result->close();
+            }
+            ?>
+            </tbody>
+        </table>
+
+        <h1 style="margin-top: 70px;">Všetky štafetové trasy</h1>
+        <table class="table table-dark" id="vsetkyTrasy">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tím</th>
+                <th scope="col">Štart</th>
+                <th scope="col">Cieľ</th>
+                <th scope="col">Prejdené km</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = "SELECT trasa_tim.odbehnute_km, tim.nazov, trasa.start_nazov, trasa.ciel_nazov, trasa.celkove_km from trasa_tim
+                    JOIN tim on trasa_tim.id_tim = tim.id
+                    JOIN trasa ON trasa_tim.id_trasa = trasa.id";
+            $i = 1;
+            if ($result = $conn->query($sql)) {
+                while ($row = $result->fetch_object()) {
+                    echo "<td>$i</td>";
+                    echo "<td>$row->nazov</td>";
+                    echo "<td>$row->start_nazov</td>";
+                    echo "<td>$row->ciel_nazov</td>";
+                    echo "<td> $row->odbehnute_km /  ".round($row->celkove_km)."</td>";
+
+                    echo "</tr>";
+                    $i++;
+                }
+                $result->close();
+            }
+            ?>
+            </tbody>
+        </table>
 
     </div>
     <div class="col-4 rightCol">
