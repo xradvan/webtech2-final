@@ -15,9 +15,11 @@ include("security/over_uzivatela.php");
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./css/stafetovyMod.css">
+    <link rel="stylesheet" href="css/background.css">
     <title>Štafetový mód - administrátor</title>
 </head>
-<body>
+<body class="bg-img-2">
+
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
         <span class="navbar-brand" >
 

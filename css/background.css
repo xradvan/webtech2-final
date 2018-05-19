@@ -5,3 +5,12 @@
     -o-background-size: cover;
     background-size: cover;
 }
+
+.bg-img-2 {
+    background: url("../img/background2.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
