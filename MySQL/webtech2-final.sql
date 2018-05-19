@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: So 19.Máj 2018, 01:13
+-- Čas generovania: So 19.Máj 2018, 16:55
 -- Verzia serveru: 10.1.32-MariaDB
 -- Verzia PHP: 7.0.30
 
@@ -141,7 +141,9 @@ INSERT INTO `trasa` (`id`, `start_nazov`, `start_lat`, `start_long`, `ciel_nazov
 (66, 'Štokholm, Švédsko', '59.32932349999999', '18.068580800000063', 'Helsinki, Fínsko', '60.16985569999999', '24.93837910000002', 484.309, '2018-05-18 23:35:07', 'štafetový', 4, 'Peter Radvan'),
 (67, 'Madrid, Španielsko', '40.4167754', '-3.7037901999999576', 'Barcelona, Španielsko', '41.38506389999999', '2.1734034999999494', 624.627, '2018-05-18 23:35:58', 'štafetový', 4, 'Peter Radvan'),
 (68, 'Madrid, Španielsko', '40.4167754', '-3.7037901999999576', 'Barcelona, Španielsko', '41.38506389999999', '2.1734034999999494', 624.627, '2018-05-18 23:36:40', 'štafetový', 4, 'Peter Radvan'),
-(69, 'Martin, Slovensko', '49.06166129999999', '18.91902349999998', 'Púchov, Slovensko', '49.12356539999999', '18.324120300000004', 81.574, '2018-05-18 23:38:11', 'štafetový', 4, 'Peter Radvan');
+(69, 'Martin, Slovensko', '49.06166129999999', '18.91902349999998', 'Púchov, Slovensko', '49.12356539999999', '18.324120300000004', 81.574, '2018-05-18 23:38:11', 'štafetový', 4, 'Peter Radvan'),
+(70, 'Hovnorsbacken, Djurhamn, Švédsko', '59.28617029999999', '18.65284810000003', 'Hovnoret, Švédsko', '59.291667', '18.66388900000004', 1.337, '2018-05-19 01:42:58', 'privátny', 4, 'Peter Radvan'),
+(71, 'Uzbekistan', '41.377491', '64.58526200000006', 'Kazachstan', '48.019573', '66.92368399999998', 1599.058, '2018-05-19 14:19:31', 'štafetový', 4, 'Peter Radvan');
 
 -- --------------------------------------------------------
 
@@ -162,13 +164,13 @@ CREATE TABLE `trasa_pouzivatel` (
 --
 
 INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`, `aktivna_trasa`) VALUES
-(24, 4, 63, 136, 0),
+(24, 4, 63, 136, 1),
 (25, 4, 64, 200, 0),
 (26, 8, 64, 0, 0),
 (27, 9, 64, 0, 0),
 (28, 10, 64, 0, 0),
 (29, 11, 64, 0, 0),
-(30, 4, 65, 1520, 1),
+(30, 4, 65, 1570, 0),
 (31, 8, 65, 150, 0),
 (32, 4, 66, 0, 0),
 (33, 8, 66, 0, 0),
@@ -177,7 +179,10 @@ INSERT INTO `trasa_pouzivatel` (`id`, `id_pouzivatel`, `id_trasa`, `prejdene_km`
 (36, 4, 68, 0, 0),
 (37, 8, 68, 0, 0),
 (38, 4, 69, 120, 0),
-(39, 8, 69, 0, 0);
+(39, 8, 69, 0, 0),
+(40, 4, 70, 1, 0),
+(41, 4, 71, 1100, 0),
+(42, 8, 71, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -202,7 +207,10 @@ INSERT INTO `trasa_tim` (`id`, `id_tim`, `id_trasa`, `odbehnute_km`) VALUES
 (4, 3, 68, 0),
 (5, 1, 69, 120),
 (6, 2, 69, 0),
-(7, 3, 69, 0);
+(7, 3, 69, 0),
+(8, 1, 71, 1100),
+(9, 2, 71, 0),
+(10, 3, 71, 0);
 
 -- --------------------------------------------------------
 
@@ -248,7 +256,11 @@ INSERT INTO `trening` (`id`, `id_trasa_pouzivatel`, `odbehnute_km`, `den_trening
 (30, 38, 30, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0'),
 (31, 38, 30, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0'),
 (32, 24, 16, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0'),
-(33, 30, 20, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0');
+(33, 30, 20, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0'),
+(34, 40, 5, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0'),
+(35, 30, 50, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0'),
+(36, 41, 100, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0'),
+(37, 41, 1000, '0000-00-00', '00:00:00', '00:00:00', 0, 0, 1, '0');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -323,25 +335,25 @@ ALTER TABLE `tim`
 -- AUTO_INCREMENT pre tabuľku `trasa`
 --
 ALTER TABLE `trasa`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT pre tabuľku `trasa_pouzivatel`
 --
 ALTER TABLE `trasa_pouzivatel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT pre tabuľku `trasa_tim`
 --
 ALTER TABLE `trasa_tim`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pre tabuľku `trening`
 --
 ALTER TABLE `trening`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Obmedzenie pre exportované tabuľky
