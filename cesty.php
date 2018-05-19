@@ -192,7 +192,28 @@ require_once "security/over_uzivatela.php";
                     echo "<th scope='row'>$i <span class='spanId' >$row->id</span><span class='spanTid' >$row->tid</span></th>";
                     echo "<td>$row->start_nazov</td>";
                     echo "<td>$row->ciel_nazov</td>";
-                    echo "<td>$row->prejdene_km/<b>".round($row->celkove_km)."</b></td>";
+                    echo "<td>";
+                    if($row->mod_trasy === 'štafetový'){
+                        $res = $conn->query("SELECT id_timu FROM pouzivatelia WHERE id = $row->id");
+                        $idtmp = $res->fetch_assoc();
+                        $idTimu = $idtmp['id_timu'];
+
+                        $res = $conn->query("SELECT odbehnute_km FROM trasa_tim WHERE id_tim = $idTimu AND id_trasa = $row->tid");
+                        $tmp = $res->fetch_assoc();
+                        $odbehKmTimu = $tmp['odbehnute_km'];
+                        if(empty($odbehKmTimu)){
+                            echo "0";
+                        }
+                        else{
+                            echo $odbehKmTimu;
+                        }
+                    }
+                    else{
+                        echo $row->prejdene_km;
+                    }
+
+
+                    echo " / <b>".round($row->celkove_km)."</b></td>";
                     echo "<td>$row->datum_vytvorenia</td>";
                     echo "<td>$row->vytvoril</td>";
                     echo "<td>$row->mod_trasy</td>";
