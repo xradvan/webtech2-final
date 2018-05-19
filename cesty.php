@@ -8,9 +8,9 @@ require_once "security/over_uzivatela.php";
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -19,6 +19,8 @@ require_once "security/over_uzivatela.php";
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="./css/cesty.css">
     <title>Cesty</title>
 
@@ -26,6 +28,7 @@ require_once "security/over_uzivatela.php";
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
         <span class="navbar-brand" >
             <?php
@@ -147,7 +150,6 @@ require_once "security/over_uzivatela.php";
             <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
 
                 <?php
-
                 if ($result = $conn->query($sql)) {
                     while ($row = $result->fetch_object()) {
 
@@ -214,8 +216,15 @@ require_once "security/over_uzivatela.php";
     </div>
     <div class="col-4 rightCol">
 
-        <img src="img/add.png" id="privateBtn" class="addBtn" alt="add">
-        <img src="img/distance.png" id="distanceBtn" class="addBtn" alt="add">
+
+        <img src="img/add.png" id="privateBtn" class="addBtn" data-toggle="tooltip" title="Privátny mód"  alt="add">
+        <img src="img/distance.png" id="distanceBtn" class="addBtn2" data-toggle="tooltip" title="Pridaj údaje" alt="add">
+
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
 
         <div class="addDiv">
 

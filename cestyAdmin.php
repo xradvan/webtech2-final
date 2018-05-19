@@ -19,8 +19,10 @@ require_once "security/over_uzivatela.php";
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!--    Google charts -->
+
+    <!--    Google charts -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <link rel="stylesheet" href="./css/cesty.css">
@@ -266,11 +268,17 @@ require_once "security/over_uzivatela.php";
     </div>
     <div class="col-4 rightCol">
 
-        <img src="img/add.png"    id="privateBtn" class="addBtn" alt="add">
-        <img src="img/public.png" id="publicBtn" class="addBtn" alt="add">
-        <img src="img/relay.png"  id="relayBtn" class="addBtn" alt="add">
-        <a href="stafetovyMod.php" > <img src="img/addpeople.png" id="addPeople" class="addBtn" alt="add"></a>
-        <img src="img/distance.png" id="distanceBtn" class="addBtn" alt="add">
+        <img src="img/add.png"    id="privateBtn" class="addBtn" alt="add"  data-toggle="tooltip" title="Privátny mód">
+        <img src="img/public.png" id="publicBtn" class="addBtn2" alt="add"  data-toggle="tooltip" title="Verejný mód">
+        <img src="img/relay.png"  id="relayBtn" class="addBtn3" alt="add"  data-toggle="tooltip" title="Štafetový mód">
+        <a href="stafetovyMod.php" > <img src="img/addpeople.png" id="addPeople" class="addBtn" alt="add"  data-toggle="tooltip" title="Vytvor tímy"></a>
+        <img src="img/distance.png" id="distanceBtn" class="addBtn" alt="add" data-toggle="tooltip" title="Pridaj údaje">
+
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
 
         <div class="addDiv">
 
@@ -417,8 +425,6 @@ require_once "security/over_uzivatela.php";
 
         $("#privatneTrasy").DataTable();
         $("#vsetkyTrasy").DataTable();
-
-
     })
 
 </script>

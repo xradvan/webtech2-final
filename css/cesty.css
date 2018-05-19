@@ -30,27 +30,62 @@ body {
     transition: all 0.3s linear;
     border-radius: 50%;
 }
+
+.addBtn2{
+    position: absolute;
+    top:30px;
+    right:50px;
+    width: 50px;
+    height:50px;
+    transition: all 0.3s linear;
+    border-radius: 50%;
+}
+
+.addBtn3{
+    position: absolute;
+    top:30px;
+    right:50px;
+    width: 50px;
+    height:50px;
+    transition: all 0.3s linear;
+    border-radius: 50%;
+}
+
 .addBtn:hover{
     transform: scale(1.05);
     cursor: pointer;
 }
-.addBtn:nth-child(2){
+
+.addBtn2:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.addBtn3:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.addBtn2{
     right:110px;
 
 }
 
-.addBtn:nth-child(3){
+.addBtn3{
     right:170px;
     border-radius: 50%;
     border: 1px solid black;
 
 }
+
 #distanceBtn{
     left:50px;
 }
+
 .addBtn:nth-child(4){
     left:110px;
 }
+
 .addBtn:nth-child(5){
     left:50px;
     background: #fff;
